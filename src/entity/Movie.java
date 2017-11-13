@@ -133,9 +133,9 @@ public class Movie implements Serializable {
 		this.status = movieStatus;
 	}
 	
-	public void printMovieDetails()
+	public String getMovieDetails()
 	{
-		
+		return "Review";
 	}
 	
 	public void getNumMovies()
