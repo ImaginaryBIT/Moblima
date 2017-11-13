@@ -7,18 +7,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ShowTime implements Serializable {
-	private static final long serialVersionUID = 1L;
 	private int showTimeId;
 	private Cinema cinema;
 	private Cineplex cineplex;
 	private GregorianCalendar showDate;
-	//private GregorianCalendar timeSlot;
+	private GregorianCalendar timeSlot;
 	private Ticket[] tickets;
 
-	public ShowTime(GregorianCalendar showDate, Cinema cinema, Ticket[] tickets) {
+	public ShowTime(GregorianCalendar showDate, GregorianCalendar timeSlot) {
 		this.showDate = showDate;
-		this.cinema = cinema;
-		this.tickets = tickets;
+		this.timeSlot = timeSlot;
 	}
 
 	// all get methods
@@ -38,9 +36,9 @@ public class ShowTime implements Serializable {
 		return showDate;
 	}
 
-	//public GregorianCalendar getTimeSlot() {
-		//return timeSlot;
-	//}
+	public GregorianCalendar getTimeSlot() {
+		return timeSlot;
+	}
 
 	public Ticket[] getTickets() {
 		return tickets;
@@ -63,9 +61,9 @@ public class ShowTime implements Serializable {
 		this.showDate = showDate;
 	}
 
-	//public void setTimeSlot(GregorianCalendar timeSlot) {
-	//	this.timeSlot = timeSlot;
-	//}
+	public void setTimeSlot(GregorianCalendar timeSlot) {
+		this.timeSlot = timeSlot;
+	}
 
 	public void setTickets(Ticket[] tickets) {
 		this.tickets = tickets;
@@ -74,8 +72,7 @@ public class ShowTime implements Serializable {
 	public void printShowTime() {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d, yyyy HH:mm");
 		Date date = showDate.getTime();
-		System.out.println("Date Time\t\t\tCinema");
-		System.out.println(dateFormatter.format(date) +"\t\t\t" + cinema.getId());
+		System.out.println("Current date and time in Date's toString() is : " + dateFormatter.format(date) + "\n");
 	}
 
 }
