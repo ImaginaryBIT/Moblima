@@ -300,15 +300,10 @@ public class Movie implements Serializable {
             //loop through all the showTime and find the tickets that are sold
             for (int i = 0; i < showTimes.size(); i++) {
                 ShowTime rv = (ShowTime) showTimes.get(i);
-                Ticket[] ticketList = rv.getTickets();
-                for (int t = 0; t < ticketList.length; t++) {
-                    if(ticketList[t].getStatus() == "sold"){
-                        //if ticket is sold add to total count
-                        total++;
-                    }
-                }
+                total += rv.getNoOfTicketsSold();
+                  
             }
-        return total;
+            return total;
 	}
 	
         /**

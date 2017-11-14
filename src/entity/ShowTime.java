@@ -61,5 +61,25 @@ public class ShowTime implements Serializable {
         public Date getShowDateTime() {
                 return showDateTime;
         }
+        public int getNoOfTicketsSold() {
+                int total = 0;
+                for (int t = 0; t < tickets.length; t++) {
+                    if(tickets[t].getStatus().equals(Ticket.SOLD)){
+                        //if ticket is sold add to total count
+                        total++;
+                    }
+                }
+                return total;
+        }
+        public int getNoOfTicketsAvailable() {
+                int total = 0;
+                for (int t = 0; t < tickets.length; t++) {
+                    if(tickets[t].getStatus().equals(Ticket.AVAILABLE)){
+                        //if ticket is sold add to total count
+                        total++;
+                    }
+                }
+                return total;
+        }
 
 }
