@@ -123,14 +123,20 @@ public class MovieController {
 			overallUserRate = sc.nextFloat();
 			
 			//9 reviews
-			List<Review> reviews = null;
+			reviews = null;
 			
 			//10 rating
 			System.out.print("Enter the Movie rating: ");
 			rating = sc.nextLine();
 			
-			//11 showTimes
-			//need to continue
+			//11 showTimes need to continue
+			int showTimeId = showTimeList.size() + 1;
+			System.out.print("Enter the cinema name: ");
+			Cinema cinema;
+			System.out.print("Enter the show date and time in DD-MM-YYYY HH:MM: ");
+			Date showDateTime;
+			System.out.print("Enter the how many ticket: ");
+			Ticket[] tickets;
 			
 			//12 status
 			System.out.print("Select the Movie show status: ");
@@ -198,15 +204,16 @@ public class MovieController {
 						System.out.println(movie.getTitle());
 						System.out.println("1. Update the Movie Name");
 						System.out.println("2. Update the Movie Type");
-						System.out.println("3. Update the Movie Runtime");
-						System.out.println("4. Update the Movie Rating");
-						System.out.println("5. Update the Movie Status");
-						
-						
-						
-						
+						System.out.println("3. Update the Movie Cast");
+						System.out.println("4. Update the Movie Director");
+						System.out.println("5. Update the Movie language");
+						System.out.println("6. Update the Movie synopsis");
+						System.out.println("7. Update the Movie running time");
+						System.out.println("8. Update the Movie overall User Rate");
+						System.out.println("9. Update the Movie rating");
+						System.out.println("10. Update the Movie showtimes");
+						System.out.println("11. Update the Movie status");
 						System.out.println("12. Exit");
-						
 						System.out.print("Choice: ");		
 						choice = sc.nextInt();
 						sc.nextLine();
