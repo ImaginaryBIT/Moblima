@@ -52,21 +52,10 @@ public class Staff {
 			choice = sc.nextInt();
 			sc.nextLine();
 
-			int configChoice;
 			switch (choice) {
 			case 1://Configure System Settings 
-				System.out.println("=====================================");
-				System.out.println("|1. Standard Ticket Price           |");
-				System.out.println("|2. Premium Ticket Price            |");
-				System.out.println("|3. Child Discount                  |");
-				System.out.println("|4. Senior Citizen Discount         |");
-				System.out.println("|5. Holiday Increment               |");
-				System.out.println("|6. Add Holiday                     |");
-				System.out.println("|7. Remove Holiday                  |");
-				System.out.println("=====================================");				
-				System.out.print("Enter your choice: ");
-				configChoice = sc.nextInt();
-				sc.nextLine();
+				SystemSettingController config = new SystemSettingController();
+				config.printMenu();
 			break;
 			
 			case 2://Add Movies
