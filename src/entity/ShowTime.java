@@ -2,9 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class ShowTime implements Serializable {
 	private int showTimeId;
@@ -53,13 +51,13 @@ public class ShowTime implements Serializable {
 		return dateFormatter.format(showDateTime.getTime());
 	}
 
-        public String getShowDate() {
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-mm-yyyy");
-		return dateFormatter.format(showDateTime.getTime());
-        }
+    public String getShowDate() {
+	SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-mm-yyyy");
+	return dateFormatter.format(showDateTime.getTime());
+    }
 
-        public Date getShowDateTime() {
-                return showDateTime;
-        }
+    public Date getShowDateTime() {
+            return showDateTime;
+    }
 
 }
