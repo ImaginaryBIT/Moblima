@@ -147,7 +147,7 @@ public class SystemSetting implements Serializable {
 	@Override
 	public String toString() {
 		
-		System.out.println("=====================================");
+		System.out.println("========Current System Config=========");
 		System.out.println(" Standard Ticket Price   : "+this.getStandardTicketPrice());
 		System.out.println(" Premium Ticket Price    : "+this.getPremiumTicketPrice());
 		System.out.println(" Child Discount          : "+this.getChildDiscount());
