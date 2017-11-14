@@ -37,14 +37,13 @@ public class Moblima {
 
 			switch (choice) {
 			case 1: // list all movies
-				ArrayList list1 = new ArrayList();		
-				list1 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
-				for(int i=0; i<list1.size(); i++)
-				System.out.println((Movie)list1.get(i));
+				showAllMovie();
 				break;
 
 			case 2: // search for movies
+				searchMovie();
 				break;
+
 
 			case 3: // top 5 ranking
 				break;
@@ -86,6 +85,8 @@ public class Moblima {
 		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
 
+
+
 	private static void staffLogin() {
 		Staff staff = new Staff();
 		if(!staff.login()) 
@@ -94,8 +95,31 @@ public class Moblima {
 			staff.showStaffMenu();
 	}
 
-	private void showAllMovie() {
+	private static void showAllMovie() {
+		ArrayList list1 = new ArrayList();		
+		list1 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+		for(int i=0; i<list1.size(); i++)
+		System.out.println((Movie)list1.get(i));
+	}
+	
+	private static void searchMovie() {
+		System.out.println("Enter the movie title: ");
+		Scanner sc = new Scanner(System.in);
+		String title = sc.nextLine();
+		
+		ArrayList list2 = new ArrayList();		
+		list2 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+		
+		for(int i=0; i<list2.size(); i++){
+			Movie movie = (Movie)list2.get(i);
 
+			if(movie.getTitle().equals(title)) {
+				System.out.println((Movie)list2.get(i));
+				break;
+			}
+			System.out.println("Can not found this movie title.");
+		}
+		
 	}
 
 	private static void bookTicket() {
