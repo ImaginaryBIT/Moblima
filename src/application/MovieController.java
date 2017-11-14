@@ -33,11 +33,11 @@ public class MovieController {
 	/** Overall User Rating  */
 	private float overallUserRate;//8
 	/** Movie Reviews */
-	private ArrayList<Review> reviews;//9
+	private List<Review> reviews;//9
 	/** Movie Type ( ) */
 	private String rating;//10
 	/** Show Times */
-	private ArrayList<ShowTime> showTimes;//11
+	private List<ShowTime> showTimes;//11
 	/** Status */
 	private String status;//12
 	
@@ -301,7 +301,7 @@ public class MovieController {
 								case 4: status = "End of Showing"; break;
 								default: System.out.println("No such choice");			
 								}
-							} while (rchoice < 1 || rchoice >4);	
+							} while (choice < 1 || choice >4);	
 							
 						list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 								

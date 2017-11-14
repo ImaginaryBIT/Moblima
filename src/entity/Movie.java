@@ -63,8 +63,8 @@ public class Movie implements Serializable {
 	 */
 	public Movie(int movieId, String title, String[] cast, String director,
 			String language, String synopsis, int runningTime,
-			float overallUserRate, ArrayList<Review> reviews, String movieType,
-			String rating, ArrayList<ShowTime> showTimes, String status) {
+			float overallUserRate, List<Review> reviews, String movieType,
+			String rating, List<ShowTime> showTimes, String status) {
 
 		this.movieId = movieId;
 		this.title = title;
