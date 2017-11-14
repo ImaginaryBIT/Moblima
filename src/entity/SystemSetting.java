@@ -1,7 +1,9 @@
 package entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +51,11 @@ public class SystemSetting implements Serializable {
 		this.holidays = holidays;
 	}
 	
+	/** Default Constructor to instantiate the SystemSetting obj */
+	public SystemSetting() {
+		//Do Nothing
+	}
+
 	/* ******************** Getter and Setter Methods *********/
 	/**
 	 * @return the standardTicketPrice
@@ -132,6 +139,39 @@ public class SystemSetting implements Serializable {
 	 */
 	public void setHolidays(List<Date> holidays) {
 		this.holidays = holidays;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		System.out.println("=====================================");
+		System.out.println(" Standard Ticket Price   : "+this.getStandardTicketPrice());
+		System.out.println(" Premium Ticket Price    : "+this.getPremiumTicketPrice());
+		System.out.println(" Child Discount          : "+this.getChildDiscount());
+		System.out.println(" Senior Citizen Discount : "+this.getSeniorCitizenDiscount());
+		System.out.println(" Holiday Increment       : "+this.getHolidayIncrement());
+		System.out.println("");
+		System.out.println(" Holidays : ");
+		int count= 0;
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		for(Date holiday : this.getHolidays()){
+			count = count + 1;
+			System.out.println(count +". " + formatter.format(holiday));
+		}
+		System.out.println("=====================================");	
+		return super.toString();
+	}
+	
+	public void printHoliday(){
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		int count = 0;
+		for(Date holiday : this.getHolidays()){
+			count = count + 1;
+			System.out.println(count +". " + formatter.format(holiday));
+		}
 	}
 	
 	
