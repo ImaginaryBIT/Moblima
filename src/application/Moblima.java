@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import database.SerializeDB;
 import entity.*;
-import system.Movie;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -46,6 +45,7 @@ public class Moblima {
 
 
 			case 3: // top 5 ranking
+				showTopRank();
 				break;
 
 			case 4: // booking and purchasing tickets
@@ -85,8 +85,6 @@ public class Moblima {
 		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
 
-
-
 	private static void staffLogin() {
 		Staff staff = new Staff();
 		if(!staff.login()) 
@@ -95,11 +93,15 @@ public class Moblima {
 			staff.showStaffMenu();
 	}
 
+
 	private static void showAllMovie() {
-		ArrayList list1 = new ArrayList();		
-		list1 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
-		for(int i=0; i<list1.size(); i++)
-		System.out.println((Movie)list1.get(i));
+		ArrayList movieList = new ArrayList();		
+		movieList = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+		for(int i=0; i<movieList.size(); i++)
+		{
+			if(movieList.contains("Now Showing")) System.out.println((Movie)movieList.get(i));
+		}
+		
 	}
 	
 	private static void searchMovie() {
@@ -107,18 +109,24 @@ public class Moblima {
 		Scanner sc = new Scanner(System.in);
 		String title = sc.nextLine();
 		
-		ArrayList list2 = new ArrayList();		
-		list2 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+		ArrayList movieList = new ArrayList();		
+		movieList = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 		
-		for(int i=0; i<list2.size(); i++){
-			Movie movie = (Movie)list2.get(i);
+		for(int i=0; i<movieList.size(); i++){
+			Movie movie = (Movie)movieList.get(i);
 
 			if(movie.getTitle().equals(title)) {
-				System.out.println((Movie)list2.get(i));
+				System.out.println((Movie)movieList.get(i));
 				break;
 			}
 			System.out.println("Can not found this movie title.");
 		}
+		
+	}
+	
+	private static void showTopRank() {
+		ArrayList rankList = new ArrayList();		
+		rankList = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 		
 	}
 

@@ -76,8 +76,11 @@ public class Staff {
 			case 3://Update movies
 				updateMovie();
 				break;
+				
+			case 4://return to menu
+				return;
 			}		
-		} while (choice < 4 && choice > 0);
+		} while (choice < 5 && choice > 0);
 
 	}
 	
@@ -91,6 +94,9 @@ public class Staff {
 	
 	public void updateMovie() {
 		MovieController ms = new MovieController();
-		ms.updateMovie();
+		if(!ms.updateMovie())
+			System.out.println("Error updating it into database");
+		else
+			System.out.println("Successfully updating it to database");
 	}
 }

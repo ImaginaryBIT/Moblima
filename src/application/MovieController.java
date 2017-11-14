@@ -319,7 +319,7 @@ public class MovieController {
 						}
 						
 					} while (choice != 13);
-				}					
+				}	
 			}	
 		}
 		catch (Exception e ) {
