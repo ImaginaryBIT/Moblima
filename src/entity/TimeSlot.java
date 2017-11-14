@@ -23,8 +23,6 @@ public class TimeSlot implements Serializable  {
             this.status = status;
         }
 
-        
-
         public String getStatus() {
             return status;
         }

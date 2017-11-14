@@ -9,10 +9,13 @@ import java.util.Scanner;
 
 import database.SerializeDB;
 import entity.Cinema;
+import entity.Cineplex;
 import entity.Movie;
 import entity.Review;
+import entity.Seat;
 import entity.ShowTime;
 import entity.Ticket;
+import entity.TimeSlot;
 
 public class MovieController {
 
@@ -45,6 +48,10 @@ public class MovieController {
 	private List<ShowTime> showTimes;//11
 	/** Status */
 	private String status;//12
+	
+	int showTimeId;
+	Cinema cinema;
+	Ticket[] tickets;
 	
 	Scanner sc = new Scanner(System.in);
 	private List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
@@ -134,14 +141,41 @@ public class MovieController {
 						}
 					} while (rchoice < 1 || rchoice >7);	
 					
-					//11 showTimes need to continue
-					int showTimeId = showTimeList.size() + 1;
-					System.out.print("Enter the cinema name: ");
-					Cinema cinema;
-					System.out.print("Enter the show date and time in DD-MM-YYYY HH:MM: ");
-					Date showDateTime;
-					System.out.print("Enter the how many ticket: ");
-					Ticket[] tickets;
+					//11 showTimes
+					showTimeId = showTimeList.size() + 1;
+					for(int i = 0; i < cinemaList.size(); i++)
+					{
+						System.out.println(cinemaList.get(i).getCinemaCode());
+					}
+					
+					System.out.print("Enter the cinema code: ");
+					String cinemaCode = sc.nextLine();
+					
+					for(int j = 0; j < cinemaList.size(); j++)
+					{
+						if(cinemaList.get(j).getCinemaCode().equals(cinemaCode)) 
+						{
+							cinema = cinemaList.get(j);
+							tickets = new Ticket[cinema.getSeat().length];
+							for(int s = 0; s < cinema.getSeat().length; s++){
+                                
+                                //movie type and getting system setting here
+                                // if newMovie.getType() == "something" price = something
+                                float price = 0.0f;
+                                //if holiday add 
+                                price += 2.0;
+                                if(s == 10 || s == 11 || s == 12)
+                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
+                                else
+                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+							}
+                                
+						}
+					}
+					
+					ShowTime st = new ShowTime(showTimeId, cinema, new Date(),tickets);
+					showTimeList.add(st);
+					SerializeDB.writeSerializedObject("Movie.ser", showTimeList);
 					
 					//12 status
 					System.out.print("Select the Movie show status: ");
@@ -221,11 +255,13 @@ public class MovieController {
 						case 1: 	//1 title
 							System.out.print("Enter the new Movie Name: ");
 							title = sc.nextLine();
+							movie.setTitle(title);
 							break;
 							
 						case 2: //2 movieType
 							System.out.print("Enter the new Movie movieType: ");
 							movieType = sc.nextLine();
+							movie.setMovieType(movieType);
 							break;
 							
 						case 3: //3 cast
@@ -238,32 +274,37 @@ public class MovieController {
 							cast = new ArrayList<String>();
 							cast.add(actor1);
 							cast.add(actor2);
-							
+							movie.setCast(cast);
 							break;
 							
 						case 4: //4 director
 							System.out.print("Enter the new Movie Director: ");
 							director = sc.nextLine();
+							movie.setDirector(director);;
 							break;
 							
 						case 5://5 language
 							System.out.print("Enter the new Movie language: ");
 							language = sc.nextLine();
+							movie.setLanguage(language);
 							break;
 							
 						case 6://6 synopsis
 							System.out.print("Enter the Movie synopsis: ");
 							synopsis = sc.nextLine();
+							movie.setSynopsis(synopsis);
 							break;
 							
 						case 7://7 runningTime
 							System.out.print("Enter the Movie running time: ");
 							runningTime = sc.nextInt();
+							movie.setRunningTime(runningTime);
 							break;
 							
 						case 8://8 overallUserRate
 							System.out.print("Enter the Movie overall user rate: ");
 							overallUserRate = sc.nextFloat();
+							movie.setOverallUserRate(overallUserRate);
 							break;
 							
 						case 9://9 rating
@@ -290,11 +331,66 @@ public class MovieController {
 								default: System.out.println("No such choice");			
 								}
 							} while (rchoice < 1 || rchoice >7);	
+							
+							movie.setRating(rating);
 							break;
 
-							
 						case 10://10 showTimes
-							//need continue
+							List<ShowTime> temp = movie.getShowTimes();
+							ShowTime st;
+							boolean idCheck = false;
+							boolean codeCheck = false;
+							
+							for(int l = 0; l < temp.size(); l++) {
+								System.out.println(temp.get(l).getShowTime());
+							}
+							while(!idCheck) {
+								System.out.println("Please enter the showTimeId to update");
+								showTimeId = sc.nextInt();
+								
+								for(int l = 0; l < temp.size(); l++) 
+								{
+									if(temp.get(l).getShowTimeId() == showTimeId)
+									{
+										temp.remove(l);
+										
+										while(!codeCheck) {
+											System.out.print("Enter the new cinema code: ");
+											String cinemaCode = sc.nextLine();
+										
+											for(int k = 0; k < cinemaList.size(); k++)
+											{
+												if(cinemaList.get(k).getCinemaCode().equals(cinemaCode)) 
+												{
+													cinema = cinemaList.get(k);
+													tickets = new Ticket[cinema.getSeat().length];
+													
+													for(int s = 0; s < cinema.getSeat().length; s++){
+	
+						                                float price = 0.0f;
+						                                price += 2.0;
+						                                
+						                                if(s == 10 || s == 11 || s == 12)
+						                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
+						                                else
+						                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+						                                
+						                                st = new ShowTime(showTimeId, cinema, new Date(),tickets);
+						                                
+						                                codeCheck = true;
+						                                idCheck = true;
+						                                break;
+													}     
+												}
+											}
+											System.out.println("The cinema code entered wrongly!");
+										}
+									}									
+								}
+								System.out.println("The showTimeId entered wrongly!");
+							}
+							temp.add(st);
+							movie.setShowTimes(temp);
 							break;
 							
 						case 11://11 status
