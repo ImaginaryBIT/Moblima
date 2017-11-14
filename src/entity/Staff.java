@@ -3,17 +3,36 @@ package entity;
 import java.util.Scanner;
 
 public class Staff {
-	private int staffId;
+	private String staffName;
+	private int staffContact;
+	private String staffMail;
+	private String staffID;
 	private String password;
 	private String username;
 
-	public Staff(String username, String password) {
-		this.username = username;
-		this.password = password;
+	public Staff() {
+
+	}
+	
+	public Staff (String name, String id, String pw, String mail, int contact){
+		staffName = name;
+		staffContact = contact;
+		staffMail = mail;
+		staffID = id;
+		password = pw;
+	}
+	
+	public String getStaffID() {
+		return staffID;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	public boolean login() {
-		return false;
+		Login log= new Login();
+		return log.authenticate();
 	}
 
 	public void showStaffMenu() {
@@ -49,10 +68,7 @@ public class Staff {
 			break;
 			
 			case 2://Add Movies
-				System.out.print("Movie title: ");
-				String movieName = sc.nextLine();
-				System.out.print("\nMovie type: ");
-				String movieType= sc.nextLine();
+				addMovie();
 				break;
 				
 			case 3://Update movies
@@ -60,5 +76,14 @@ public class Staff {
 			}		
 		} while (choice < 4 && choice > 0);
 
+	}
+
+	private void addMovie() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Movie title: ");
+		String movieName = sc.nextLine();
+		System.out.print("\nMovie type: ");
+		String movieType= sc.nextLine();
+		
 	}
 }
