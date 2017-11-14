@@ -254,7 +254,7 @@ public class Movie implements Serializable {
 	/**
 	 * @param reviews the reviews to set
 	 */
-	public void setReviews(ArrayList<Review> reviews) {
+	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
 
@@ -278,7 +278,7 @@ public class Movie implements Serializable {
 	/**
 	 * @param showTimes the showTimes to set
 	 */
-	public void setShowTimes(ArrayList<ShowTime> showTimes) {
+	public void setShowTimes(List<ShowTime> showTimes) {
 		this.showTimes = showTimes;
 	}
 
