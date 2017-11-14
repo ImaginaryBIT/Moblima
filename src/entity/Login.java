@@ -5,13 +5,28 @@ import java.util.Scanner;
 import java.io.*;
 import database.SerializeDB;
 
+/**
+ * This class implement the login function
+ * @author Group5
+ *
+ */
+
 public class Login {
 	
+	/** User Id */
 	private String id;
+	
+	/** Password */
 	private String pw;
+	
+	
 	int choice;
 	Scanner sc = new Scanner(System.in);
 	
+	/**
+	 * This method return the message if login is successful or not
+	 * @return boolean
+	 */
 	public boolean authenticate(){
 		
 		try{

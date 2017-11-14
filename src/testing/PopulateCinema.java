@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import database.SerializeDB;
 import entity.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class PopulateCinema {
 
@@ -69,44 +73,82 @@ public class PopulateCinema {
                                 id++;
                             }
                         }
+                        
+                        ArrayList<TimeSlot> timeSlotList = new ArrayList<>();
+                        //make a list of time slot up to next 30 days
+                        Calendar date = new GregorianCalendar();
+                        for(int i = 0; i < 30 ; i++){
+                            
+                            Date timeSlotTime;
+                            // reset hour, minutes, seconds and millis
+                            date.set(Calendar.HOUR_OF_DAY, 0);
+                            date.set(Calendar.MINUTE, 0);
+                            date.set(Calendar.SECOND, 0);
+                            date.set(Calendar.MILLISECOND, 0);
+
+                            // next day
+                            date.add(Calendar.DATE, 1);
+                            //start from tmr 8 am
+                            date.add(Calendar.HOUR_OF_DAY, 8);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            date.add(Calendar.HOUR_OF_DAY, 3);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            date.add(Calendar.HOUR_OF_DAY, 3);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            date.add(Calendar.HOUR_OF_DAY, 3);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            date.add(Calendar.HOUR_OF_DAY, 3);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            date.add(Calendar.HOUR_OF_DAY, 3);
+                            timeSlotTime = date.getTime();
+                            timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
+                            
+                        }
+                        TimeSlot[] timeSlotArray = new TimeSlot[timeSlotList.size()];
+                        timeSlotArray = timeSlotList.toArray(timeSlotArray);
                         //cineplex1
-                        newCinema = new Cinema(0, "C1", newCineplex1, seatList1, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(0, "C1", newCineplex1, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(1, "C2", newCineplex1, seatList2, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(1, "C2", newCineplex1, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(2, "C3", newCineplex1, seatList3, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(2, "C3", newCineplex1, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(3, "C4", newCineplex1, seatList4, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(3, "C4", newCineplex1, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
                         
                         //cineplex2
-                        newCinema = new Cinema(4, "C1", newCineplex2, seatList1, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(4, "C1", newCineplex2, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(5, "C2", newCineplex2, seatList2, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(5, "C2", newCineplex2, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(6, "C3", newCineplex2, seatList3, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(6, "C3", newCineplex2, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(7, "C4", newCineplex2, seatList4, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(7, "C4", newCineplex2, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
                         
                         //cineplex3
-                        newCinema = new Cinema(8, "C1", newCineplex3, seatList1, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(8, "C1", newCineplex3, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(9, "C2", newCineplex3, seatList2, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(9, "C2", newCineplex3, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(10, "C3", newCineplex3, seatList3, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(10, "C3", newCineplex3, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(11, "C4", newCineplex3, seatList4, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(11, "C4", newCineplex3, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
                         
                         //cineplex4
-                        newCinema = new Cinema(12, "C1", newCineplex4, seatList1, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(12, "C1", newCineplex4, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(13, "C2", newCineplex4, seatList2, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(13, "C2", newCineplex4, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(14, "C3", newCineplex4, seatList3, Cinema.CINEMA_CLASS_REGULAR);
+                        newCinema = new Cinema(14, "C3", newCineplex4, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotArray);
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(15, "C4", newCineplex4, seatList4, Cinema.CINEMA_CLASS_PLATINIUM);
+                        newCinema = new Cinema(15, "C4", newCineplex4, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotArray);
                         cinemaList.add(newCinema);
                         
                         SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
@@ -115,7 +157,36 @@ public class PopulateCinema {
 			for (int i = 0; i < list.size(); i++) {
 				Cinema cnma = (Cinema) list.get(i);
 				System.out.println( cnma.getCinemaId()+": "+cnma.getCinemaCode() + " from " +cnma.getCineplex().getName());
-				System.out.println("-------------------");
+                                
+                                //record previous row so that we know when to break line for seat layout
+                                int prevRow = 0;
+                                //print time slots
+                                String prevDate = "";
+                                for(int s=0; s<cnma.getTimeSlot().length; s++) {
+                                    if(!prevDate.equals(cnma.getTimeSlot()[s].getDate())){
+                                        System.out.println(" ");
+                                        System.out.println(cnma.getTimeSlot()[s].getDate());
+                                    }
+  
+                                    System.out.print(cnma.getTimeSlot()[s].getTime()+" ");
+                                    
+                                    prevDate = cnma.getTimeSlot()[s].getDate();
+                                }
+                                System.out.println(" ");
+                                /*System.out.println("---------Screen----------");
+                                //loop the whole seat list
+                                for(int s=0; s<cnma.getSeat().length; s++) {
+                                    //row not the same so line break
+                                    if(cnma.getSeat()[s].getRow() != prevRow){
+                                        System.out.println("");
+                                    }
+                                    //print layout [00] ,[XX]
+                                    System.out.print("["+cnma.getSeat()[s].getRow()+cnma.getSeat()[s].getColumn()+"]");
+                                    //update the previous row
+                                    prevRow = cnma.getSeat()[s].getRow();
+                                }
+                                System.out.println("");
+				System.out.println("--------------------------");*/
 			}
 			/////////////////////////////// Movie //////////////////////////////////////////
 			// Create new data

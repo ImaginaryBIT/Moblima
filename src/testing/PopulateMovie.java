@@ -45,8 +45,17 @@ public class PopulateMovie {
                                     }
                                     
                                 }
-                                ShowTime st = new ShowTime(0, cnma,new Date(),tckt);
-                                showtimeList.add(st);
+                                //get first 3 timeslot and create show time
+                                for(int ts = 0 ; ts < cnma.getTimeSlot().length ; ts ++){
+                                    cnma.getTimeSlot()[ts].setStatus(TimeSlot.UNAVAILABLE);
+                                    ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot()[ts].getDateTime(),tckt);
+                                    showtimeList.add(st);
+                                    if(ts == 3){
+                                        break;
+                                    }
+                                }
+                                
+                                
                                 break;
                         }
                         
@@ -56,6 +65,8 @@ public class PopulateMovie {
                         //try print the created movie
                         list = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Movie.ser");
 			for (int i = 0; i < list.size(); i++) {
+                                
+                                /*printing out the seat base on tickets inside showtime of movie*/
                                 Movie mov = (Movie) list.get(i);
                                 System.out.println("Movie title	: " + mov.getTitle());
                                 System.out.println("Movie Description	: " + mov.getSynopsis());
@@ -65,13 +76,15 @@ public class PopulateMovie {
                                         System.out.println("Show Time Time: " + mov.getShowTimes().get(t).getShowTime());
                                         int prevRow = 0;
                                         System.out.println("---------Screen----------");
+                                        //get ticket inside showtime of a movie
                                         for(int z = 0; z < mov.getShowTimes().get(t).getTickets().length; z++){
-                                            
+                                                //check if the row change and do the line break
                                                 if(mov.getShowTimes().get(t).getTickets()[z].getSeat().getRow() != prevRow){
                                                     System.out.println("");
                                                 }
-                                                //print layout [00] ,[XX]
-
+                                                //print layout [00] ,[--]
+                                                
+                                                //if ticket is available print row and column else print [--]
                                                 if(mov.getShowTimes().get(t).getTickets()[z].getStatus().equals(Ticket.AVAILABLE) ){
                                                     System.out.print("["+mov.getShowTimes().get(t).getTickets()[z].getSeat().getRow()+mov.getShowTimes().get(t).getTickets()[z].getSeat().getColumn()+"]");
                                                 }else{
@@ -86,6 +99,7 @@ public class PopulateMovie {
                                         System.out.println("");
                                         System.out.println("--------------------------");
                                 }
+                                /*end of printing seat */
                         }
                         
 
