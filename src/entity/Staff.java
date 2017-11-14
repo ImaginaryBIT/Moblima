@@ -3,6 +3,7 @@ package entity;
 import java.util.Scanner;
 
 import application.MovieController;
+import application.SystemSettingController;
 
 public class Staff {
 	private String staffName;
@@ -46,7 +47,8 @@ public class Staff {
 			System.out.println("|1. Configure System Settings       |");
 			System.out.println("|2. Add Movies                      |");
 			System.out.println("|3. Update Movies                   |");
-			System.out.println("|4. Logout                          |");
+			System.out.println("|4. Generate Sale Report.");
+			System.out.println("|5. Logout                          |");
 			System.out.println("=====================================");
 			System.out.print("Enter your choice: ");
 			choice = sc.nextInt();
@@ -66,13 +68,22 @@ public class Staff {
 				updateMovie();
 				break;
 				
-			case 4://return to menu
+			case 4://Generate Sale Report
+				generateSaleReport();
+				break;
+				
+			case 5://return to menu
 				return;
 			}		
 		} while (choice < 5 && choice > 0);
 
 	}
 	
+	private void generateSaleReport() {
+		
+		
+	}
+
 	public void addMovie() {
 		MovieController ms = new MovieController();
 		if(!(ms.addMovie()))

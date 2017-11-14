@@ -64,6 +64,7 @@ public class MovieController {
 		
 		int rchoice, choice;
 		boolean flag = false;
+		boolean codeCheck = false;
 		
 		try {
 			while(true){
@@ -114,7 +115,7 @@ public class MovieController {
 					overallUserRate = sc.nextFloat();
 					
 					//9 reviews
-					reviews = null;
+					reviews = new ArrayList();
 					
 					//10 rating
 					System.out.println("Choose the Movie rating: ");
@@ -147,32 +148,35 @@ public class MovieController {
 					{
 						System.out.println(cinemaList.get(i).getCinemaCode());
 					}
-					
-					System.out.print("Enter the cinema code: ");
-					String cinemaCode = sc.nextLine();
-					
-					for(int j = 0; j < cinemaList.size(); j++)
-					{
-						if(cinemaList.get(j).getCinemaCode().equals(cinemaCode)) 
+					while(!codeCheck) {
+						System.out.print("Enter the cinema code: ");
+						String cinemaCode = sc.nextLine();
+						
+						for(int j = 0; j < cinemaList.size(); j++)
 						{
-							cinema = cinemaList.get(j);
-							tickets = new Ticket[cinema.getSeat().length];
-							for(int s = 0; s < cinema.getSeat().length; s++){
-                                
-                                //movie type and getting system setting here
-                                // if newMovie.getType() == "something" price = something
-                                float price = 0.0f;
-                                //if holiday add 
-                                price += 2.0;
-                                if(s == 10 || s == 11 || s == 12)
-                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
-                                else
-                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+							if(cinemaList.get(j).getCinemaCode().equals(cinemaCode)) 
+							{
+								
+								cinema = cinemaList.get(j);
+								tickets = new Ticket[cinema.getSeat().length];
+								for(int s = 0; s < cinema.getSeat().length; s++){
+	                                
+	                                //movie type and getting system setting here
+	                                // if newMovie.getType() == "something" price = something
+	                                float price = 0.0f;
+	                                //if holiday add 
+	                                price += 2.0;
+	                                if(s == 10 || s == 11 || s == 12)
+	                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
+	                                else
+	                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+	                                
+	                                
+								}
+								codeCheck = true;
 							}
-                                
 						}
 					}
-					
 					ShowTime st = new ShowTime(showTimeId, cinema, new Date(),tickets);
 					showTimeList.add(st);
 					SerializeDB.writeSerializedObject("Movie.ser", showTimeList);
@@ -193,7 +197,7 @@ public class MovieController {
 						case 4: status = "End of Showing"; break;
 						default: System.out.println("No such choice");			
 						}
-					} while (rchoice < 1 || rchoice >4);	
+					} while (choice < 1 || choice >4);	
 					
 					Movie mov = new Movie(movieId, title, cast, director,
 							language, synopsis,runningTime,
@@ -337,7 +341,7 @@ public class MovieController {
 
 						case 10://10 showTimes
 							List<ShowTime> temp = movie.getShowTimes();
-							ShowTime st;
+							ShowTime st = null;
 							boolean idCheck = false;
 							boolean codeCheck = false;
 							
@@ -410,6 +414,7 @@ public class MovieController {
 								default: System.out.println("No such choice");			
 								}
 							} while (choice < 1 || choice >4);	
+							movie.setStatus(status);
 								
 						case 12: //write into DB
 							Movie mov = new Movie(movie.getMovieId(), movie.getTitle(), movie.getCast(), 
