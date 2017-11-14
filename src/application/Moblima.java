@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import database.SerializeDB;
 import entity.*;
+import system.Movie;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,10 @@ public class Moblima {
 
 			switch (choice) {
 			case 1: // list all movies
+				ArrayList list1 = new ArrayList();		
+				list1 = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+				for(int i=0; i<list1.size(); i++)
+				System.out.println((Movie)list1.get(i));
 				break;
 
 			case 2: // search for movies

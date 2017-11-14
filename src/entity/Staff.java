@@ -3,7 +3,6 @@ package entity;
 import java.util.Scanner;
 
 import application.MovieController;
-import system.MovieSystem;
 
 public class Staff {
 	private String staffName;
@@ -75,31 +74,23 @@ public class Staff {
 				break;
 				
 			case 3://Update movies
+				updateMovie();
 				break;
 			}		
 		} while (choice < 4 && choice > 0);
 
 	}
-
-	private void addMovie() {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Movie title: ");
-		String movieName = sc.nextLine();
-		System.out.print("\nMovie type: ");
-		String movieType= sc.nextLine();
-		
-	}
 	
 	public void addMovie() {
-		MovieController ms = new MovieSystem();
-		if(!(ms.addMovieToDB()))
+		MovieController ms = new MovieController();
+		if(!(ms.addMovie()))
 			System.out.println("Error adding it into database");
 		else
 			System.out.println("Successfully adding it to database");
 	}
 	
-	public void editMovieDB() {
-		MovieSystem ms = new MovieSystem();
-		ms.editMovieDB();
+	public void updateMovie() {
+		MovieController ms = new MovieController();
+		ms.updateMovie();
 	}
 }
