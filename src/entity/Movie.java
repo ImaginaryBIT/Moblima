@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -24,7 +25,7 @@ public class Movie implements Serializable {
 	/** Director of the Movie */
 	private String director;
 	/** Movie Language */
-	private String[] language;
+	private String language;
 	/** Brief Summary of the Movie */
 	private String synopsis;
 	/** Movie Running Time (minute) */
@@ -32,7 +33,7 @@ public class Movie implements Serializable {
 	/** Overall User Rating  */
 	private float overallUserRate;
 	/** Movie Reviews */
-	private ArrayList<Review> reviews;
+	private List<Review> reviews;
 	/** Movie Type ( ) */
 	private String movieType;
 	/** Movie Restrict Level */
@@ -61,7 +62,7 @@ public class Movie implements Serializable {
 	 * @param status
 	 */
 	public Movie(int movieId, String title, String[] cast, String director,
-			String[] language, String synopsis, int runningTime,
+			String language, String synopsis, int runningTime,
 			float overallUserRate, ArrayList<Review> reviews, String movieType,
 			String rating, ArrayList<ShowTime> showTimes, String status) {
 
@@ -116,7 +117,7 @@ public class Movie implements Serializable {
 	/**
 	 * @return the language
 	 */
-	public String[] getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
@@ -138,43 +139,17 @@ public class Movie implements Serializable {
 
 
 	/**
-	 * @return the total ticket sold
-	 */
-	public int getTicketSold() {
-        int total = 0;
-        //loop through all the showTime and find the tickets that are sold
-        for (int i = 0; i < showTimes.size(); i++) {
-            ShowTime rv = (ShowTime) showTimes.get(i);
-            Ticket[] ticketList = rv.getTickets();
-            for (int t = 0; t < ticketList.length; t++) {
-                if(ticketList[t].getStatus() == "sold"){
-                    //if ticket is sold add to total count
-                    total++;
-                }
-            }
-        }
-        return total;
-	}
-        
-    /**
 	 * @return the overallUserRate
 	 */
-    public float getOverallUserRating() {
-        int total_rating = 0;
-        //loop through all reivew and sum total rating
-        for (int i = 0; i < reviews.size(); i++) {
-            Review rv = (Review) reviews.get(i);
-            total_rating += rv.getUserRating();
-        }
-        //total rating devided by no is overall rating
-        return total_rating/reviews.size();
+	public float getOverallUserRate() {
+		return overallUserRate;
 	}
 
 
 	/**
 	 * @return the reviews
 	 */
-	public ArrayList<Review> getReviews() {
+	public List<Review> getReviews() {
 		return reviews;
 	}
 
@@ -246,7 +221,7 @@ public class Movie implements Serializable {
 	/**
 	 * @param language the language to set
 	 */
-	public void setLanguage(String[] language) {
+	public void setLanguage(String language) {
 		this.language = language;
 	}
 
