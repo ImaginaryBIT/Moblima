@@ -82,11 +82,11 @@ public class Moblima {
 	}
 
 	private static void staffLogin() {
-		System.out.print("Staff username: ");
-		String username = sc.nextLine();
-		System.out.print("Password: ");
-		String pw = sc.nextLine();
-		Staff staff = new Staff(username, pw);
+		Staff staff = new Staff();
+		if(!staff.login()) 
+			System.out.println("Incorrect ID or Password");
+		else	 
+			staff.showStaffMenu();
 	}
 
 	private void showAllMovie() {

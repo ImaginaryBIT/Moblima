@@ -2,6 +2,9 @@ package entity;
 
 import java.util.Scanner;
 
+import application.MovieController;
+import system.MovieSystem;
+
 public class Staff {
 	private String staffName;
 	private int staffContact;
@@ -85,5 +88,18 @@ public class Staff {
 		System.out.print("\nMovie type: ");
 		String movieType= sc.nextLine();
 		
+	}
+	
+	public void addMovie() {
+		MovieController ms = new MovieSystem();
+		if(!(ms.addMovieToDB()))
+			System.out.println("Error adding it into database");
+		else
+			System.out.println("Successfully adding it to database");
+	}
+	
+	public void editMovieDB() {
+		MovieSystem ms = new MovieSystem();
+		ms.editMovieDB();
 	}
 }
