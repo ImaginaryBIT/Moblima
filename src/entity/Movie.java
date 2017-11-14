@@ -39,7 +39,7 @@ public class Movie implements Serializable {
 	/** Movie Restrict Level */
 	private String rating;
 	/** Show Times */
-	private ArrayList<ShowTime> showTimes;
+	private List<ShowTime> showTimes;
 	/** Status */
 	private String status;
 	
@@ -80,6 +80,7 @@ public class Movie implements Serializable {
 		this.showTimes = showTimes;
 		this.status = status;
 	}
+
 
 	/* ******************** Getter and Setter Methods *********/
 	/**
@@ -173,7 +174,7 @@ public class Movie implements Serializable {
 	/**
 	 * @return the showTimes
 	 */
-	public ArrayList<ShowTime> getShowTimes() {
+	public List<ShowTime> getShowTimes() {
 		return showTimes;
 	}
 
