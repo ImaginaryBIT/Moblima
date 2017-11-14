@@ -165,8 +165,8 @@ public class MovieController {
 							language, synopsis,runningTime,
 							overallUserRate, reviews, movieType,
 							rating, showTimes, status);
-					list.add(mov);
-					SerializeDB.writeSerializedObject("Movie.ser", list);
+					movieList.add(mov);
+					SerializeDB.writeSerializedObject("Movie.ser", movieList);
 					return true;
 					}
 					else {
@@ -187,16 +187,17 @@ public class MovieController {
 
 	public boolean updateMovie() {
 		int choice, rchoice;
-		List list;
 		
 		try {			
-			System.out.print("Enter the movie name: ");
+			System.out.print("Enter the updating movie name: ");
 			title = sc.nextLine();
+			System.out.println("Enter the updating Movie Type");
+			movieType = sc.nextLine();
 			
 			for(int i=0; i<movieList.size(); i++){
 				Movie movie = (Movie)movieList.get(i);
 
-				if(movie.getTitle().equals(title)) {
+				if(movie.getTitle().equals(title) && movie.getMovieType().equals(movieType)) {
 					do {
 						System.out.println("Which detail do you want to update?");
 						System.out.println(movie.getTitle());
@@ -223,7 +224,50 @@ public class MovieController {
 							break;
 							
 						case 2: //2 movieType
-							System.out.println("Choose the Movie Type: ");
+							System.out.print("Enter the new Movie movieType: ");
+							movieType = sc.nextLine();
+							break;
+							
+						case 3: //3 cast
+							System.out.print("Enter the new Movie Cast(First actor)");
+							actor1 = sc.nextLine();
+							
+							System.out.print("Enter the new Movie Cast(second actor)");
+							actor2 = sc.nextLine();
+							
+							cast = new ArrayList<String>();
+							cast.add(actor1);
+							cast.add(actor2);
+							
+							break;
+							
+						case 4: //4 director
+							System.out.print("Enter the new Movie Director: ");
+							director = sc.nextLine();
+							break;
+							
+						case 5://5 language
+							System.out.print("Enter the new Movie language: ");
+							language = sc.nextLine();
+							break;
+							
+						case 6://6 synopsis
+							System.out.print("Enter the Movie synopsis: ");
+							synopsis = sc.nextLine();
+							break;
+							
+						case 7://7 runningTime
+							System.out.print("Enter the Movie running time: ");
+							runningTime = sc.nextInt();
+							break;
+							
+						case 8://8 overallUserRate
+							System.out.print("Enter the Movie overall user rate: ");
+							overallUserRate = sc.nextFloat();
+							break;
+							
+						case 9://9 rating
+							System.out.println("Choose the new Movie rating: ");
 							System.out.println("1. G");
 							System.out.println("2. PG");
 							System.out.println("3. PG13 ");
@@ -247,56 +291,14 @@ public class MovieController {
 								}
 							} while (rchoice < 1 || rchoice >7);	
 							break;
-							
-						case 3: //3 cast
-							System.out.print("Enter the Movie Cast(First actor)");
-							actor1 = sc.nextLine();
-							
-							System.out.print("Enter the Movie Cast(second actor)");
-							actor2 = sc.nextLine();
-							
-							cast = new ArrayList<String>();
-							cast.add(actor1);
-							cast.add(actor2);
-							
-							break;
-							
-						case 4: //4 director
-							System.out.print("Enter the Movie Director: ");
-							director = sc.nextLine();
-							break;
-							
-						case 5://5 language
-							System.out.print("Enter the Movie language: ");
-							language = sc.nextLine();
-							break;
-							
-						case 6://6 synopsis
-							System.out.print("Enter the Movie synopsis: ");
-							synopsis = sc.nextLine();
-							break;
-							
-						case 7://7 runningTime
-							System.out.print("Enter the Movie running time: ");
-							runningTime = sc.nextInt();
-							break;
-							
-						case 8://8 overallUserRate
-							System.out.print("Enter the Movie overall user rate: ");
-							overallUserRate = sc.nextFloat();
-							break;
-							
-						case 9://9 rating
-							System.out.print("Enter the Movie rating: ");
-							rating = sc.nextLine();
-							break;
+
 							
 						case 10://10 showTimes
 							//need continue
 							break;
 							
 						case 11://11 status
-							System.out.print("Select the Movie show status: ");
+							System.out.print("Select the new Movie show status: ");
 							System.out.println("1. Coming Soon");
 							System.out.println("2. Preview");
 							System.out.println("3. Now Showing");
@@ -312,8 +314,6 @@ public class MovieController {
 								default: System.out.println("No such choice");			
 								}
 							} while (choice < 1 || choice >4);	
-							
-						list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 								
 						case 12: //write into DB
 							Movie mov = new Movie(movie.getMovieId(), movie.getTitle(), movie.getCast(), 
@@ -351,19 +351,5 @@ public class MovieController {
 			} 
 		}
 		return false;
-	}
-
-	public ArrayList<Movie> showAllMovie() {
-		return null;
-	}
-	
-	public ArrayList<ShowTime> getShowTime(int movieId)
-	{
-		return null;
-	}
-	
-	public ArrayList<Movie> getTopFive(String rankBy)
-	{
-		return null;
 	}
 }
