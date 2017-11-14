@@ -2,7 +2,6 @@ package entity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -10,18 +9,17 @@ import java.util.GregorianCalendar;
 public class ShowTime implements Serializable {
 	private int showTimeId;
 	private Cinema cinema;
-	//private Cineplex cineplex;
-	private GregorianCalendar showDate;
-	//private GregorianCalendar timeSlot;
-	//private ArrayList<Ticket> tickets;
+	private Date showDateTime;
+	private Ticket[] tickets;
 
-	public ShowTime(GregorianCalendar showDate, Cinema cinema) {
-		this.showDate = showDate;
-		//this.timeSlot = timeSlot;
-		this.cinema = cinema;
-		//this.cineplex = cineplex;
-		setTickets(showDate);
-	}
+        public ShowTime(int showTimeId, Cinema cinema, Date showDateTime, Ticket[] tickets) {
+                this.showTimeId = showTimeId;
+                this.cinema = cinema;
+                this.showDateTime = showDateTime;
+                this.tickets = tickets;
+        }
+
+	
 
 	// all get methods
 	public int getShowTimeId() {
@@ -32,21 +30,10 @@ public class ShowTime implements Serializable {
 		return cinema;
 	}
 
-	//public Cineplex getCineplex() {
-		//return cineplex;
-	//}
 
-	public GregorianCalendar getShowDate() {
-		return showDate;
+	public Ticket[] getTickets() {
+		return tickets;
 	}
-
-	//public GregorianCalendar getTimeSlot() {
-	//return timeSlot;
-	//}
-
-	//public ArrayList<Ticket> getTickets() {
-		//return tickets;
-	//}
 
 	// all set methods
 	public void setShowTimeID(int showTimeId) {
@@ -55,28 +42,24 @@ public class ShowTime implements Serializable {
 
 	public void setCinema(Cinema cinema) {
 		this.cinema = cinema;
+        }
+
+	public void setTickets(Ticket[] tickets) {
+		this.tickets = tickets;
 	}
 
-	//public void setCineplex(Cineplex cineplex) {
-		//this.cineplex = cineplex;
-	//}
-
-	public void setShowDate(GregorianCalendar showDate) {
-		this.showDate = showDate;
+	public String getShowTime() {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("hh:mm");
+		return dateFormatter.format(showDateTime.getTime());
 	}
 
-	//public void setTimeSlot(GregorianCalendar timeSlot) {
-	//	this.timeSlot = timeSlot;
-	//}
+        public String getShowDate() {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-mm-yyyy");
+		return dateFormatter.format(showDateTime.getTime());
+        }
 
-	public void setTickets(GregorianCalendar showDate) {
-		
-	}
-
-	/*public void printShowTime() {
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d, yyyy HH:mm");
-		Date date = showDate.getTime();
-		System.out.println(dateFormatter.format(date) + "\t\t\t" + cinema.getCinemaId());
-	}*/
+        public Date getShowDateTime() {
+                return showDateTime;
+        }
 
 }

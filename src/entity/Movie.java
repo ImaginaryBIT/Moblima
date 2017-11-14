@@ -39,7 +39,7 @@ public class Movie implements Serializable {
 	/** Movie Restrict Level */
 	private String rating;
 	/** Show Times */
-	private ArrayList<ShowTime> showTimes;
+	private List<ShowTime> showTimes;
 	/** Status */
 	private String status;
 	
@@ -80,6 +80,7 @@ public class Movie implements Serializable {
 		this.showTimes = showTimes;
 		this.status = status;
 	}
+
 
 	/* ******************** Getter and Setter Methods *********/
 	/**
@@ -173,7 +174,7 @@ public class Movie implements Serializable {
 	/**
 	 * @return the showTimes
 	 */
-	public ArrayList<ShowTime> getShowTimes() {
+	public List<ShowTime> getShowTimes() {
 		return showTimes;
 	}
 
@@ -273,7 +274,7 @@ public class Movie implements Serializable {
 		this.rating = rating;
 	}
 
-
+        
 	/**
 	 * @param showTimes the showTimes to set
 	 */
@@ -289,8 +290,39 @@ public class Movie implements Serializable {
 		this.status = status;
 	}
 	
+        
 	/* *******************Methods ***********************/
+        /**
+	 * @method to get Ticket sold
+	 */
+	public int getTicketSold() {
+            int total = 0;
+            //loop through all the showTime and find the tickets that are sold
+            for (int i = 0; i < showTimes.size(); i++) {
+                ShowTime rv = (ShowTime) showTimes.get(i);
+                Ticket[] ticketList = rv.getTickets();
+                for (int t = 0; t < ticketList.length; t++) {
+                    if(ticketList[t].getStatus() == "sold"){
+                        //if ticket is sold add to total count
+                        total++;
+                    }
+                }
+            }
+        return total;
+	}
 	
-	
+        /**
+	 * @return the overallUserRate
+	 */
+        public float getOverallUserRating() {
+            int total_rating = 0;
+            //loop through all reivew and sum total rating
+            for (int i = 0; i < reviews.size(); i++) {
+                Review rv = (Review) reviews.get(i);
+                total_rating += rv.getUserRating();
+            }
+            //total rating devided by no is overall rating
+            return total_rating/reviews.size();
+	}
 
 }
