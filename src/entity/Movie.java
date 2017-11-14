@@ -21,7 +21,7 @@ public class Movie implements Serializable {
 	/** Movie Title */
 	private String title;
 	/** Movie Cast */
-	private String[] cast;
+	private List<String> cast;
 	/** Director of the Movie */
 	private String director;
 	/** Movie Language */
@@ -61,7 +61,7 @@ public class Movie implements Serializable {
 	 * @param showTimes
 	 * @param status
 	 */
-	public Movie(int movieId, String title, String[] cast, String director,
+	public Movie(int movieId, String title, List<String> cast, String director,
 			String language, String synopsis, int runningTime,
 			float overallUserRate, List<Review> reviews, String movieType,
 			String rating, List<ShowTime> showTimes, String status) {
@@ -102,7 +102,7 @@ public class Movie implements Serializable {
 	/**
 	 * @return the cast
 	 */
-	public String[] getCast() {
+	public List<String> getCast() {
 		return cast;
 	}
 
@@ -206,7 +206,7 @@ public class Movie implements Serializable {
 	/**
 	 * @param cast the cast to set
 	 */
-	public void setCast(String[] cast) {
+	public void setCast(List<String> cast) {
 		this.cast = cast;
 	}
 

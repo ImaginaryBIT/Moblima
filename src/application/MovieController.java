@@ -3,13 +3,16 @@ package application;
 import java.io.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
+import entity.Cinema;
 import entity.Movie;
 import entity.Review;
 import entity.ShowTime;
+import entity.Ticket;
 
 public class MovieController {
 
@@ -21,7 +24,9 @@ public class MovieController {
 	/** Movie Cast */
 	private String movieType;//2
 	/** Movie Restrict Level */
-	private String[] cast;//3
+	private List<String> cast;//3
+	private String actor1;
+	private String actor2;
 	/** Director of the Movie */
 	private String director;//4
 	/** Movie Language */
@@ -41,28 +46,21 @@ public class MovieController {
 	/** Status */
 	private String status;//12
 	
-	// private float userRate;
 	Scanner sc = new Scanner(System.in);
-
-	// private long movieRevenue
-	public Movie findMovie(String movieName) {
-		return null;
-	}
-
-	public ArrayList<Movie> showAllMovie() {
-		return null;
-	}
-
+	private List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
+	private List<Cinema> cinemaList = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
+	private List<ShowTime> showTimeList = (ArrayList<ShowTime>) SerializeDB.readSerializedObject("ShowTime.ser");
+	int size = movieList.size();
+	
+	@SuppressWarnings("unchecked")
 	public boolean addMovie() {
 		
 		int rchoice, choice;
 		boolean flag = false;
-		List list;
 		
 		try {
 			//0 movieId
-			list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
-			movieId = list.size() + 1;
+			movieId = size + 1;
 			
 			//1 title
 			System.out.print("Enter the new Movie Name: ");
@@ -94,8 +92,15 @@ public class MovieController {
 			} while (rchoice < 1 || rchoice >7);	
 			
 			//3 cast
-			System.out.print("Enter the Movie Cast: ");
-			cast[0] = sc.nextLine(); // update [] later
+			System.out.print("Enter the Movie Cast(First actor)");
+			actor1 = sc.nextLine();
+			
+			System.out.print("Enter the Movie Cast(second actor)");
+			actor2 = sc.nextLine();
+			
+			cast = new ArrayList<String>();
+			cast.add(actor1);
+			cast.add(actor2);
 			
 			//4 director
 			System.out.print("Enter the Movie Director: ");
@@ -118,18 +123,14 @@ public class MovieController {
 			overallUserRate = sc.nextFloat();
 			
 			//9 reviews
-			System.out.print("Enter the Movie reviews: ");
-			// need to update arraylist!!!
+			List<Review> reviews = null;
 			
 			//10 rating
 			System.out.print("Enter the Movie rating: ");
 			rating = sc.nextLine();
 			
 			//11 showTimes
-			System.out.print("Enter the Movie show times: ");
-			// need to update arraylist!!!
-			
-			list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+			//need to continue
 			
 			//12 status
 			System.out.print("Select the Movie show status: ");
@@ -187,11 +188,9 @@ public class MovieController {
 		try {			
 			System.out.print("Enter the movie name: ");
 			title = sc.nextLine();
-
-			list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 			
-			for(int i=0; i<list.size(); i++){
-				Movie movie = (Movie)list.get(i);
+			for(int i=0; i<movieList.size(); i++){
+				Movie movie = (Movie)movieList.get(i);
 
 				if(movie.getTitle().equals(title)) {
 					do {
@@ -202,7 +201,11 @@ public class MovieController {
 						System.out.println("3. Update the Movie Runtime");
 						System.out.println("4. Update the Movie Rating");
 						System.out.println("5. Update the Movie Status");
-						System.out.println("6. Exit");
+						
+						
+						
+						
+						System.out.println("12. Exit");
 						
 						System.out.print("Choice: ");		
 						choice = sc.nextInt();
@@ -241,8 +244,16 @@ public class MovieController {
 							break;
 							
 						case 3: //3 cast
-							System.out.print("Enter the Movie Cast: ");
-							cast[0] = sc.nextLine(); // update [] later
+							System.out.print("Enter the Movie Cast(First actor)");
+							actor1 = sc.nextLine();
+							
+							System.out.print("Enter the Movie Cast(second actor)");
+							actor2 = sc.nextLine();
+							
+							cast = new ArrayList<String>();
+							cast.add(actor1);
+							cast.add(actor2);
+							
 							break;
 							
 						case 4: //4 director
@@ -270,22 +281,16 @@ public class MovieController {
 							overallUserRate = sc.nextFloat();
 							break;
 							
-						case 9://9 reviews
-							System.out.print("Enter the Movie reviews: ");
-							// need to update arraylist!!!
-							break;
-							
-						case 10://10 rating
+						case 9://9 rating
 							System.out.print("Enter the Movie rating: ");
 							rating = sc.nextLine();
 							break;
 							
-						case 11://11 showTimes
-							System.out.print("Enter the Movie show times: ");
-							// need to update arraylist!!!
+						case 10://10 showTimes
+							//need continue
 							break;
 							
-						case 12://12 status
+						case 11://11 status
 							System.out.print("Select the Movie show status: ");
 							System.out.println("1. Coming Soon");
 							System.out.println("2. Preview");
@@ -305,20 +310,20 @@ public class MovieController {
 							
 						list = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
 								
-						case 13: //write into DB
+						case 12: //write into DB
 							Movie mov = new Movie(movie.getMovieId(), movie.getTitle(), movie.getCast(), 
 									movie.getDirector(),movie.getLanguage(), movie.getSynopsis(), movie.getRunningTime(),
 									movie.getOverallUserRate(), movie.getReviews() , movie.getMovieType(),
 									movie.getRating(), movie.getShowTimes(),movie.getStatus());
-							list.remove(mov);
-							list.add(mov);
-							SerializeDB.writeSerializedObject("Movie.ser", list);
+							movieList.remove(mov);
+							movieList.add(mov);
+							SerializeDB.writeSerializedObject("Movie.ser", movieList);
 							return true;
 
 						default: System.out.println("No such choice");
 						}
 						
-					} while (choice != 13);
+					} while (choice < 13 && choice > 0);
 				}	
 			}	
 		}
@@ -329,6 +334,22 @@ public class MovieController {
 		System.out.println("Movie not found in Database.");
 		return false;
 	
+	}
+	
+	private boolean checkDuplicateMovie(String name, String director, String type){
+		
+		for(Movie movie : movieList){
+			if ((movie.getTitle().equalsIgnoreCase(name)) && (movie.getMovieType().equalsIgnoreCase(type))
+					&& (movie.getDirector().equals(director))) {
+				System.out.println("Movie already in database.Please add another movie");
+				return true;
+			} 
+		}
+		return false;
+	}
+
+	public ArrayList<Movie> showAllMovie() {
+		return null;
 	}
 	
 	public ArrayList<ShowTime> getShowTime(int movieId)

@@ -125,8 +125,8 @@ public class Moblima {
 	}
 	
 	private static void showTopRank() {
-		ArrayList rankList = new ArrayList();		
-		rankList = (ArrayList) SerializeDB.readSerializedObject("Movie.ser");
+		
+		//need to continue
 		
 	}
 
