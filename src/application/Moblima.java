@@ -14,7 +14,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 
 public class Moblima {
-
+	private static final long serialVersionUID = 1L;
 	private static Scanner sc = new Scanner(System.in);
 	private static List list;
 	// private static Person person;
@@ -54,7 +54,24 @@ public class Moblima {
 
 			case 3: // top 5 ranking
 				String rankBy = "";
+				System.out.println("=====================================");
+				System.out.println("|1. Rank by Sales                   |");
+				System.out.println("|2. Rank by Review Rate             |");
+				System.out.println("|3. Back to main menu               |");
+				System.out.println("=====================================");
+				System.out.print("Enter your choice: ");
+				choice = sc.nextInt();
+
+				sc.nextLine();
+				if (choice == 1)
+					rankBy = "sales";
+				else if (choice == 2)
+					rankBy = "review";
 				ArrayList<Movie> top5movies = showTopRank(rankBy);
+				System.out.println("\nTop 5 Ranking");
+				for (int i = 0; i < top5movies.size(); i++) {
+					System.out.printf("%d\t%s", i+1, top5movies.get(i).getTitle());
+				}
 				break;
 
 			case 4: // booking and purchasing tickets
@@ -171,21 +188,6 @@ public class Moblima {
 		}
 		return top5List;
 	}
-	/*
-	 * list = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
-	 * for (int i = 0; i < list.size(); i++) { Cinema cnma = (Cinema) list.get(i);
-	 * Ticket[] tckt = new Ticket[cnma.getSeat().length]; for (int s = 0; s <
-	 * cnma.getSeat().length; s++) {
-	 * 
-	 * // movie type and getting system setting here // if newMovie.getType() ==
-	 * "something" price = something float price = 0.0f; // if holiday add price +=
-	 * 2.0; if (s == 10 || s == 11 || s == 12) { tckt[s] = new Ticket(s,
-	 * cnma.getSeat()[s], price, Ticket.SOLD); } else { tckt[s] = new Ticket(s,
-	 * cnma.getSeat()[s], price, Ticket.AVAILABLE); }
-	 * 
-	 * } ShowTime st = new ShowTime(0, cnma, new Date(), tckt);
-	 * showtimeList.add(st); break; }
-	 */
 
 	private static void printingSeatLayout(ShowTime st) {
 		int prevRow = 0;
@@ -287,9 +289,7 @@ public class Moblima {
 			ShowTime selectedST = (movieList.get(i)).getShowTimes().get(j);
 			int b2choice;
 			ArrayList<Ticket> bookedTickets = new ArrayList<>();
-			
-			
-			
+
 			do {
 				System.out.println("=====================================");
 				System.out.println("|1. Pick a seat                     |");
@@ -299,7 +299,7 @@ public class Moblima {
 				System.out.print("Enter your choice: ");
 				b2choice = sc.nextInt();
 				sc.nextLine();
-				
+
 				switch (b2choice) {
 				case 1:// pick a seat
 					int col = 0;
@@ -313,9 +313,8 @@ public class Moblima {
 
 					col = seatNum / 10;
 					row = (seatNum - col) / 10;
-					
-					try
-					{
+
+					try {
 						for (x = 0; x < tmpTickets.length; x++) {
 							Seat tmpSeat = tmpTickets[x].getSeat();
 							if (tmpSeat.getRow() == row && tmpSeat.getColumn() == col) {
@@ -323,13 +322,9 @@ public class Moblima {
 								break;
 							}
 						}
-					}
-					catch (ArrayIndexOutOfBoundsException exception)
-					{
+					} catch (ArrayIndexOutOfBoundsException exception) {
 						System.out.println("Selected seat not found");
-					}
-					catch (Exception ex)
-					{
+					} catch (Exception ex) {
 						System.out.println(ex);
 					}
 
@@ -410,8 +405,7 @@ public class Moblima {
 		System.out.print("Enter your choice: ");
 		int choice = sc.nextInt();
 		if (choice == 1) {
-			for(int i = 0;i<bookedTickets.size();i++)
-			{
+			for (int i = 0; i < bookedTickets.size(); i++) {
 				Ticket ticket = bookedTickets.get(i);
 				ticket.setStatus(Ticket.SOLD);
 				ticket.getSeat().setStatus(false);
