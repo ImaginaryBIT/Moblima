@@ -546,4 +546,13 @@ public class MovieController {
 		}
 		return false;
 	}
+	
+	public static void viewAllMovie(){
+
+		for(Movie movie : movieList){
+			System.out.println("=========Available Movies========");
+			movie.showMovieDetail();
+			System.out.println("=================================");
+		}
+	}
 }
