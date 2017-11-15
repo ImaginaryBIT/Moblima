@@ -76,7 +76,7 @@ public class StaffFunctionsController {
 		System.out.println("=========Printing Sales for each movie.==========");
 		for(int i = 0; i < movieList.size(); i++)
 		{
-			System.out.println((i+1) + ". " + movieList.get(i).getTitle() + " :");
+			System.out.println((i+1) + ". " + movieList.get(i).getTitle() + "=>");
 			for(int j = 0; j < goerList.size();j++)
 			{
 				transList = goerList.get(j).getMovieGoerTXN();
