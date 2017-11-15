@@ -18,7 +18,7 @@ public class StaffFunctionsController {
 		try {
 			do {
 				System.out.println("=========Available Functions==========");
-				System.out.println("|1. Search Movie.                    |");
+				System.out.println("|1. View All Movie.                    |");
 				System.out.println("|2. Add Movie.                       |");
 				System.out.println("|3. Update Movie.                    |");
 				System.out.println("|4. Generate Sale Report.            |");
