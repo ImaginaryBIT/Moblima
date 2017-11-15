@@ -534,7 +534,16 @@ public class MovieController {
 		return false;
 	
 	}
-	
+	public static boolean  addReview(int MovieId,String name,String email,float rating,String review){
+        for(Movie mv : movieList){
+            if(mv.getMovieId() == MovieId) {
+                mv.addReview(name, email, rating, review);
+                SerializeDB.writeSerializedObject("Movie.ser", movieList);
+                return true;
+            }
+        }
+        return false;
+    }
 	private static boolean checkDuplicateMovie(String name, String director, String type){
 		
 		for(Movie movie : movieList){

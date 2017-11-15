@@ -338,4 +338,17 @@ public class Movie implements Serializable {
     	System.out.println("Status		: "+this.status);
     	
     }
+    /**
+	 * @method add review to movie
+	 */
+	public boolean addReview(String name,String email,float rating,String review) {
+		for(Review rv:reviews){
+                    if(rv.getUserEmail().equals(email)){
+                        return false;
+                    }
+                }
+                int reviewId = reviews.size()+1;
+                reviews.add(new Review(reviewId,rating,review,name,email));
+                return true;
+	}
 }
