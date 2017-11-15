@@ -118,7 +118,7 @@ public class Moblima {
 		if (!staff.login())
 			System.out.println("Incorrect ID or Password");
 		else
-			staff.showStaffMenu();
+			StaffFunctionsController.printStaffMenu();
 	}
 
 	public static ArrayList<Movie> searchMovies(String movieName) {

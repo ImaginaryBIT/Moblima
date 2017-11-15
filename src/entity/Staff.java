@@ -11,7 +11,6 @@ public class Staff {
 	private String staffMail;
 	private String staffID;
 	private String password;
-	private String username;
 
 	public Staff() {
 
