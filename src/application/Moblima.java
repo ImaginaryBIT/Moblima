@@ -70,7 +70,7 @@ public class Moblima {
 				ArrayList<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i+1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
 				}
 				break;
 
@@ -214,29 +214,60 @@ public class Moblima {
 		// display all now showing movies
 		System.out.println("Now showing movies:");
 		showAllMovies();
+		int movieId;
 		// ask user for movie title
-		ArrayList<Movie> movieList = new ArrayList<>();
+		ArrayList<Movie> movieList;
 		String movieTitle;
+		String movieType = "";
+		Movie movie = null;
+
+		// ask user to choose a movie
 		do {
-			System.out.print("Enter movie name to book: ");
-			movieTitle = sc.nextLine();
+			System.out.print("Enter the movie name: ");
+			movieTitle = sc.nextLine().toLowerCase();
 			sc.nextLine();
 			movieList = searchMovies(movieTitle);
 			if (movieList.size() == 0)
 				System.out.println("No movie found. Re-enter the movie title");
+			else {
+				System.out.println("Your movie is available in:");
+				for (int a = 0; a > movieList.size(); a++) {
+					movie = movieList.get(a);
+					System.out.printf("%d   %s", a, movie.getMovieType());
+				}
+				// ask user to choose the type
+				boolean foundType = false;
+				do {
+					System.out.print("\nEnter the movie type: ");
+					movieType = sc.nextLine();
+					sc.nextLine().toLowerCase();
+					for (int b = 0; b < movieList.size(); b++) {
+						movie = movieList.get(b);
+						if (movie.getMovieType().toLowerCase() == movieType) {
+							foundType = true;
+							break;
+						}
+					}
+					if (!foundType)
+						System.out.println("Type not found. Please re-enter the type");
+				} while (!foundType);
+			}
 		} while (movieList.size() == 0);
 
-		// print out showtime for each movie
-		for (int i = 0; i < movieList.size(); i++) {
-			Movie movie = (Movie) movieList.get(i);
-			if (movie.getStatus() == "Now showing") {
-				System.out.printf("Showtime for %s %s\n", i, movie.getTitle(), movie.getMovieType());
+		// print out showtime for selected movie
+		if (movie.getStatus() == "Coming Soon") {
+			System.out.println("The movie is coming soon. Please come back later");
+		} else if (movie.getStatus() == "End of Showing") {
+			System.out.println("Sorry, the showing period for this movie has ended");
+		} else {// printing showtime for "Now showing" and "Preview" movies
+			for (int i = 0; i < movie.getShowTimes().size(); i++) {
+				System.out.printf("Showtime for %s in %s\n", i, movie.getTitle(), movie.getMovieType());
 				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
 				List<ShowTime> stList = movie.getShowTimes();
 				for (int j = 0; j < stList.size(); j++) {
 					ShowTime st = stList.get(j);
 					int availSeatNum = st.getNoOfTicketsAvailable();
-					System.out.print(st.getShowTimeId() + "\t");
+					System.out.printf("%d \t", st.getShowTimeId());
 					System.out.print(st.getShowDateTime());
 					System.out.printf("\t\t\t%s \t\t\t%d%n", st.getCinema().getCinemaId(), availSeatNum);
 					if (availSeatNum > 0) {
@@ -246,10 +277,11 @@ public class Moblima {
 						System.out.println();
 					}
 				}
+
 			}
 		} // end of printing all showtime
 
-		// ask for userinput
+		// ask user to start booking
 		int bchoice;
 		System.out.println("======================================");
 		System.out.println("|Enter 1. To start booking 2. To exit|");
@@ -257,136 +289,51 @@ public class Moblima {
 		bchoice = sc.nextInt();
 		sc.nextLine();
 		if (bchoice == 1) {
-			Movie movie;
-			List<ShowTime> stList;
-			boolean foundST = false;
-			int i = 0;
-			int j = 0;
-			while (true) {
-				System.out.print("Enter the ShowTime ID you want to book: ");
-				int stID = sc.nextInt();
-				sc.nextLine();
-				for (i = 0; i < movieList.size(); i++) {
-					movie = (Movie) movieList.get(i);
-					if (movie.getTitle() == movieTitle) {
-						stList = movie.getShowTimes();
-						for (j = 0; j < stList.size(); j++) {
-							ShowTime st = stList.get(j);
-							if (st.getShowTimeId() == stID) {
-								foundST = true;
-								break;
-							}
-						}
-					}
-				}
 
-				if (foundST)
-					break;
-				else
-					System.out.println("Re-enter the ShowTime ID");
-			} // end while
-
-			ShowTime selectedST = (movieList.get(i)).getShowTimes().get(j);
-			int b2choice;
-			ArrayList<Ticket> bookedTickets = new ArrayList<>();
-
-			do {
-				System.out.println("=====================================");
-				System.out.println("|1. Pick a seat                     |");
-				System.out.println("|2. Confirm booking                 |");
-				System.out.println("|3. Go back to main menu            |");
-				System.out.println("=====================================");
-				System.out.print("Enter your choice: ");
-				b2choice = sc.nextInt();
-				sc.nextLine();
-
-				switch (b2choice) {
-				case 1:// pick a seat
-					int col = 0;
-					int row = 0;
-					int x = 0;
-					Ticket[] tmpTickets = selectedST.getTickets();
-					Seat selectedSeat = new Seat();
-					System.out.print("\nEnter the seat number: ");
-					int seatNum = sc.nextInt();
-					sc.nextLine();
-
-					col = seatNum / 10;
-					row = (seatNum - col) / 10;
-
-					try {
-						for (x = 0; x < tmpTickets.length; x++) {
-							Seat tmpSeat = tmpTickets[x].getSeat();
-							if (tmpSeat.getRow() == row && tmpSeat.getColumn() == col) {
-								selectedSeat = tmpSeat;
-								break;
-							}
-						}
-					} catch (ArrayIndexOutOfBoundsException exception) {
-						System.out.println("Selected seat not found");
-					} catch (Exception ex) {
-						System.out.println(ex);
-					}
-
-					System.out.println("===================================================");
-					System.out.println("| Ticket type 1. Child 2. Adult 3. Senior Citizen |");
-					System.out.println("===================================================");
-					System.out.print("Enter your choice: ");
-					int typeChoice = sc.nextInt();
-					String ticketType;
-					if (typeChoice == 1)
-						ticketType = Ticket.CHILD;
-					else if (typeChoice == 3)
-						ticketType = Ticket.CENIOR_CITIZEN;
-					else
-						ticketType = Ticket.ADULT;
-
-					tmpTickets[x].setTicketType(ticketType);
-					tmpTickets[x].setSeat(selectedSeat);
-					bookedTickets.add(tmpTickets[x]);
-					break;
-				case 2: // confirm booking
-					// update seats's availability to false and ticket to SOLD
-
-					System.out.print("Enter your name: ");
-					String mgName = sc.nextLine();
-					sc.nextLine();
-					System.out.print("Email: ");
-					String mgEmail = sc.nextLine();
-					sc.nextLine();
-					System.out.print("Contact: ");
-					int mgContact = sc.nextInt();
-					sc.nextLine();
-
-					MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
-					Transaction txn = new Transaction(selectedST.getShowDateTime(),
-							selectedST.getCinema().getCinemaCode(), movieTitle, bookedTickets, movieGoer);
-					movieGoer.setMovieGoerTXN(txn);
-
-					printTXN(movieTitle, bookedTickets.size(), txn.getTotalPayment());
-					// proceed to purchase
-					if (purchaseTicket(bookedTickets)) {
-						System.out.println("Payment was successful!!!");
-						// add movieGoer to database
-						ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
-								.readSerializedObject("MovieGoer.ser");
-						mgList.add(movieGoer);
-						SerializeDB.writeSerializedObject("Staff.ser", mgList);
-					}
-					break;
-				case 3: // back to main menu
-					break;
-				default:
-					System.out.println("Option not found");
-				}
-
-			} while (bchoice > 0 && bchoice < 3);
-
+			ShowTime selectedST = showtimePicker(movie.getShowTimes());
+			startBooking(selectedST, movieTitle);
 		} // end of booking
 	}
 
 	private static void pastBooking() {
+		SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:MM");
 
+		boolean foundMG = false;
+		MovieGoer movieGoer;
+		Transaction txn;
+
+		ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+
+		while (!foundMG) {
+			System.out.print("Enter your email: ");
+			String email = sc.nextLine();
+			sc.nextLine();
+			System.out.print("Enter your contact number: ");
+			int contact = sc.nextInt();
+			sc.nextLine();
+
+			for (int i = 0; i < mgList.size(); i++) {
+				movieGoer = mgList.get(i);
+				if (movieGoer.getEmail() == email && movieGoer.getContact() == contact) {
+					if (movieGoer.getMovieGoerTXN().size() != 0) {
+						System.out.println("\nYour booking history:");
+						System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
+								"No. of Tickets", "Total Payment");
+						for (int j = 0; j < movieGoer.getMovieGoerTXN().size(); j++) {
+							txn = movieGoer.getMovieGoerTXN().get(i);
+							System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(txn.getTransactionDate()),
+									txn.getMovieName(), dft.format(txn.getShowTime()), txn.getTickets().size(),
+									txn.getTotalPayment());
+						}
+					} else
+						System.out.println("No transaction found");
+					foundMG = true;
+					break;
+				}
+			}
+			if (!foundMG)
+				System.out.println("Your input information is not found. Please re-enter");
+		}
 	}
 
 	private static void printTXN(String movieTitle, int seatNum, float totalPayment) {
@@ -408,10 +355,127 @@ public class Moblima {
 			for (int i = 0; i < bookedTickets.size(); i++) {
 				Ticket ticket = bookedTickets.get(i);
 				ticket.setStatus(Ticket.SOLD);
-				ticket.getSeat().setStatus(false);
 			}
 			return true;
 		}
 		return false;
+	}
+
+	private static ShowTime showtimePicker(List<ShowTime> stList) {
+		// List<ShowTime> stList;
+		ShowTime st = null;
+		while (true) {
+			System.out.print("Enter the ShowTime ID you want to book: ");
+			int stID = sc.nextInt();
+			sc.nextLine();
+
+			for (int j = 0; j < stList.size(); j++) {
+				st = stList.get(j);
+				if (st.getShowTimeId() == stID) {
+					return st;
+				}
+
+			}
+
+			System.out.println("ShowTime ID not found. Re-enter the ShowTime ID");
+		} // end while
+	}
+
+	private static String ticketTypePicker() {
+		int typeChoice;
+		do {
+			System.out.println("===================================================");
+			System.out.println("| Ticket type 1. Child 2. Adult 3. Senior Citizen |");
+			System.out.println("===================================================");
+			System.out.print("Enter your choice: ");
+			typeChoice = sc.nextInt();
+
+			if (typeChoice == 1)
+				return Ticket.CHILD;
+			else if (typeChoice == 3)
+				return Ticket.CENIOR_CITIZEN;
+			else
+				return Ticket.ADULT;
+		} while (typeChoice > 0 && typeChoice < 4);
+	}
+
+	@SuppressWarnings("null")
+	private static void startBooking(ShowTime selectedST, String movieTitle) {
+		ArrayList<Ticket> bookedTickets = null;
+		int choice;
+		do {
+			System.out.println("=====================================");
+			System.out.println("|1. Pick a seat                     |");
+			System.out.println("|2. Confirm booking                 |");
+			System.out.println("|3. Go back to main menu            |");
+			System.out.println("=====================================");
+			System.out.print("Enter your choice: ");
+			choice = sc.nextInt();
+			sc.nextLine();
+
+			switch (choice) {
+			case 1:// pick a seat
+				int col = 0;
+				int row = 0;
+				int x = 0;
+				Ticket[] tmpTickets = selectedST.getTickets();
+				// Seat selectedSeat = new Seat();
+				System.out.print("\nEnter the seat number: ");
+				int seatNum = sc.nextInt();
+				sc.nextLine();
+
+				col = seatNum / 10;
+				row = (seatNum - col) / 10;
+
+				boolean foundSeat = false;
+				do {
+					for (x = 0; x < tmpTickets.length; x++) {
+						if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
+								&& tmpTickets[x].getStatus() == Ticket.AVAILABLE) {
+							foundSeat = true;
+							break;
+						}
+					}
+					System.out.println("Seat not available. Re-enter seat number");
+				} while (!foundSeat);
+
+				String ticketType = ticketTypePicker();
+				tmpTickets[x].setTicketType(ticketType);
+				bookedTickets.add(tmpTickets[x]);
+				break;
+			case 2: // confirm booking
+				System.out.print("Enter your name: ");
+				String mgName = sc.nextLine();
+				sc.nextLine();
+				System.out.print("Email: ");
+				String mgEmail = sc.nextLine();
+				sc.nextLine();
+				System.out.print("Contact: ");
+				int mgContact = sc.nextInt();
+				sc.nextLine();
+
+				MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
+				Transaction txn = new Transaction(selectedST.getShowDateTime(), selectedST.getCinema().getCinemaCode(),
+						movieTitle, bookedTickets, movieGoer);
+				movieGoer.setMovieGoerTXN(txn);
+
+				printTXN(movieTitle, bookedTickets.size(), txn.getTotalPayment());
+				// proceed to purchase
+				if (purchaseTicket(bookedTickets)) {
+					System.out.println("Payment was successful!!!");
+					// add movieGoer to database
+					ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
+							.readSerializedObject("MovieGoer.ser");
+					mgList.add(movieGoer);
+					SerializeDB.writeSerializedObject("Staff.ser", mgList);
+				}
+				break;
+			case 3: // back to main menu
+				break;
+			default:
+				System.out.println("Option not found");
+			}
+
+		} while (choice != 3);
 	}
 }
