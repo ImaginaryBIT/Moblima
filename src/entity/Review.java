@@ -1,57 +1,34 @@
 package entity;
 
-/**
- * 
- * @author Group5
- *
- */
-
 public class Review {
-	/** Review Id */
 	private int reviewId;
-	/** User Rating */
-	private int userRating;
-	/** Review Content*/
+	private float userRating;
 	private String review;
-	/** MovieGoer */
-	private MovieGoer movieGoer;
-	
-	
-	/* ******************** Constructors *********************/
-	/**
-	 * @param reviewContent
-	 * @param userRating
-	 * @param movieGoer
-	 */
+	private String userName;
+        private String userEmail;
 
-	public Review(String reviewContent, int userRating, MovieGoer movieGoer) {
-		this.review = reviewContent;
+	public Review(int reviewId, float userRating, String reviewContent, String name, String email) {
+		this.reviewId = reviewId;
+                this.review = reviewContent;
 		this.userRating = userRating;
-		this.movieGoer = movieGoer;
+		this.userName = name;
+                this.userEmail = email;
 	}
 
-	
-	/* ******************** Getter and Setter Methods *********/
-	/**
-	 * @return the review
-	 */
 	public String getContent() {
 		return review;
 	}
-	
-	/**
-	 * @return the userRating
-	 */
-	public int getUserRating()
+	public float getUserRating()
 	{
 		return userRating;
 	}
-	
-	/**
-	 * @return the movieGoer
-	 */
-	public MovieGoer getMovieGoer()
+	public String getUserName()
 	{
-		return movieGoer;
+		return userName;
+	}
+        
+        public String getUserEmail()
+	{
+		return userEmail;
 	}
 }
