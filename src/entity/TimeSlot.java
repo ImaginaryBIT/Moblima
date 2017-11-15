@@ -23,6 +23,8 @@ public class TimeSlot implements Serializable  {
             this.status = status;
         }
 
+        
+
         public String getStatus() {
             return status;
         }
@@ -39,6 +41,11 @@ public class TimeSlot implements Serializable  {
         public Date getDateTime() {
                 return dateTime;
         }
+
+        public void setStatus(String status) {
+                this.status = status;
+        }
+        
         
 
 }
