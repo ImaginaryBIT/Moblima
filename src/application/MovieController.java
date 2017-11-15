@@ -19,53 +19,54 @@ import entity.TimeSlot;
 
 public class MovieController {
 
-	private List<Movie> list;
+	private static List<Movie> list;
 	/** Movie Id */
-	private int movieId;
+	private static int movieId;
 	/** Movie Title */
-	private String title;//1
+	private static String title;//1
 	/** Movie Type 2D/3D */
-	private String movieType;//2
+	private static String movieType;//2
 	/** Movie Cast */
-	private List<String> cast;//3
-	private String actor1;
-	private String actor2;
+	private static List<String> cast;//3
+	private static String actor1;
+	private static String actor2;
 	/** Director of the Movie */
-	private String director;//4
+	private static String director;//4
 	/** Movie Language */
-	private String language;//5
+	private static String language;//5
 	/** Brief Summary of the Movie */
-	private String synopsis;//6
+	private static String synopsis;//6
 	/** Movie Running Time (minute) */
-	private int runningTime;//7
+	private static int runningTime;//7
 	/** Overall User Rating  */
-	private float overallUserRate;//8
+	private static float overallUserRate;//8
 	/** Movie Reviews */
-	private List<Review> reviews;//9
+	private static List<Review> reviews;//9
 	/** Movie Restrict Level */
-	private String rating;//10
+	private static String rating;//10
 	/** Show Times */
-	private List<ShowTime> showTimes;//11
+	private static List<ShowTime> showTimes;//11
 	/** Status */
-	private String status;//12
+	private static String status;//12
 	
-	int showTimeId;
-	Cinema cinema;
-	Ticket[] tickets;
+	private static int showTimeId;
+	private static Cinema cinema;
+	private static Ticket[] tickets;
 	
-	Scanner sc = new Scanner(System.in);
-	private List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
-	private List<Cinema> cinemaList = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
-	private List<ShowTime> showTimeList = (ArrayList<ShowTime>) SerializeDB.readSerializedObject("ShowTime.ser");
-	int size = movieList.size();
+	private static Scanner sc = new Scanner(System.in);
+	private static List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
+	private static List<Cinema> cinemaList = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
 	
+	private static int size = movieList.size();
+	private static List<ShowTime> showTimeList = new ArrayList();
 	@SuppressWarnings("unchecked")
-	public boolean addMovie() {
+	public static boolean addMovie() {
 		
 		int rchoice, choice;
 		boolean flag = false;
 		boolean codeCheck = false;
-		
+                boolean showTimeCheck = false;
+		Date chosen_timeSlot = new Date();
 		try {
 			while(true){
 				//0 movieId
@@ -86,7 +87,7 @@ public class MovieController {
 				boolean errorflag = checkDuplicateMovie(title, director, movieType);
 				
 				if(!errorflag) {
-				
+                                        
 					//3 cast
 					System.out.print("Enter the Movie Cast(First actor)");
 					actor1 = sc.nextLine();
@@ -142,34 +143,32 @@ public class MovieController {
 						}
 					} while (rchoice < 1 || rchoice >7);	
 					
-					//11 showTimes
-					showTimeId = showTimeList.size() + 1;
-					for(int i = 0; i < cinemaList.size(); i++)
+					//11 showTimes 
+					int showTimeId = showTimeList.size()+1;
+                                        
+                                        
+					for(Cinema cinema : cinemaList)
 					{
-						System.out.println(cinemaList.get(i).getCinemaCode());
+						System.out.println(cinema.getCinemaId()+": "+cinema.getClassType()+" "+cinema.getCinemaCode() + " from " +cinema.getCineplex().getName());
 					}
 					while(!codeCheck) {
-						System.out.print("Enter the cinema code: ");
-						String cinemaCode = sc.nextLine();
+						System.out.print("Enter the cinema id: ");
+						int cinemaId = sc.nextInt();
 						
-						for(int j = 0; j < cinemaList.size(); j++)
+						for(Cinema cnma : cinemaList)
 						{
-							if(cinemaList.get(j).getCinemaCode().equals(cinemaCode)) 
+							if(cnma.getCinemaId() == cinemaId) 
 							{
 								
-								cinema = cinemaList.get(j);
+								cinema = cnma;
 								tickets = new Ticket[cinema.getSeat().length];
 								for(int s = 0; s < cinema.getSeat().length; s++){
 	                                
-	                                //movie type and getting system setting here
-	                                // if newMovie.getType() == "something" price = something
-	                                float price = 0.0f;
-	                                //if holiday add 
-	                                price += 2.0;
-	                                if(s == 10 || s == 11 || s == 12)
-	                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
-	                                else
-	                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+	                               
+                                                                    float price = 0.0f;
+	                                
+	                                
+                                                                    tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
 	                                
 	                                
 								}
@@ -177,9 +176,51 @@ public class MovieController {
 							}
 						}
 					}
-					ShowTime st = new ShowTime(showTimeId, cinema, new Date(),tickets);
+                                        
+                                        System.out.println("You have chosen:");
+                                        System.out.println(cinema.getClassType()+" "+cinema.getCinemaCode() + " from " +cinema.getCineplex().getName());
+                                            
+                                        while(!showTimeCheck) {
+                                            
+                                            //System.out.print("Enter the new Movie Name: ");
+                                            
+
+                                            System.out.print("Enter the date in dd-mm-yyyy: ");
+                                            String day_string = sc.next();
+                                            
+                                            boolean date_check = false;
+                                            int slot_count = 0;
+                                            //list to store the menu
+                                            List<TimeSlot> timeSlotArray = new ArrayList();
+                                            
+                                            for(int i = 0; i < cinema.getTimeSlot().length; i ++){
+                                                if(cinema.getTimeSlot()[i].getDate().equals(day_string) && cinema.getTimeSlot()[i].getStatus().equals(TimeSlot.AVAILABLE)){
+                                                    slot_count++;
+                                                    System.out.println(slot_count+": "+cinema.getTimeSlot()[i].getTime()+" ");
+                                                    timeSlotArray.add(cinema.getTimeSlot()[i]);
+                                                    date_check = true;
+                                                } 
+                                            }
+                                            if (date_check == false){
+                                                //no time slot found ask to enther again
+                                                System.out.println("No time slot found for input "+day_string+ ".");
+                                                
+                                            }else{
+                                                int time_slot_no = 0;
+                                                do{
+                                                    System.out.print("Please select a time slot (1 to "+slot_count+"): ");
+                                                    time_slot_no = sc.nextInt();
+                                                }while(time_slot_no < 0 || time_slot_no > slot_count);
+                                                
+                                                chosen_timeSlot = timeSlotArray.get(time_slot_no-1).getDateTime();
+                                                showTimeCheck = true;
+                                            }
+                                            
+                                        }
+                                        cinema.setTimeSlotStatus(chosen_timeSlot, TimeSlot.UNAVAILABLE);
+					ShowTime st = new ShowTime(showTimeId, cinema, chosen_timeSlot,tickets);
 					showTimeList.add(st);
-					SerializeDB.writeSerializedObject("Movie.ser", showTimeList);
+					
 					
 					//12 status
 					System.out.print("Select the Movie show status: ");
@@ -202,19 +243,23 @@ public class MovieController {
 					Movie mov = new Movie(movieId, title, cast, director,
 							language, synopsis,runningTime,
 							overallUserRate, reviews, movieType,
-							rating, showTimes, status);
+							rating, showTimeList, status);
 					movieList.add(mov);
 					SerializeDB.writeSerializedObject("Movie.ser", movieList);
+                                        
+                                        //int current_index = cinemaList.indexOf(cinema);
+                                        //cinemaList.remove(current_index);
+                                        //cinemaList.set(current_index,cinema);
+                                        SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
 					return true;
-					}
-					else {
-						System.out.println("Movie already in database.");
-						System.out.println("Choose 1 to Add another movie.");
-						System.out.println("Choose 2 to Back to menu.");
-						choice = sc.nextInt();
-						if(choice == 2)
-							return false;;
-						}
+                                    }else {
+                                        System.out.println("Movie already in database.");
+                                        System.out.println("Choose 1 to Add another movie.");
+                                        System.out.println("Choose 2 to Back to menu.");
+                                        choice = sc.nextInt();
+                                        if(choice == 2)
+                                                return false;;
+                                    }
 				}
 		}
 		catch (Exception e ) {
@@ -223,13 +268,14 @@ public class MovieController {
 		}
 	}
 
-	public boolean updateMovie() {
+	public static boolean  updateMovie() {
 		int choice, rchoice;
-		
+		Date chosen_timeSlot = new Date();
 		try {			
 			System.out.print("Enter the updating movie name: ");
 			title = sc.nextLine();
-			System.out.println("Enter the updating Movie Type");
+                        System.out.print("");
+			System.out.print("Enter the updating Movie Type: ");
 			movieType = sc.nextLine();
 			
 			for(int i=0; i<movieList.size(); i++){
@@ -248,9 +294,10 @@ public class MovieController {
 						System.out.println("7. Update the Movie running time");
 						System.out.println("8. Update the Movie overall User Rate");
 						System.out.println("9. Update the Movie rating");
-						System.out.println("10. Update the Movie showtimes");
-						System.out.println("11. Update the Movie status");
-						System.out.println("12. Exit");
+						System.out.println("10. Remove the Movie showtimes");
+                                                System.out.println("11. Add the Movie showtimes");
+						System.out.println("12. Update the Movie status");
+						System.out.println("13. Exit");
 						System.out.print("Choice: ");		
 						choice = sc.nextInt();
 						sc.nextLine();
@@ -339,73 +386,123 @@ public class MovieController {
 							movie.setRating(rating);
 							break;
 
-						case 10://10 showTimes
+						case 10://10 remove showTimes
 							List<ShowTime> temp = movie.getShowTimes();
 							ShowTime st = null;
 							boolean idCheck = false;
 							boolean codeCheck = false;
-							
+                                                        if (temp.size() == 0){
+                                                            System.out.println("No showtime to remove: ");
+                                                            break;
+                                                        }
+                                                            
 							for(int l = 0; l < temp.size(); l++) {
-								System.out.println(temp.get(l).getShowTime());
+								System.out.println((l+1)+": "+temp.get(l).getShowTime()+" "+temp.get(l).getShowDate()+" "+temp.get(l).getCinema().getCinemaCode()+" "+temp.get(l).getCinema().getCineplex().getName());
 							}
-							while(!idCheck) {
-								System.out.println("Please enter the showTimeId to update");
-								showTimeId = sc.nextInt();
-								
-								for(int l = 0; l < temp.size(); l++) 
-								{
-									if(temp.get(l).getShowTimeId() == showTimeId)
-									{
-										temp.remove(l);
-										
-										while(!codeCheck) {
-											System.out.print("Enter the new cinema code: ");
-											String cinemaCode = sc.nextLine();
-										
-											for(int k = 0; k < cinemaList.size(); k++)
-											{
-												if(cinemaList.get(k).getCinemaCode().equals(cinemaCode)) 
-												{
-													cinema = cinemaList.get(k);
-													tickets = new Ticket[cinema.getSeat().length];
-													
-													for(int s = 0; s < cinema.getSeat().length; s++){
-	
-						                                float price = 0.0f;
-						                                price += 2.0;
-						                                
-						                                if(s == 10 || s == 11 || s == 12)
-						                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.SOLD);
-						                                else
-						                                	tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
-						                                
-						                                st = new ShowTime(showTimeId, cinema, new Date(),tickets);
-						                                
-						                                codeCheck = true;
-						                                idCheck = true;
-						                                break;
-													}     
-												}
-											}
-											System.out.println("The cinema code entered wrongly!");
-										}
-									}									
-								}
-								System.out.println("The showTimeId entered wrongly!");
-							}
-							temp.add(st);
+                                                        do{
+                                                            System.out.println("Enter a number to remove: ");
+                                                            rchoice = sc.nextInt();sc.nextLine();
+                                                        }while(rchoice > temp.size() || rchoice < 1);
+                                                        int index = rchoice-1;
+                                                        //update the time slot in cinema
+                                                        for(Cinema cnma : cinemaList){
+                                                            if(cnma.getCinemaId() == temp.get(index).getCinema().getCinemaId()) {
+                                                                cnma.setTimeSlotStatus(temp.get(index).getShowDateTime(), TimeSlot.AVAILABLE);
+                                                            }
+                                                        }
+							temp.remove(index);
 							movie.setShowTimes(temp);
+                                                        
 							break;
-							
-						case 11://11 status
-							System.out.print("Select the new Movie show status: ");
+                                                case 11://10 add showTimes
+                                                        int showTimeId = showTimeList.size()+1;
+                                        
+                                        
+                                                        for(Cinema cnma : cinemaList)
+                                                        {
+                                                                System.out.println(cnma.getCinemaId()+": "+cnma.getClassType()+" "+cnma.getCinemaCode() + " from " +cnma.getCineplex().getName());
+                                                        }
+                                                        codeCheck = false;
+                                                        while(!codeCheck) {
+                                                                System.out.print("Enter the cinema id: ");
+                                                                int cinemaId = sc.nextInt();
+
+                                                                for(Cinema cnma : cinemaList)
+                                                                {
+                                                                        if(cnma.getCinemaId() == cinemaId) 
+                                                                        {
+
+                                                                                cinema = cnma;
+                                                                                tickets = new Ticket[cinema.getSeat().length];
+                                                                                for(int s = 0; s < cinema.getSeat().length; s++){
+
+
+                                                                                    float price = 0.0f;
+
+
+                                                                                    tickets[s] = new Ticket(s,cinema.getSeat()[s],price,Ticket.AVAILABLE);
+
+
+                                                                                }
+                                                                                codeCheck = true;
+                                                                        }
+                                                                }
+                                                        }
+
+                                                        System.out.println("You have chosen:");
+                                                        System.out.println(cinema.getClassType()+" "+cinema.getCinemaCode() + " from " +cinema.getCineplex().getName());
+                                                        boolean showTimeCheck = false;
+                                                        while(!showTimeCheck) {
+
+                                                            //System.out.print("Enter the new Movie Name: ");
+
+
+                                                            System.out.print("Enter the date in dd-mm-yyyy: ");
+                                                            String day_string = sc.next();
+
+                                                            boolean date_check = false;
+                                                            int slot_count = 0;
+                                                            //list to store the menu
+                                                            List<TimeSlot> timeSlotArray = new ArrayList();
+
+                                                            for(int c = 0; c < cinema.getTimeSlot().length; c ++){
+                                                                if(cinema.getTimeSlot()[c].getDate().equals(day_string) && cinema.getTimeSlot()[c].getStatus().equals(TimeSlot.AVAILABLE)){
+                                                                    slot_count++;
+                                                                    System.out.println(slot_count+": "+cinema.getTimeSlot()[c].getTime()+" ");
+                                                                    timeSlotArray.add(cinema.getTimeSlot()[c]);
+                                                                    date_check = true;
+                                                                } 
+                                                            }
+                                                            if (date_check == false){
+                                                                //no time slot found ask to enther again
+                                                                System.out.println("No time slot found for input "+day_string+ ".");
+
+                                                            }else{
+                                                                int time_slot_no = 0;
+                                                                do{
+                                                                    System.out.print("Please select a time slot (1 to "+slot_count+"): ");
+                                                                    time_slot_no = sc.nextInt();
+                                                                }while(time_slot_no < 0 || time_slot_no > slot_count);
+
+                                                                chosen_timeSlot = timeSlotArray.get(time_slot_no-1).getDateTime();
+                                                                showTimeCheck = true;
+                                                            }
+
+                                                        }
+                                                        cinema.setTimeSlotStatus(chosen_timeSlot, TimeSlot.UNAVAILABLE);
+                                                        ShowTime showtime = new ShowTime(showTimeId, cinema, chosen_timeSlot,tickets);
+                                                        movie.getShowTimes().add(showtime);
+                                                        sc.nextLine();
+                                                        break;
+						case 12://11 status
+							System.out.println("Select the new Movie show status: ");
 							System.out.println("1. Coming Soon");
 							System.out.println("2. Preview");
 							System.out.println("3. Now Showing");
 							System.out.println("4. End of Showing");
 							System.out.print("Choice: ");
 							do {
-								choice = sc.nextInt(); sc.nextLine();
+								rchoice = sc.nextInt(); sc.nextLine();
 								switch(choice) {
 								case 1: status = "Coming Soon"; break;
 								case 2: status = "Preview"; break;
@@ -413,36 +510,32 @@ public class MovieController {
 								case 4: status = "End of Showing"; break;
 								default: System.out.println("No such choice");			
 								}
-							} while (choice < 1 || choice >4);	
+							} while (rchoice < 1 || rchoice >4);	
 							movie.setStatus(status);
-								
-						case 12: //write into DB
-							Movie mov = new Movie(movie.getMovieId(), movie.getTitle(), movie.getCast(), 
-									movie.getDirector(),movie.getLanguage(), movie.getSynopsis(), movie.getRunningTime(),
-									movie.getOverallUserRate(), movie.getReviews() , movie.getMovieType(),
-									movie.getRating(), movie.getShowTimes(),movie.getStatus());
-							movieList.remove(mov);
-							movieList.add(mov);
+                                                        break;
+						case 13: //write into DB
+                                                        SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
 							SerializeDB.writeSerializedObject("Movie.ser", movieList);
 							return true;
 
 						default: System.out.println("No such choice");
 						}
 						
-					} while (choice < 13 && choice > 0);
+					} while (choice < 14 && choice > 0);
 				}	
 			}	
 		}
 		catch (Exception e ) {
-			System.out.println( "Exception >> " + e.getMessage() );
-			return false;
+                        throw e;
+			//System.out.println( "Exception >> " + e.getMessage() );
+			//return false;
 		}
 		System.out.println("Movie not found in Database.");
 		return false;
 	
 	}
 	
-	private boolean checkDuplicateMovie(String name, String director, String type){
+	private static boolean checkDuplicateMovie(String name, String director, String type){
 		
 		for(Movie movie : movieList){
 			if ((movie.getTitle().equalsIgnoreCase(name)) && (movie.getMovieType().equalsIgnoreCase(type))
