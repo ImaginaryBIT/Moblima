@@ -1,6 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import database.SerializeDB;
+import entity.Cinema;
+import entity.Movie;
+import entity.MovieGoer;
+import entity.Transaction;
 /**
  * 
  * @author Group5
@@ -58,6 +66,32 @@ public class StaffFunctionsController {
 	
 	private static void generateSaleReport(){
 		
-	}
-	
+		List<MovieGoer> goerList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+		List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
+		
+		ArrayList<Transaction> transList;
+		int numberOfSoldTickets = 0;
+		float amountOfSales = 0;
+		
+		System.out.println("=========Printing Sales for each movie.==========");
+		for(int i = 0; i < movieList.size(); i++)
+		{
+			System.out.println((i+1) + ". " + movieList.get(i).getTitle() + " :");
+			for(int j = 0; j < goerList.size();j++)
+			{
+				transList = goerList.get(j).getMovieGoerTXN();
+				
+				for(int k = 0; k < transList.size(); k++)
+				{
+					if(movieList.get(i).getTitle() == transList.get(k).getMovieName())
+					{
+						numberOfSoldTickets += transList.get(k).getTickets().size();
+						amountOfSales += transList.get(k).getTotalPayment();
+					}
+				}
+			}
+			System.out.println("The total number of Sold Tickets is : " + numberOfSoldTickets);
+			System.out.println("The total amount of Sales is : " + amountOfSales);
+		}	
+	}	
 }
