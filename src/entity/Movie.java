@@ -319,5 +319,23 @@ public class Movie implements Serializable {
             //total rating devided by no is overall rating
             return total_rating/reviews.size();
 	}
-
+	
+    public void showMovieDetail(){
+    	String rating = "NA";
+    	System.out.println("Moive ID    : "+this.movieId);
+    	System.out.println("Moive Title : "+this.title);
+    	System.out.println("Synopisis   :"+this.synopsis);
+    	System.out.println("Actors 	    : "+this.cast.get(0)+" , "+this.cast.get(2));
+    	System.out.println("Director    : "+this.director);
+    	System.out.println("Language    : "+this.language);
+    	System.out.println("Type	    : "+this.movieType);
+    	System.out.println("Rating	    : "+this.rating);
+    	System.out.println("Running Time: "+this.runningTime);
+    	if(this.overallUserRate > 0){
+    		rating = String.valueOf(this.overallUserRate);
+    	}
+    	System.out.println("Running Time: "+rating);
+    	System.out.println("Status		: "+this.status);
+    	
+    }
 }
