@@ -20,7 +20,7 @@ public class PopulateMovie {
                         ArrayList<Movie> movieList = new ArrayList<>();
                         ArrayList<ShowTime> showtimeList = new ArrayList<>();
                         ArrayList<Review> reviewList = new ArrayList<>();
-                        String[] myStringArray = new String[]{"a","b","c"};
+                        ArrayList<String> myStringArray = new ArrayList<>();
                         Movie newMovie;
       
                         
