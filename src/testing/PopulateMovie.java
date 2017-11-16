@@ -60,7 +60,7 @@ public class PopulateMovie {
                                 break;
                         }
                         
-                        newMovie = new Movie(1,"Test Mv1",myStringArray, "Unknown","en", "description movie",90,0.5f,reviewList,"anything","PG13", showtimeList, "now showing");
+                        newMovie = new Movie(1,"Test Mv1",myStringArray, "Unknown","en", "description movie",90,reviewList,"anything","PG13", showtimeList, "now showing");
                         movieList.add(newMovie);
 			SerializeDB.writeSerializedObject("Movie.ser", movieList);
 			SerializeDB.writeSerializedObject("Cinema.ser", list);
