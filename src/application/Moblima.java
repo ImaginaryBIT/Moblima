@@ -65,11 +65,11 @@ public class Moblima {
 				while (true) {
 					try {
 						choice = sc.nextInt();
-						sc.nextLine();
+						//sc.nextLine();
 						break;
 					} catch (InputMismatchException e) {
 						System.out.println("Your choice is in incorrect format");
-						sc.nextLine();
+						//sc.nextLine();
 					}
 				}
 				sc.nextLine();
@@ -80,20 +80,22 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s%n", i + 1, top5movies.get(i).getTitle());
 				}
 				break;
 			case 3:
 				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
+				//sc.nextLine();
 				List<Movie> searchMovieList = MovieController.searchMovies(movieTitle);
 				if(searchMovieList.isEmpty()){
 					System.out.println("No movie found");
 				}
 				else{
-					//int sn = 0;
+					int sn = 0;
 					for(Movie movie : searchMovieList){
-						System.out.println(movie.getMovieId() +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+						sn = sn+1;
+						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
 					}
 				}
 				menuAfterList(searchMovieList);
@@ -134,9 +136,10 @@ public class Moblima {
 				int no = sc.nextInt();
 				switch(no){
 				case 1:
-					System.out.print("Enter Movie No to book: ");
+					System.out.print("Enter Movie No to process booking: ");
 					try{
 						int selectedIndex = sc.nextInt();
+						sc.nextLine();
 						Movie movie = movieLst.get(selectedIndex-1);
 						bookTicket(movie);
 						
@@ -150,8 +153,8 @@ public class Moblima {
 					System.out.print("Enter Movie No to View Detail: ");
 					try{
 						int selectedIndex = sc.nextInt();
+						sc.nextLine();
 						Movie movie = movieLst.get(selectedIndex-1);
-                                                
 						viewMovieDetail(movie);
 						
 					} catch (InputMismatchException e) {
@@ -171,7 +174,7 @@ public class Moblima {
 			while(true);
 		}
 		catch(Exception e){
-			//System.out.println("Invalid Input"+e.getMessage());
+			System.out.println("Invalid Input");
 		}
 		
 	}
@@ -214,21 +217,20 @@ public class Moblima {
 		System.out.println("Enter your review:");
 		String content = sc.nextLine();
 		sc.nextLine();
-		System.out.print("Enter your rating: ");
-		float rate;
+		System.out.print("Enter your rate: ");
+		int rate;
 		while (true) {
 			try {
-				rate = sc.nextFloat();
+				rate = sc.nextInt();
 				sc.nextLine();
 				break;
 			} catch (InputMismatchException e) {
 
 				System.out.println("Your rate is in incorrect format. Please re-enter");
-			
+				sc.nextLine();
 			}
 		}
 		System.out.println();
-                movie.addReview(mg.getName(), mg.getEmail(), rate, content);
 		List<Review> rvList = (ArrayList<Review>) movie.getReviews();
 		movie.setReviews(rvList);
                 
@@ -477,23 +479,14 @@ public class Moblima {
 	private static void bookTicket(Movie movie) throws Exception {
 		// ask user to choose a movie
 		do {
-		
+			int sn = 0;
 			List<ShowTime> showTimes = movie.getShowTimes();
-                        System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
-                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
-			int index = 0;
-                        for (ShowTime showTime : showTimes){
-                            System.out.println("");
-                            System.out.printf("%s \t\t%s \t%s %s %s \t%s",
-                                                (index+1),
-                                                showTime.getShowTime(),
-                                                showTime.getShowDate(),
-                                                showTime.getCinema().getClassType(),
-                                                showTime.getCinema().getCineplex().getName(),
-                                                showTime.getNoOfTicketsAvailable());
-                            index++;
+			for (ShowTime showTime : showTimes){
+				sn = sn +1;
+				System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
+				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats\n");
+				System.out.printf("%d          \t%s %s    \t\t\t %s    \t\t\t%d\n",showTime.getShowTimeId(),showTime.getShowDate(),showTime.getShowTime(),showTime.getCinema().getCineplex().getName(),showTime.getNoOfTicketsAvailable());
 			}
-                        System.out.println("");
 			System.out.print("Please enter showtime no: ");
 			int selectedNo = sc.nextInt();
 			ShowTime selectedShowTime = null;
@@ -509,10 +502,9 @@ public class Moblima {
 			System.out.print(selectedShowTime.getShowDateTime());
 			System.out.printf("\t\t\t%s \t\t\t%d%n", selectedShowTime.getCinema().getCinemaId(), availSeatNum);
 			if (availSeatNum > 0) {
-				System.out.println("-----------SCREEN-----------");
+				System.out.println("--------Seat layout--------");
 				printingSeatLayout(selectedShowTime);
-                                System.out.println("");
-				System.out.println("----------ENTRANCE----------");
+				System.out.println("---------------------------");
 				System.out.println();
 			}
 			
@@ -572,48 +564,37 @@ public class Moblima {
 				int x = 0;
 				Ticket[] tmpTickets = selectedST.getTickets();
 				// Seat selectedSeat = new Seat();
-				
+				System.out.print("\nEnter the seat number: ");
 				int seatNum;
 
 				while (true) {
 					try {
-                                                System.out.print("\nEnter the seat number: ");
 						seatNum = sc.nextInt();
 						sc.nextLine();
-                                                row = seatNum / 10;
-                                                col = (seatNum - row) / 10;
-                                                boolean foundSeat = false;
-                                                
-                                                for (x = 0; x < tmpTickets.length; x++) {
-                                                        if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
-                                                                        && tmpTickets[x].getStatus().equals(Ticket.AVAILABLE)) {
-                                                                foundSeat = true;
-                                                                tmpTickets[x].setStatus(Ticket.SOLD);
-                                                                break;
-                                                        }
-                                                }
-                                                if(foundSeat){
-                                                    break;
-                                                }else{
-                                                    System.out.println("Seat not available. Re-enter seat number");
-                                                    
-                                                }
-                                                
+						break;
 					} catch (InputMismatchException e) {
 						System.out.println("Your seat number is in incorrect format");
 						sc.nextLine();
 					}
 				}
 
-				
+				col = seatNum / 10;
+				row = (seatNum - col) / 10;
+
+				boolean foundSeat = false;
+				do {
+					for (x = 0; x < tmpTickets.length; x++) {
+						if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
+								&& tmpTickets[x].getStatus() == Ticket.AVAILABLE) {
+							foundSeat = true;
+							break;
+						}
+					}
+					System.out.println("Seat not available. Re-enter seat number");
+				} while (!foundSeat);
 
 				String ticketType = ticketTypePicker();
 				tmpTickets[x].setTicketType(ticketType);
-                                System.out.println("-----------SCREEN-----------");
-				printingSeatLayout(selectedST);
-                                System.out.println("");
-				System.out.println("----------ENTRANCE----------");
-				System.out.println();
                                 //get the price base on cinema type,movietype,tickettype and showtime date
                                 float price = 0;
                                 //base on cinema set the price
@@ -700,9 +681,6 @@ public class Moblima {
 				}
 				break;
 			case 3: // back to main menu
-                                for(Ticket tk : bookedTickets){
-                                    tk.setStatus(Ticket.AVAILABLE);
-                                }
 				break;
 			default:
 				System.out.println("Option not found");
