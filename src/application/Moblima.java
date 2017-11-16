@@ -72,7 +72,7 @@ public class Moblima {
 						sc.nextLine();
 					}
 				}
-				sc.nextLine();
+				//sc.nextLine();
 				if (choice == 1)
 					rankBy = "sales";
 				else if (choice == 2)
@@ -80,7 +80,7 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s\n", i + 1, top5movies.get(i).getTitle());
 				}
 				break;
 			case 3:
