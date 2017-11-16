@@ -182,13 +182,13 @@ public class Moblima {
 		System.out.print("\nEnter your email: ");
 		String email = sc.nextLine();
 		sc.nextLine();
-		for (int i = 0; i < mgList.size(); i++) {
-			mg = mgList.get(i);
-			if (mg.getEmail().toLowerCase() == email.toLowerCase()) {
+		for(MovieGoer moviegoer : mgList){
+			if(moviegoer.getEmail().equalsIgnoreCase(email)){
 				foundEmail = true;
 				break;
 			}
 		}
+		
 		if (!foundEmail) {
 			System.out.println("\nThis is the first time you are here. Kindly provide us your info");
 			System.out.print("Enter your name: ");
@@ -208,15 +208,17 @@ public class Moblima {
 				}
 			}
 			mg = new MovieGoer(name, email, contact);
+			mgList.add(mg);
 		}
+		
 		System.out.println("Enter your review:");
 		String content = sc.nextLine();
 		sc.nextLine();
-		System.out.print("Enter your rating: ");
-		float rate;
+		System.out.print("Enter your rating 1 to 5 (Best)");
+		int rate;
 		while (true) {
 			try {
-				rate = sc.nextFloat();
+				rate = sc.nextInt();
 				sc.nextLine();
 				break;
 			} catch (InputMismatchException e) {
@@ -226,13 +228,14 @@ public class Moblima {
 			}
 		}
 		System.out.println();
-                movie.addReview(mg.getName(), mg.getEmail(), rate, content);
-		List<Review> rvList = (ArrayList<Review>) movie.getReviews();
+        if(!movie.addReview(mg.getName(), mg.getEmail(), rate, content)){
+        	System.out.println("You had written review for this Movie");
+        }
+      	List<Review> rvList = movie.getReviews();
 		movie.setReviews(rvList);
-                
-                int index = movieList.indexOf(movie);
-                movieList.set(index, movie);
-                SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
+        int index = movieList.indexOf(movie);
+        movieList.set(index, movie);
+        SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
 		return movie;
 	}
 
@@ -429,7 +432,7 @@ public class Moblima {
 				System.out.println("===What would you like to do?========");
 				System.out.println("|1. Book this Movie                  |");
 				System.out.println("|2. Write Review                     |");
-				System.out.println("|3. Exit				             |");
+				System.out.println("|3. Exit                             |");
 				System.out.println("======================================");				
 				System.out.print("Enter your choice: ");
 				int choice = sc.nextInt();
