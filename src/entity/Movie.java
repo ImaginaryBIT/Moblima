@@ -317,9 +317,9 @@ public class Movie implements Serializable {
 		System.out.println("Moive Title : " + this.title);
 		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
 		if (this.cast != null) {
-			System.out.print("Actors 	    : ");
+			System.out.println("Actors 	    : ");
 			for (String cast : this.cast) {
-				System.out.print(cast + ", ");
+				System.out.println(cast + ", ");
 			}
 		}
 		System.out.println("Director    : " + this.director);
