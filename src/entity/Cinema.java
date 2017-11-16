@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Cinema implements Serializable {
     public static final String CINEMA_CLASS_REGULAR = "Regular Movie Suites";
@@ -13,14 +14,16 @@ public class Cinema implements Serializable {
     private Seat[] seat;
     private String classType;
     private TimeSlot[] timeSlot;
+    private List<Integer> aisleColumns;
  
-    public Cinema(int cinemaId, String cinemaCode, Cineplex cineplex, Seat[] seat, String classType, TimeSlot[] timeSlot) {
+    public Cinema(int cinemaId, String cinemaCode, Cineplex cineplex, Seat[] seat, String classType, TimeSlot[] timeSlot,List<Integer> aisleColumns) {
         this.cinemaId = cinemaId;
         this.cinemaCode = cinemaCode;
         this.cineplex = cineplex;
         this.seat = seat;
         this.classType = classType;
         this.timeSlot = timeSlot;
+        this.aisleColumns = aisleColumns;
     }
 
     public static String getCINEMA_CLASS_REGULAR() {
@@ -77,6 +80,14 @@ public class Cinema implements Serializable {
 
     public void setTimeSlot(TimeSlot[] timeSlot) {
         this.timeSlot = timeSlot;
+    }
+
+    public List<Integer> getAisleColumns() {
+        return aisleColumns;
+    }
+
+    public void setAisleColumns(List<Integer> aisleColumns) {
+        this.aisleColumns = aisleColumns;
     }
     
     public boolean setTimeSlotStatus(Date date,String status){
