@@ -32,7 +32,7 @@ public class Moblima {
 			System.out.println("=====================================");
 			System.out.println("|1. List Movies                     |");
 			System.out.println("|2. Top 5 Ranking                   |");
-			System.out.println("|3. Search and Book					|");
+			System.out.println("|3. Search and Book                 |");
 			System.out.println("|4. Staff Login                     |");
 			System.out.println("=====================================");
 
