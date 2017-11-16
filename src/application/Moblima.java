@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
+import entity.Cinema;
 import entity.Movie;
 import entity.MovieGoer;
 import entity.Review;
@@ -14,6 +15,7 @@ import entity.ShowTime;
 import entity.Staff;
 import entity.Ticket;
 import entity.Transaction;
+import java.util.Calendar;
 
 public class Moblima {
 	private static final long serialVersionUID = 1L;
@@ -229,6 +231,10 @@ public class Moblima {
 		System.out.println();
 		List<Review> rvList = (ArrayList<Review>) movie.getReviews();
 		movie.setReviews(rvList);
+                
+                int index = movieList.indexOf(movie);
+                movieList.set(index, movie);
+                SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
 		return movie;
 	}
 
@@ -518,7 +524,7 @@ public class Moblima {
 			if (bchoice == 1) {
 	
 				
-				startBooking(selectedShowTime, movie.getTitle());
+				startBooking(selectedShowTime, movie);
 			} // end of booking
 			
 		}while(true);
@@ -526,7 +532,7 @@ public class Moblima {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void startBooking(ShowTime selectedST, String movieTitle) {
+	private static void startBooking(ShowTime selectedST, Movie selectedMv) {
 		List<Ticket> bookedTickets = new ArrayList<>();
 		int choice;
 		do {
@@ -586,6 +592,40 @@ public class Moblima {
 
 				String ticketType = ticketTypePicker();
 				tmpTickets[x].setTicketType(ticketType);
+                                //get the price base on cinema type,movietype,tickettype and showtime date
+                                float price = 0;
+                                //base on cinema set the price
+                                if(selectedST.getCinema().getClassType().equals(Cinema.CINEMA_CLASS_PLATINIUM)){
+                                    price = SystemSettingController.getSystemSetting().getPremiumTicketPrice();
+                                }else{
+                                    price = SystemSettingController.getSystemSetting().getStandardTicketPrice();
+                                }
+                                //base on movie type increse the price
+                                if(selectedMv.getMovieType().equals(Movie.BLOCKBUSTER)){
+                                    price += 1;
+                                }else if(selectedMv.getMovieType().equals(Movie.THREED)){
+                                    price += 1;
+                                }else{
+                                    price += 1;
+                                }
+                               
+                                //base on ticket increase the price
+                                if(tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)){
+                                    price -= SystemSettingController.getSystemSetting().getSeniorCitizenDiscount();
+                                }else if(tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)){
+                                    price -= SystemSettingController.getSystemSetting().getChildDiscount();
+                                }
+                                //increaste if holiday
+                                Calendar c1 = Calendar.getInstance();
+                                c1.setTime(selectedST.getShowDateTime());
+                                if (c1.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY 
+                                        || c1.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+                                        || SystemSettingController.getSystemSetting().getHolidays().contains(selectedST.getShowDateTime())){
+                                    
+                                    price += SystemSettingController.getSystemSetting().getHolidayIncrement();
+                                }
+                                tmpTickets[x].setPrice(price);
+                                
 				bookedTickets.add(tmpTickets[x]);
 				break;
 			case 2: // confirm booking
@@ -610,19 +650,31 @@ public class Moblima {
 				}
 
 				MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
+                                float total_payment = 0;
+                                for(Ticket tk : bookedTickets){
+                                    total_payment += tk.getPrice();
+                                }
 				Transaction txn = new Transaction(selectedST.getShowDateTime(), selectedST.getCinema().getCinemaCode(),
-						movieTitle, bookedTickets);
-				movieGoer.setMovieGoerTXN(txn);
-
-				printTXN(movieTitle, bookedTickets.size(), txn.getTotalPayment());
+						selectedMv.getTitle(), bookedTickets,total_payment);
+				
+                                
+				printTXN(selectedMv.getTitle(), bookedTickets.size(), txn.getTotalPayment());
 				// proceed to purchase
 				if (purchaseTicket(bookedTickets)) {
 					System.out.println("Payment was successful!!!");
+                                        //set transcation price and ticket status
+                                        for(Ticket tk : bookedTickets){
+                                            tk.setStatus(Ticket.SOLD);
+                                        }
+                                        movieGoer.setMovieGoerTXN(txn);
 					// add movieGoer to database
 					ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
 							.readSerializedObject("MovieGoer.ser");
 					mgList.add(movieGoer);
-					SerializeDB.writeSerializedObject("Staff.ser", mgList);
+					SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
+                                        int index = movieList.indexOf(selectedMv);
+                                        movieList.set(index, selectedMv);
+                                        SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
 				}
 				break;
 			case 3: // back to main menu

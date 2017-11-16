@@ -144,5 +144,11 @@ public class SystemSettingController  {
 		return date;
 	}
 	
-	
+	/**
+	 * Get SystemSetting from SerialDatabase
+	 * @param 
+	 */
+	public static SystemSetting getSystemSetting(){
+            return systemSettingDb.get(0);
+	}
 }
