@@ -19,7 +19,7 @@ public class Moblima {
 	private static List list;
 	// private static Person person;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		int choice;
 		do {
@@ -44,12 +44,26 @@ public class Moblima {
 			case 2: // search for movies
 				ArrayList<Movie> movieList = new ArrayList<>();
 
-				System.out.print("Enter movie name to book: ");
+				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
 				sc.nextLine();
 				movieList = searchMovies(movieTitle);
 				if (movieList.size() == 0)
 					System.out.println("No movie found");
+				else {
+					for (int i = 0; i < movieList.size(); i++) {
+						System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
+						System.out.printf("%30 %10s%n", movieList.get(i).getTitle(), movieList.get(i).getMovieType());
+						System.out.println("------------Reviews-------------");
+						List<Review> reviewList = movieList.get(i).getReviews();
+						for (int j = 0; j < reviewList.size(); j++) {
+							System.out.printf("Posted by: %50s Rate: %10d%n",
+									reviewList.get(i).getMovieGoer().getName(), reviewList.get(i).getUserRating());
+							System.out.printf("%150s%n", reviewList.get(i).getContent());
+							System.out.println();
+						}
+					}
+				}
 				break;
 
 			case 3: // top 5 ranking
@@ -130,7 +144,7 @@ public class Moblima {
 		for (int i = 0; i < list.size(); i++) {
 			Movie mv = (Movie) list.get(i);
 			if (mv.getTitle().toLowerCase().contains(movieName.toLowerCase())) {
-				// if search name is in movile title add to list
+				// if search name is in movie title add to list
 				movieList.add(mv);
 			}
 		}
@@ -210,7 +224,7 @@ public class Moblima {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void bookTicket() {
+	private static void bookTicket() throws Exception {
 		// display all now showing movies
 		System.out.println("Now showing movies:");
 		showAllMovies();
@@ -286,12 +300,23 @@ public class Moblima {
 		System.out.println("======================================");
 		System.out.println("|Enter 1. To start booking 2. To exit|");
 		System.out.println("======================================");
-		bchoice = sc.nextInt();
-		sc.nextLine();
+		while(true)
+		{
+			try {
+				bchoice = sc.nextInt();
+				sc.nextLine();
+				break;
+			}
+			catch (Exception IllegalFormatException)
+			{
+				System.out.println("Your choice is in incorrect format. Please re-enter");
+			}
+		}
+		
 		if (bchoice == 1) {
 
 			ShowTime selectedST = showtimePicker(movie.getShowTimes());
-			startBooking(selectedST, movieTitle);
+			startBooking(selectedST, movie.getTitle());
 		} // end of booking
 	}
 
@@ -309,8 +334,20 @@ public class Moblima {
 			String email = sc.nextLine();
 			sc.nextLine();
 			System.out.print("Enter your contact number: ");
-			int contact = sc.nextInt();
-			sc.nextLine();
+			int contact=0;
+			while(true)
+			{
+				try {
+					contact= sc.nextInt();
+					sc.nextLine();
+					break;
+				}
+				catch (Exception IllegalFormatException)
+				{
+					System.out.println("Your choice is in incorrect format. Please re-enter");
+				}
+			}
+			
 
 			for (int i = 0; i < mgList.size(); i++) {
 				movieGoer = mgList.get(i);
@@ -350,7 +387,19 @@ public class Moblima {
 		System.out.println("|2. Cancel booking                  |");
 		System.out.println("=====================================");
 		System.out.print("Enter your choice: ");
-		int choice = sc.nextInt();
+		int choice =0;
+		while(true)
+		{
+			try {
+				choice = sc.nextInt();
+				sc.nextLine();
+				break;
+			}
+			catch (Exception IllegalFormatException)
+			{
+				System.out.println("Your choice is in incorrect format. Please re-enter");
+			}
+		}
 		if (choice == 1) {
 			for (int i = 0; i < bookedTickets.size(); i++) {
 				Ticket ticket = bookedTickets.get(i);
@@ -366,8 +415,19 @@ public class Moblima {
 		ShowTime st = null;
 		while (true) {
 			System.out.print("Enter the ShowTime ID you want to book: ");
-			int stID = sc.nextInt();
-			sc.nextLine();
+			int stID =0;
+			while(true)
+			{
+				try {
+					stID = sc.nextInt();
+					sc.nextLine();
+					break;
+				}
+				catch (Exception IllegalFormatException)
+				{
+					System.out.println("Your choice is in incorrect format. Please re-enter");
+				}
+			}
 
 			for (int j = 0; j < stList.size(); j++) {
 				st = stList.get(j);
@@ -388,7 +448,22 @@ public class Moblima {
 			System.out.println("| Ticket type 1. Child 2. Adult 3. Senior Citizen |");
 			System.out.println("===================================================");
 			System.out.print("Enter your choice: ");
-			typeChoice = sc.nextInt();
+			
+			
+			while(true)
+			{
+				try {
+					typeChoice = sc.nextInt();
+					sc.nextLine();
+					break;
+				}
+				catch (Exception IllegalFormatException)
+				{
+					System.out.println("Your choice is in incorrect format. Please re-enter");
+				}
+			}
+
+			
 
 			if (typeChoice == 1)
 				return Ticket.CHILD;
@@ -410,9 +485,20 @@ public class Moblima {
 			System.out.println("|3. Go back to main menu            |");
 			System.out.println("=====================================");
 			System.out.print("Enter your choice: ");
-			choice = sc.nextInt();
-			sc.nextLine();
-
+			
+			
+			while(true)
+			{
+				try {
+					choice = sc.nextInt();
+					sc.nextLine();
+					break;
+				}
+				catch (Exception IllegalFormatException)
+				{
+					System.out.println("Your choice is in incorrect format. Please re-enter");
+				}
+			}
 			switch (choice) {
 			case 1:// pick a seat
 				int col = 0;
