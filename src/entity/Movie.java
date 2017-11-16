@@ -300,7 +300,12 @@ public class Movie implements Serializable {
 			total_rating += rv.getUserRating();
 		}
 		// total rating devided by no is overall rating
-		return total_rating / reviews.size();
+		if(reviews.isEmpty()) {
+			return 0;
+		}
+		else {
+			return total_rating / reviews.size();
+		}
 	}
 
 	/**
