@@ -354,13 +354,14 @@ public class Movie implements Serializable {
 	 */
 	public void showMovieDetailWithReview() {
 		System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-		System.out.printf("%30 %10s%n", this.title, this.movieType);
+		System.out.printf("%30s %10s%n", this.title, this.movieType);
 		System.out.println("------------Reviews-------------");
-
+		
 		List<Review> reviewList = this.reviews;
 		for (Review review : reviewList) {
-			System.out.printf("Posted by: %50s Rate: %10d%n", review.getUserName(), review.getUserRating());
-			System.out.printf("%150s%n", review.getContent());
+			System.out.printf("Posted by: %50s Rate: %10d%n",
+					review.getUserName(), review.getUserRating());
+			System.out.printf("%150s%n", review.getComment());
 			System.out.println();
 		}
 	}
