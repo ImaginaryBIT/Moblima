@@ -33,21 +33,22 @@ public class PopulateMovie {
                         list = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
 			for (int i = 0; i < list.size(); i++) {
 				Cinema cnma = (Cinema) list.get(i);
-                                Ticket[] tckt = new Ticket[cnma.getSeat().length];
-                                for(int s = 0; s < cnma.getSeat().length; s++){
-                                    
-                                    //movie type and getting system setting here
-                                    // if newMovie.getType() == "something" price = something
-                                    float price = 0.0f;
-                                    //if holiday add 
-                                    price += 2.0;
-                                   
-                                    tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
-                                    
-                                    
-                                }
                                 //get first 3 timeslot and create show time
                                 for(int ts = 0 ; ts < cnma.getTimeSlot().size() ; ts ++){
+                                    Ticket[] tckt = new Ticket[cnma.getSeat().length];
+                                    for(int s = 0; s < cnma.getSeat().length; s++){
+
+                                        //movie type and getting system setting here
+                                        // if newMovie.getType() == "something" price = something
+                                        float price = 0.0f;
+                                        //if holiday add 
+                                        price += 2.0;
+
+                                        tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
+
+
+                                    }
+                                
                                     cnma.getTimeSlot().get(ts).setStatus(TimeSlot.UNAVAILABLE);
                                     ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot().get(ts).getDateTime(),tckt);
                                     showtimeList.add(st);

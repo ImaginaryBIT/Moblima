@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This represents a moviegoer which inherits person's behaviors and signatures

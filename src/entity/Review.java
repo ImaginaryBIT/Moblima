@@ -23,7 +23,7 @@ public class Review implements Serializable{
 	/** User Name */
 	private String userName;
 	/** User Email */
-    private String userEmail;
+        private String userEmail;
     
     
 	/**

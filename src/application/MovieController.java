@@ -736,7 +736,7 @@ public class MovieController {
 		int sn = 0;
 		for(Movie movie : movieList){
 			sn++;
-			System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+			System.out.println(sn +". "+ movie.getTitle()+", ( "+movie.getStatus()+")");
 			
 		}
 		System.out.println("======================================");

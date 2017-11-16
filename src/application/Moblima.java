@@ -177,20 +177,18 @@ public class Moblima {
 
 		// ask for user's email
 		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
-		boolean foundEmail = false;
 		MovieGoer mg = null;
+		boolean foundEmail = false;
+                sc.nextLine();
 		System.out.print("Enter your email: ");
-		sc.nextLine();
 		String email = sc.nextLine();
-		sc.nextLine();
-		for(MovieGoer moviegoer : mgList){
-			if(moviegoer.getEmail().equalsIgnoreCase(email)){
-				mg = moviegoer;
+		for (int i = 0; i < mgList.size(); i++) {
+			mg = mgList.get(i);
+			if (mg.getEmail().toLowerCase().equals(email.toLowerCase())) {
 				foundEmail = true;
 				break;
 			}
 		}
-		
 		if (!foundEmail) {
 			System.out.println("\nThis is the first time you are here. Kindly provide us your info");
 			System.out.print("Enter your name: ");
@@ -209,35 +207,37 @@ public class Moblima {
 				}
 			}
 			mg = new MovieGoer(name, email, contact);
-			mgList.add(mg);
 		}
-		
 		System.out.println("Enter your review:");
 		String content = sc.nextLine();
 		sc.nextLine();
-		System.out.print("Enter your rating 1 to 5 (Best)");
+		System.out.print("Enter your rating: ");
 		float rate;
 		while (true) {
 			try {
 				rate = sc.nextFloat();
 				break;
 			} catch (InputMismatchException e) {
+
 				System.out.println("Your rate is in incorrect format. Please re-enter");
 			
 			}
 		}
 		System.out.println();
-        if(!movie.addReview(mg.getName(), mg.getEmail(), rate, content)){
-        	System.out.println("You had written review for this Movie");
-        }
-        else{
-        	System.out.println("Review added successfully!");
-        }
-      	List<Review> rvList = movie.getReviews();
-		movie.setReviews(rvList);
-        int index = movieList.indexOf(movie);
-        movieList.set(index, movie);
-        SerializeDB.writeSerializedObject("Movie.ser", movieList);
+                
+                movie.addReview(mg.getName(), mg.getEmail(), rate, content);
+		
+                
+                //find the movie id index
+                int index = 0;
+                for(Movie mv: movieList){
+                    if(mv.getMovieId() == movie.getMovieId()){
+                        break;
+                    }
+                    index++;
+                }
+                movieList.set(index, movie);
+                SerializeDB.writeSerializedObject("Movie.ser", movieList);
 		return movie;
 	}
 
@@ -461,7 +461,7 @@ public class Moblima {
 			}while(true);
 		} catch (Exception e) {
 			
-			System.out.println("Exception >> " + e.getMessage());
+			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -617,11 +617,9 @@ public class Moblima {
                                 }
                                 //base on movie type increse the price
                                 if(selectedMv.getMovieType().equals(Movie.BLOCKBUSTER)){
-                                    price += 1;
+                                    price += SystemSettingController.getSystemSetting().getBlockBusterTypeIncrement();
                                 }else if(selectedMv.getMovieType().equals(Movie.THREED)){
-                                    price += 1;
-                                }else{
-                                    price += 1;
+                                    price += SystemSettingController.getSystemSetting().getThreeDTypeIncrement();
                                 }
                                
                                 //base on ticket increase the price
@@ -687,7 +685,14 @@ public class Moblima {
 							.readSerializedObject("MovieGoer.ser");
 					mgList.add(movieGoer);
 					SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
-                                        int index = movieList.indexOf(selectedMv);
+                                        //find the movie id index
+                                        int index = 0;
+                                        for(Movie mv: movieList){
+                                            if(mv.getMovieId() == selectedMv.getMovieId()){
+                                                break;
+                                            }
+                                            index++;
+                                        }
                                         movieList.set(index, selectedMv);
                                         SerializeDB.writeSerializedObject("Movie.ser", movieList);
                     return;

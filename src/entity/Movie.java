@@ -348,16 +348,18 @@ public class Movie implements Serializable {
 	/**
     * This shows a movie with its detals along with reviews
 	 */
-	public void showMovieDetailWithReview() {
-		System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-		System.out.printf("%30s %10s%n", this.title, this.movieType);
+	public void showMovieDetailWithReview(){
+		//System.out.printf("%s %30s%n", "Movie Name", "Movie Type");
+		//System.out.printf("%s %20s%n", this.title, this.movieType);
+                showMovieDetail();
 		System.out.println("------------Reviews-------------");
 		
+
 		List<Review> reviewList = this.reviews;
 		for (Review review : reviewList) {
-			System.out.printf("Posted by: %50s Rate: %10d%n",
-					review.getUserName(), review.getUserRating());
-			System.out.printf("%150s%n", review.getComment());
+			System.out.println("Posted by: "+review.getUserName());
+                        System.out.println("Rating: "+review.getUserRating());
+			System.out.println("Review:\n"+ review.getComment());
 			System.out.println();
 		}
 	}
@@ -369,11 +371,7 @@ public class Movie implements Serializable {
 	 * @param review The content of this new review
 	 */
 	public boolean addReview(String name, String email, float rating, String review) {
-		for (Review rv : reviews) {
-			if (rv.getUserEmail().equals(email)) {
-				return false;
-			}
-		}
+		
 		int reviewId = reviews.size() + 1;
 		reviews.add(new Review(reviewId, rating, review, name, email));
 		return true;
