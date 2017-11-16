@@ -3,7 +3,8 @@ package entity;
 import java.util.ArrayList;
 
 /**
- * 
+ * This represents a moviegoer which inherits person's behaviours
+ * Contains Transaction list, uUsed to store all transactions purchased by the MovieGoer
  * @author Group5
  *
  */
@@ -14,9 +15,17 @@ public class MovieGoer extends Person {
 	 * with respect to serialization
 	 */
 	private static final long serialVersionUID = 1L;
+	/** The ID of this moviegoer */
 	private String movieGoerId;
+	/** The list of transctions that this moviegoer has made */
 	private ArrayList<Transaction> txnList;
 	
+	/**
+	 * This contructs the MovieGoer with his/her personal information
+	 * @param name This is moviegoer's name
+	 * @param email This is his/her email
+	 * @param contact This is his/her contact number
+	 */
 	public MovieGoer(String name, String email, int contact)
 	{
 		super(name, email, contact);
@@ -24,6 +33,7 @@ public class MovieGoer extends Person {
 	}
 
 	/**
+	 * Gets the ID of this moviegoer
 	 * @return the movieGoerId
 	 */
 	public String getMovieGoerId() {
@@ -31,27 +41,33 @@ public class MovieGoer extends Person {
 	}
 
 	/**
+	 * Gets all the transactions this moviegoer has made
 	 * @return the txnList
 	 */
 	public ArrayList<Transaction> getTxnList() {
 		return txnList;
 	}
 	
-	
 	/**
-	 * @param movieGoerId the movieGoerId to set
+	 * Changes the ID of this moviegoer
+	 * @param movieGoerId The movieGoerId to set
 	 */
 	public void setMovieGoerId(String movieGoerId) {
 		this.movieGoerId = movieGoerId;
 	}
 
 	/**
-	 * @param txnList the txnList to set
+	 * Changes the transactions list that the moviegoer has made
+	 * @param txnList The transaction list to set
 	 */
 	public void setTxnList(ArrayList<Transaction> txnList) {
 		this.txnList = txnList;
 	}
 	
+	/**
+	 * Adds one more transaction into transaction list
+	 * @param txn New transaction that has just been made
+	 */
 	public void setMovieGoerTXN(Transaction txn)
 	{
 		if(this.txnList.isEmpty()) {
