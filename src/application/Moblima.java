@@ -47,31 +47,34 @@ public class Moblima {
 
 			switch (choice) {
 			case 1: // list all movies
-				showAllMovies();
+				MovieController.viewAllMovie();
 				break;
 
 			case 2: // search for movies
-				ArrayList<Movie> movieList = new ArrayList<>();
-
 				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
 				sc.nextLine();
-				movieList = searchMovies(movieTitle);
-				if (movieList.size() == 0)
+				List<Movie> movieList = MovieController.searchMovies(movieTitle);
+				if(movieList.isEmpty()){
 					System.out.println("No movie found");
-				else {
-					for (int i = 0; i < movieList.size(); i++) {
+				}
+				else{
+					for(Movie movie : movieList){
 						System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-						System.out.printf("%30 %10s%n", movieList.get(i).getTitle(), movieList.get(i).getMovieType());
+						System.out.printf("%30 %10s%n", movie.getTitle(), movie.getMovieType());
 						System.out.println("------------Reviews-------------");
-						List<Review> reviewList = movieList.get(i).getReviews();
-						for (int j = 0; j < reviewList.size(); j++) {
+						
+
+						List<Review> reviewList = movie.getReviews();
+						for (Review review : reviewList) {
 							System.out.printf("Posted by: %50s Rate: %10d%n",
-									reviewList.get(i).getMovieGoer().getName(), reviewList.get(i).getUserRating());
-							System.out.printf("%150s%n", reviewList.get(i).getContent());
+									review.getUserName(), review.getUserRating());
+							System.out.printf("%150s%n", review.getContent());
 							System.out.println();
 						}
 					}
+				}
+		
 					System.out.println("============================================");
 					System.out.println("Enter 1. To write your own review 2. To exit");
 					System.out.println("============================================");
