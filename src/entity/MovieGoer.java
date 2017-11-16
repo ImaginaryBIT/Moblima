@@ -24,7 +24,7 @@ public class MovieGoer extends Person {
 	/* ******************** Constructor ************************/
 	
 	/**
-	 * This contructs the MovieGoer with his/her personal information
+	 * This constructs the MovieGoer with his/her personal information
 	 * @param name This is moviegoer's name
 	 * @param email This is his/her email
 	 * @param contact This is his/her contact number

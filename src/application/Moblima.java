@@ -17,12 +17,26 @@ import entity.Staff;
 import entity.Ticket;
 import entity.Transaction;
 
+/**
+ * This is the main interface that both staff and movieoger will work with
+ * Moblima gives user the option to:
+ * 1. List down all movies being shown (including "Preview" movies),
+ * 2. Query the top 5 ranking based on either sale or review rate
+ * 3. Search and book any Preview or Now Showing movies
+ * 4. Also view their booking history
+ * 5. This option is dedicated to staff only. 
+ * Once the staff logins successfully, they can modify movies, show time, holidays, etc in the database. 
+ * Changing the settings of the system will also be available to staff
+ * @author group5
+ *
+ */
+
 public class Moblima {
 	private static final long serialVersionUID = 1L;
 	private static Scanner sc = new Scanner(System.in);
 	private static List<Movie> movieList = new ArrayList<>();
 	// private static Person person;
-
+	
 	public static void main(String[] args) throws Exception {
 		
 		int choice;
@@ -124,6 +138,11 @@ public class Moblima {
 		} while (choice <= 4 && choice > 0); // end of do-while loop
 	}
 	
+	/**
+	 * This methods will be called after a successful search of a movie.
+	 * It offers users the options to start new booking, view the movie in full details or just simply go back to main menu 
+	 * @param movieLst The list of movies being queried before hand
+	 */
 	private static void menuAfterList(List<Movie> movieLst){
 		try{
 			do{
@@ -170,9 +189,16 @@ public class Moblima {
 		}
 		catch(Exception e){
 			//System.out.println("Invalid Input"+e.getMessage());
-		}
-		
+		}		
 	}
+	
+	/**
+	 * The method generates a form for users to write a review for any particular movie.
+	 * The user will needs to enter their email before starting writing review. This is for the purpose of showing and maintaining reviews
+	 * Once the process of writing review is successful, the system will store the reviewer personal details, their review and the rate they have given in Movie.ser database
+	 * @param movie The movie object that the user would like to give a review
+	 * @return movie with a new review added
+	 */
 	private static Movie writeReview(Movie movie) {
 
 		// ask for user's email
@@ -241,6 +267,10 @@ public class Moblima {
 		return movie;
 	}
 
+	/**
+	 * This method is used by staff to login to the system. It asks for the staff's ID and password.
+	 * It brings up staff menu if the login is success
+	 */
 	private static void staffLogin() {
 		Staff staff = new Staff();
 		if (!staff.login())
@@ -249,8 +279,11 @@ public class Moblima {
 			StaffFunctionsController.printStaffMenu();
 	}
 
-
-	// get top 5 sort by review or no_of_ticket_sold
+	/**
+	 * Gets top 5 movies sort by review or number of tickets sold for this particular movie
+	 * @param rankBy The sorting that users would like to make
+	 * @return List of top 5 movies based on selected sorting method
+	 */
 	public static List<Movie> showTopRank(String rankBy) {
 		// temp movie to hold during sort
 		Movie temp_movie;
@@ -296,6 +329,11 @@ public class Moblima {
 		return top5List;
 	}
 
+	/**
+	 * Print the seat layout of a particular movie at a particular show time and cinema.
+	 * The seat layout will show users the arrangement of seats, the screen, the exit as well as aisle between seat rows
+	 * @param st
+	 */
 	private static void printingSeatLayout(ShowTime st) {
 		int prevRow = 0;
 		for (int z = 0; z < st.getTickets().length; z++) {

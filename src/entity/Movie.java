@@ -93,7 +93,7 @@ public class Movie implements Serializable {
 	/* ******************** Getter and Setter Methods ******** */
 	/**
 	 * Gets the ID of this movie
-	 * @return the movieId
+	 * @return movieId The ID of this movie
 	 */
 	public int getMovieId() {
 		return movieId;
@@ -283,7 +283,7 @@ public class Movie implements Serializable {
 		this.status = status;
 	}
 
-	/* *******************Methods ********************** */
+	/* ******************* Other Methods ********************** */
 	/**
 	 * Get the number of ticket sold	
 	 * @return total number of ticket
@@ -346,7 +346,7 @@ public class Movie implements Serializable {
 	}
 	
 	/**
-    * This shows a movie with its detals along with reviews
+    * This shows a movie with its details along with reviews
 	 */
 	public void showMovieDetailWithReview(){
 		//System.out.printf("%s %30s%n", "Movie Name", "Movie Type");

@@ -724,7 +724,7 @@ public class MovieController {
 		for (Movie movie : movieList) {
 			if ((movie.getTitle().equalsIgnoreCase(name)) && (movie.getMovieType().equalsIgnoreCase(type))
 					&& (movie.getDirector().equals(director))) {
-				System.out.println("Movie already in database.Please add another movie");
+				System.out.println("Movie already in database. Please add another movie");
 				return true;
 			}
 		}
@@ -736,7 +736,7 @@ public class MovieController {
 		int sn = 0;
 		for(Movie movie : movieList){
 			sn++;
-			System.out.println(sn +". "+ movie.getTitle()+", ( "+movie.getStatus()+")");
+			System.out.println(sn +". "+ movie.getTitle()+", ("+movie.getStatus()+")");
 			
 		}
 		System.out.println("======================================");
