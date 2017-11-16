@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 import database.SerializeDB;
 
 /**
- * This class implement to do action, add or delete public holidays from PublicHoliday.ser
+ * This class implemented to do action, add or delete public holidays from PublicHoliday.ser
  * @author Group5
  *
  */
@@ -19,8 +19,8 @@ public class PublicHoliday {
 
 	/**
 	 * This method add date as public holiday to PublicHoliday.ser
-	 * @param date the date to add as holiday lists
-	 * @return boolean
+	 * @param date The date to add as holiday lists
+	 * @return boolean True if the adding is successful, false otherwise
 	 */
 	public boolean addHoliday(GregorianCalendar date) {
 		long dateMS = date.getTimeInMillis();
@@ -39,8 +39,8 @@ public class PublicHoliday {
 
 	/**
 	 * The method remove date from PublicHoliday.ser
-	 * @param date the date to remove from holiday lists
-	 * @return boolean 
+	 * @param date The date to remove from holiday lists
+	 * @return boolean True if the removing is successful, false otherwise
 	 */
 	public boolean deleteHoliday(GregorianCalendar date) {
 		long dateMS = date.getTimeInMillis();
@@ -59,9 +59,9 @@ public class PublicHoliday {
 	}
 
 	/**
-	 * The method check the date is whether holiday or not
-	 * @param date the date to check whether holiday
-	 * @return boolean
+	 * The method check if a given date is a holiday
+	 * @param date The date to check whether holiday
+	 * @return boolean True if the the given date is holiday, false otherwise
 	 */
 	public boolean isHoliday(GregorianCalendar date) {
 		date.set(GregorianCalendar.HOUR_OF_DAY, 0);
@@ -81,8 +81,8 @@ public class PublicHoliday {
 	}
 
 	/**
-	 * the method to get the public holiday
-	 * @return publicHoliday
+	 * The method to get all the public holidays in a list
+	 * @return publicHoliday List of public holidays
 	 */
 	public ArrayList<GregorianCalendar> getPublicHoliday() {
 		publicHoliday = (ArrayList<GregorianCalendar>) SerializeDB.readSerializedObject("PublicHoliday.ser");

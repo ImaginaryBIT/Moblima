@@ -13,7 +13,7 @@ public class Person implements Serializable {
 	private String name;
 	/** Person Email */
 	private String email;
-	/** Person contact nubmer */
+	/** Person contact number */
 	private int contact;
 	
 	/**
@@ -23,9 +23,10 @@ public class Person implements Serializable {
 		//do nothing
 	}
 	/**
-	 * @param name
-	 * @param email
-	 * @param contact
+	 * This create a new person object with his/her personal information
+	 * @param name This person's name
+	 * @param email This person's email
+	 * @param contact This person's contact number
 	 */
 	public Person(String name, String email, int contact) {
 		super();
@@ -34,36 +35,42 @@ public class Person implements Serializable {
 		this.contact = contact;
 	}
 	/**
-	 * @return the name
+	 * Gets the name of this person
+	 * @return name The person's name
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * @return the email
+	 * Gets this person's email
+	 * @return email This person's email
 	 */
 	public String getEmail() {
 		return email;
 	}
 	/**
+	 * Gets this person's contact number
 	 * @return the contact
 	 */
 	public int getContact() {
 		return contact;
 	}
 	/**
+	 * Changes the name to a new one
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
+	 * Changes his/her email
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	/**
+	 * Changes his/her contact number
 	 * @param contact the contact to set
 	 */
 	public void setContact(int contact) {
