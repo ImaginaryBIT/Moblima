@@ -1,21 +1,24 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
+import utilities.Utilities;
 
 /**
  * 
  * @author Group5
- *
+ * 
  */
 public class Movie implements Serializable {
+
 	/**
-	 * Used during deserialization to verify that the sender and receiver of a serialized object have loaded 
-	 * classes for that object that are compatible with respect to serialization 
+	 * Used during deserialization to verify that the sender and receiver of a
+	 * serialized object have loaded classes for that object that are compatible
+	 * with respect to serialization
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** Movie Id */
 	private int movieId;
 	/** Movie Title */
@@ -30,7 +33,7 @@ public class Movie implements Serializable {
 	private String synopsis;
 	/** Movie Running Time (minute) */
 	private int runningTime;
-	/** Overall User Rating  */
+	/** Overall User Rating */
 	private float overallUserRate;
 	/** Movie Reviews */
 	private List<Review> reviews;
@@ -42,9 +45,8 @@ public class Movie implements Serializable {
 	private List<ShowTime> showTimes;
 	/** Status */
 	private String status;
-	
 
-	/* ******************** Constructors *********************/
+	/* ******************** Constructors ******************** */
 
 	/**
 	 * @param movieId
@@ -81,15 +83,17 @@ public class Movie implements Serializable {
 		this.status = status;
 	}
 
+	public Movie() {
+		// TODO Auto-generated constructor stub
+	}
 
-	/* ******************** Getter and Setter Methods *********/
+	/* ******************** Getter and Setter Methods ******** */
 	/**
 	 * @return the movieId
 	 */
 	public int getMovieId() {
 		return movieId;
 	}
-
 
 	/**
 	 * @return the title
@@ -98,14 +102,12 @@ public class Movie implements Serializable {
 		return title;
 	}
 
-
 	/**
 	 * @return the cast
 	 */
 	public List<String> getCast() {
 		return cast;
 	}
-
 
 	/**
 	 * @return the director
@@ -114,14 +116,12 @@ public class Movie implements Serializable {
 		return director;
 	}
 
-
 	/**
 	 * @return the language
 	 */
 	public String getLanguage() {
 		return language;
 	}
-
 
 	/**
 	 * @return the synopsis
@@ -130,14 +130,12 @@ public class Movie implements Serializable {
 		return synopsis;
 	}
 
-
 	/**
 	 * @return the runningTime
 	 */
 	public int getRunningTime() {
 		return runningTime;
 	}
-
 
 	/**
 	 * @return the overallUserRate
@@ -146,14 +144,12 @@ public class Movie implements Serializable {
 		return overallUserRate;
 	}
 
-
 	/**
 	 * @return the reviews
 	 */
 	public List<Review> getReviews() {
 		return reviews;
 	}
-
 
 	/**
 	 * @return the movieType
@@ -162,14 +158,12 @@ public class Movie implements Serializable {
 		return movieType;
 	}
 
-
 	/**
 	 * @return the rating
 	 */
 	public String getRating() {
 		return rating;
 	}
-
 
 	/**
 	 * @return the showTimes
@@ -178,7 +172,6 @@ public class Movie implements Serializable {
 		return showTimes;
 	}
 
-
 	/**
 	 * @return the status
 	 */
@@ -186,169 +179,182 @@ public class Movie implements Serializable {
 		return status;
 	}
 
-
 	/**
-	 * @param movieId the movieId to set
+	 * @param movieId
+	 *            the movieId to set
 	 */
 	public void setMovieId(int movieId) {
 		this.movieId = movieId;
 	}
 
-
 	/**
-	 * @param title the title to set
+	 * @param title
+	 *            the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
 	/**
-	 * @param cast the cast to set
+	 * @param cast
+	 *            the cast to set
 	 */
 	public void setCast(List<String> cast) {
 		this.cast = cast;
 	}
 
-
 	/**
-	 * @param director the director to set
+	 * @param director
+	 *            the director to set
 	 */
 	public void setDirector(String director) {
 		this.director = director;
 	}
 
-
 	/**
-	 * @param language the language to set
+	 * @param language
+	 *            the language to set
 	 */
 	public void setLanguage(String language) {
 		this.language = language;
 	}
 
-
 	/**
-	 * @param synopsis the synopsis to set
+	 * @param synopsis
+	 *            the synopsis to set
 	 */
 	public void setSynopsis(String synopsis) {
 		this.synopsis = synopsis;
 	}
 
-
 	/**
-	 * @param runningTime the runningTime to set
+	 * @param runningTime
+	 *            the runningTime to set
 	 */
 	public void setRunningTime(int runningTime) {
 		this.runningTime = runningTime;
 	}
 
-
 	/**
-	 * @param overallUserRate the overallUserRate to set
+	 * @param overallUserRate
+	 *            the overallUserRate to set
 	 */
 	public void setOverallUserRate(float overallUserRate) {
 		this.overallUserRate = overallUserRate;
 	}
 
-
 	/**
-	 * @param reviews the reviews to set
+	 * @param reviews
+	 *            the reviews to set
 	 */
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
 
-
 	/**
-	 * @param movieType the movieType to set
+	 * @param movieType
+	 *            the movieType to set
 	 */
 	public void setMovieType(String movieType) {
 		this.movieType = movieType;
 	}
 
-
 	/**
-	 * @param rating the rating to set
+	 * @param rating
+	 *            the rating to set
 	 */
 	public void setRating(String rating) {
 		this.rating = rating;
 	}
 
-        
 	/**
-	 * @param showTimes the showTimes to set
+	 * @param showTimes
+	 *            the showTimes to set
 	 */
 	public void setShowTimes(List<ShowTime> showTimes) {
 		this.showTimes = showTimes;
 	}
 
-
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-        
-	/* *******************Methods ***********************/
-        /**
-	 * @method to get Ticket sold
+
+	/* *******************Methods ********************** */
+	/**
+	 * Get the number of ticket sold
+	 * 
+	 * @return total number of ticket
 	 */
 	public int getTicketSold() {
-            int total = 0;
-            //loop through all the showTime and find the tickets that are sold
-            for (int i = 0; i < showTimes.size(); i++) {
-                ShowTime rv = (ShowTime) showTimes.get(i);
-                total += rv.getNoOfTicketsSold();
-                  
-            }
-            return total;
+		int total = 0;
+		// loop through all the showTime and find the tickets that are sold
+		for (int i = 0; i < showTimes.size(); i++) {
+			ShowTime rv = (ShowTime) showTimes.get(i);
+			total += rv.getNoOfTicketsSold();
+
+		}
+		return total;
 	}
-	
-        /**
-	 * @return the overallUserRate
+
+	/**
+	 * Calculate Overall User Rating
+	 * 
+	 * @return rating
 	 */
-        public float getOverallUserRating() {
-            int total_rating = 0;
-            //loop through all reivew and sum total rating
-            for (int i = 0; i < reviews.size(); i++) {
-                Review rv = (Review) reviews.get(i);
-                total_rating += rv.getUserRating();
-            }
-            //total rating devided by no is overall rating
-            return total_rating/reviews.size();
+	public float getOverallUserRating() {
+		int total_rating = 0;
+		// loop through all reivew and sum total rating
+		for (int i = 0; i < reviews.size(); i++) {
+			Review rv = (Review) reviews.get(i);
+			total_rating += rv.getUserRating();
+		}
+		// total rating devided by no is overall rating
+		return total_rating / reviews.size();
 	}
-	
-    public void showMovieDetail(){
-    	String rating = "NA";
-    	System.out.println("Moive ID    : "+this.movieId);
-    	System.out.println("Moive Title : "+this.title);
-    	System.out.println("Synopisis   :"+this.synopsis);
-    	System.out.println("Actors 	    : "+this.cast.get(0)+" , "+this.cast.get(2));
-    	System.out.println("Director    : "+this.director);
-    	System.out.println("Language    : "+this.language);
-    	System.out.println("Type	    : "+this.movieType);
-    	System.out.println("Rating	    : "+this.rating);
-    	System.out.println("Running Time: "+this.runningTime);
-    	if(this.overallUserRate > 0){
-    		rating = String.valueOf(this.overallUserRate);
-    	}
-    	System.out.println("Running Time: "+rating);
-    	System.out.println("Status		: "+this.status);
-    	
-    }
-    /**
+
+	/**
+	 * Print Movie Detail
+	 */
+	public void showMovieDetail() {
+		String rating = "NA";
+		System.out.println("Moive ID    : " + this.movieId);
+		System.out.println("Moive Title : " + this.title);
+		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
+		if (this.cast != null) {
+			System.out.print("Actors 	    : ");
+			for (String cast : this.cast) {
+				System.out.print(cast + ", ");
+			}
+		}
+		System.out.println("Director    : " + this.director);
+		System.out.println("Language    : " + this.language);
+		System.out.println("Type        : " + this.movieType);
+		System.out.println("Rating      : " + this.rating);
+		System.out.println("RunTime     : " + this.runningTime);
+		if (this.overallUserRate > 0) {
+			rating = String.valueOf(this.overallUserRate);
+		}
+		System.out.println("Rating      : " + rating);
+		System.out.println("Status      : " + this.status);
+
+	}
+
+	/**
 	 * @method add review to movie
 	 */
-	public boolean addReview(String name,String email,float rating,String review) {
-		for(Review rv:reviews){
-                    if(rv.getUserEmail().equals(email)){
-                        return false;
-                    }
-                }
-                int reviewId = reviews.size()+1;
-                reviews.add(new Review(reviewId,rating,review,name,email));
-                return true;
+	public boolean addReview(String name, String email, float rating,
+			String review) {
+		for (Review rv : reviews) {
+			if (rv.getUserEmail().equals(email)) {
+				return false;
+			}
+		}
+		int reviewId = reviews.size() + 1;
+		reviews.add(new Review(reviewId, rating, review, name, email));
+		return true;
 	}
 }
