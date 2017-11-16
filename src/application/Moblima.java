@@ -57,7 +57,7 @@ public class Moblima {
 						List<Review> reviewList = movieList.get(i).getReviews();
 						for (int j = 0; j < reviewList.size(); j++) {
 							System.out.printf("Posted by: %50s Rate: %10d%n",
-									reviewList.get(i).getMovieGoer().getName(), reviewList.get(i).getUserRating());
+									reviewList.get(i).getUserName(), reviewList.get(i).getUserRating());
 							System.out.printf("%150s%n", reviewList.get(i).getContent());
 							System.out.println();
 						}
