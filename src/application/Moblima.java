@@ -32,7 +32,7 @@ public class Moblima {
 			System.out.println("=====================================");
 			System.out.println("|1. List Movies                     |");
 			System.out.println("|2. Top 5 Ranking                   |");
-			System.out.println("|3. Search and Book                 |");
+			System.out.println("|3. Search and Book					|");
 			System.out.println("|4. Staff Login                     |");
 			System.out.println("=====================================");
 
@@ -53,26 +53,7 @@ public class Moblima {
 				movieList = MovieController.viewAllMovie();
 				break;
 
-			case 2: // search for movies
-			case 4:
-				System.out.print("Enter movie name to search: ");
-				String movieTitle = sc.nextLine();
-				sc.nextLine();
-				List<Movie> searchMovieList = MovieController.searchMovies(movieTitle);
-				if(searchMovieList.isEmpty()){
-					System.out.println("No movie found");
-				}
-				else{
-					int sn = 0;
-					for(Movie movie : searchMovieList){
-						sn = sn+1;
-						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
-					}
-				}
-				menuAfterList(searchMovieList);
-				break;
-
-			case 3: // top 5 ranking
+			case 2: // top 5 ranking
 				String rankBy = "";
 				System.out.println("=====================================");
 				System.out.println("|1. Rank by Sales                   |");
@@ -102,8 +83,27 @@ public class Moblima {
 					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
 				}
 				break;
+			case 3:
+				System.out.print("Enter movie name to search: ");
+				String movieTitle = sc.nextLine();
+				sc.nextLine();
+				List<Movie> searchMovieList = MovieController.searchMovies(movieTitle);
+				if(searchMovieList.isEmpty()){
+					System.out.println("No movie found");
+				}
+				else{
+					int sn = 0;
+					for(Movie movie : searchMovieList){
+						sn = sn+1;
+						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+					}
+				}
+				menuAfterList(searchMovieList);
+				break;
 
-			case 5: // staff login
+			
+
+			case 4: // staff login
 				staffLogin();
 				break;
 
@@ -121,7 +121,7 @@ public class Moblima {
 					}
 				}
 			}
-		} while (choice <= 5 && choice > 0); // end of do-while loop
+		} while (choice <= 4 && choice > 0); // end of do-while loop
 	}
 	
 	private static void menuAfterList(List<Movie> movieLst){
