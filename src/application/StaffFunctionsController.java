@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
-import entity.Cinema;
 import entity.Movie;
 import entity.MovieGoer;
 import entity.Transaction;
@@ -26,7 +25,7 @@ public class StaffFunctionsController {
 		try {
 			do {
 				System.out.println("=========Available Functions==========");
-				System.out.println("|1. View All Movie.                    |");
+				System.out.println("|1. View All Movie.                  |");
 				System.out.println("|2. Add Movie.                       |");
 				System.out.println("|3. Update Movie.                    |");
 				System.out.println("|4. Generate Sale Report.            |");
@@ -59,12 +58,14 @@ public class StaffFunctionsController {
 				}
 			}while(true);
 		} catch (Exception e) {
+			
 			System.out.println("Exception >> " + e.getMessage());
+			throw e;
 		}
 		
 	}
 	
-	private static void generateSaleReport(){
+private static void generateSaleReport(){
 		
 		List<MovieGoer> goerList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
 		List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
@@ -79,7 +80,7 @@ public class StaffFunctionsController {
 			System.out.println((i+1) + ". " + movieList.get(i).getTitle() + "=>");
 			for(int j = 0; j < goerList.size();j++)
 			{
-				transList = goerList.get(j).getMovieGoerTXN();
+				transList = goerList.get(j).getTxnList();
 				
 				for(int k = 0; k < transList.size(); k++)
 				{
@@ -94,4 +95,5 @@ public class StaffFunctionsController {
 			System.out.println("The total amount of Sales is : " + amountOfSales);
 		}	
 	}	
+	
 }

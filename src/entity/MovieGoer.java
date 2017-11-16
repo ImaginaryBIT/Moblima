@@ -2,6 +2,11 @@ package entity;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Group5
+ *
+ */
 public class MovieGoer {
 	private String movieGoerId;
 	private String name;
@@ -11,51 +16,85 @@ public class MovieGoer {
 	
 	public MovieGoer(String name, String email, int contact)
 	{
-		setMovieGoerId(name, contact);
 		this.name=name;
 		this.email=email;
 		this.contact=contact;
 	}
-	public String movieGoerId()
-	{
+
+	/**
+	 * @return the movieGoerId
+	 */
+	public String getMovieGoerId() {
 		return movieGoerId;
 	}
-	public String getName()
-	{
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
 		return name;
 	}
-	public String email()
-	{
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
 		return email;
 	}
-	public int getContact()
-	{
+
+	/**
+	 * @return the contact
+	 */
+	public int getContact() {
 		return contact;
 	}
-	public ArrayList<Transaction> getMovieGoerTXN()
-	{
+
+	/**
+	 * @return the txnList
+	 */
+	public ArrayList<Transaction> getTxnList() {
 		return txnList;
 	}
-	//set methods
-	public void setMovieGoerId(String name, int contact)
-	{
-		movieGoerId = name + String.valueOf(contact);
+	
+	
+	/**
+	 * @param movieGoerId the movieGoerId to set
+	 */
+	public void setMovieGoerId(String movieGoerId) {
+		this.movieGoerId = movieGoerId;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @param contact the contact to set
+	 */
+	public void setContact(int contact) {
+		this.contact = contact;
+	}
+
+	/**
+	 * @param txnList the txnList to set
+	 */
+	public void setTxnList(ArrayList<Transaction> txnList) {
+		this.txnList = txnList;
 	}
 	
-	public void setName(String name)
-	{
-		this.name=name;
-	}
-	public void setEmail(String email)
-	{
-		this.email=email;		
-	}
-	public void setContact(int contact)
-	{
-		this.contact=contact;
-	}
 	public void setMovieGoerTXN(Transaction txn)
 	{
 		this.txnList.add(txn);
 	}
+
 }
