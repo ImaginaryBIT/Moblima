@@ -7,7 +7,9 @@ package testing;
 
 import database.SerializeDB;
 import entity.Staff;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,8 +24,8 @@ public class PopulateStaff {
         // TODO code application logic here
         /////////////////////////////// STAFF //////////////////////////////////////////
         // Create new data
-        ArrayList staffList = new ArrayList();
-        Staff staff = new Staff("admin", "0", "password", "email", 123);
+        List<Staff> staffList = new ArrayList();
+        Staff staff = new Staff("admin", "1", "password", "email", 123);
         // add to list
         staffList.add(staff);
 
