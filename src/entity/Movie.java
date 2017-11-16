@@ -18,7 +18,10 @@ public class Movie implements Serializable {
 	 * with respect to serialization
 	 */
 	private static final long serialVersionUID = 1L;
-
+	/** type of Movies  */
+    public static final String BLOCKBUSTER = "Blockbuster";
+    public static final String THREED = "3D";
+    public static final String DIGITAL = "Digital";
 	/** Movie Id */
 	private int movieId;
 	/** Movie Title */
