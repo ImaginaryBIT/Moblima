@@ -483,8 +483,9 @@ public class Moblima {
 			List<ShowTime> showTimes = movie.getShowTimes();
 			for (ShowTime showTime : showTimes){
 				sn = sn +1;
-				System.out.printf("Showtime for %s in %s\n", sn, movie.getTitle(), movie.getMovieType());
-				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
+				System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
+				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats\n");
+				System.out.printf("%d          \t%s %s    \t\t\t %s    \t\t\t%d\n",showTime.getShowTimeId(),showTime.getShowDate(),showTime.getShowTime(),showTime.getCinema().getCineplex().getName(),showTime.getNoOfTicketsAvailable());
 			}
 			System.out.print("Please enter showtime no: ");
 			int selectedNo = sc.nextInt();
