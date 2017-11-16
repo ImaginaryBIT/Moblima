@@ -1,23 +1,25 @@
 package application;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
-import entity.Movie;
-import entity.MovieGoer;
-import entity.Review;
-import entity.ShowTime;
-import entity.Staff;
-import entity.Ticket;
-import entity.Transaction;
+import entity.*;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
 
 public class Moblima {
+	private static final long serialVersionUID = 1L;
 	private static Scanner sc = new Scanner(System.in);
 	private static List list;
-	
+	// private static Person person;
+
 	public static void main(String[] args) throws Exception {
 
 		int choice;
@@ -32,8 +34,16 @@ public class Moblima {
 			System.out.println("=====================================");
 
 			System.out.print("Enter your choice: ");
-			choice = sc.nextInt();
-			sc.nextLine();
+			while (true) {
+				try {
+					choice = sc.nextInt();
+					sc.nextLine();
+					break;
+				} catch (InputMismatchException e) {
+					System.out.println("Your choice is in incorrect format");
+					sc.nextLine();
+				}
+			}
 
 			switch (choice) {
 			case 1: // list all movies
@@ -57,10 +67,47 @@ public class Moblima {
 						List<Review> reviewList = movieList.get(i).getReviews();
 						for (int j = 0; j < reviewList.size(); j++) {
 							System.out.printf("Posted by: %50s Rate: %10d%n",
-									reviewList.get(i).getUserName(), reviewList.get(i).getUserRating());
+									reviewList.get(i).getMovieGoer().getName(), reviewList.get(i).getUserRating());
 							System.out.printf("%150s%n", reviewList.get(i).getContent());
 							System.out.println();
 						}
+					}
+					System.out.println("============================================");
+					System.out.println("Enter 1. To write your own review 2. To exit");
+					System.out.println("============================================");
+					int rchoice;
+					while (true) {
+						try {
+							rchoice = sc.nextInt();
+							sc.nextLine();
+							break;
+						} catch (InputMismatchException e) {
+							System.out.println("Your choice is in incorrect format");
+							sc.nextLine();
+						}
+					}
+					if (rchoice == 1) {
+						boolean foundType = false;
+						Movie movie = null;
+						String mvType = "";
+
+						do {
+							System.out.print("Enter the movie type: ");
+							mvType = sc.nextLine().toLowerCase();
+
+							sc.nextLine();
+							for (int i = 0; i < movieList.size(); i++) {
+								movie = movieList.get(i);
+								if (movie.getMovieType().toLowerCase() == mvType) {
+									movieList.remove(i);
+									foundType = true;
+									break;
+								}
+							}
+							if (!foundType)
+								System.out.println("Type not found. Re-enter the type");
+						} while (!foundType);
+						writeReview(movieList, movie);
 					}
 				}
 				break;
@@ -73,8 +120,17 @@ public class Moblima {
 				System.out.println("|3. Back to main menu               |");
 				System.out.println("=====================================");
 				System.out.print("Enter your choice: ");
-				choice = sc.nextInt();
 
+				while (true) {
+					try {
+						choice = sc.nextInt();
+						sc.nextLine();
+						break;
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
+					}
+				}
 				sc.nextLine();
 				if (choice == 1)
 					rankBy = "sales";
@@ -95,7 +151,16 @@ public class Moblima {
 					System.out.println("|3. Back to main menu               |");
 					System.out.println("=====================================");
 					System.out.print("Enter your choice: ");
-					choice = sc.nextInt();
+					while (true) {
+						try {
+							choice = sc.nextInt();
+							sc.nextLine();
+							break;
+						} catch (InputMismatchException e) {
+							System.out.println("Your choice is in incorrect format");
+							sc.nextLine();
+						}
+					}
 					sc.nextLine();
 
 					switch (choice) {
@@ -121,9 +186,79 @@ public class Moblima {
 			default: // need to improve here
 				System.out.println("Re-enter your choice!");
 				System.out.print("Enter your choice: ");
-				choice = sc.nextInt();
+				while (true) {
+					try {
+						choice = sc.nextInt();
+						sc.nextLine();
+						break;
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
+					}
+				}
 			}
 		} while (choice <= 5 && choice > 0); // end of do-while loop
+	}
+
+	private static void writeReview(ArrayList<Movie> movieList, Movie movie) {
+
+		// ask for user's email
+
+		ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+		MovieGoer mg = null;
+		boolean foundEmail = false;
+		System.out.print("\nEnter your email: ");
+		String email = sc.nextLine();
+		sc.nextLine();
+		for (int i = 0; i < mgList.size(); i++) {
+			mg = mgList.get(i);
+			if (mg.getEmail().toLowerCase() == email.toLowerCase()) {
+				foundEmail = true;
+				break;
+			}
+		}
+		if (!foundEmail) {
+			System.out.println("\nThis is the first time you are here. Kindly provide us your info");
+			System.out.print("Enter your name: ");
+			String name = sc.nextLine();
+			sc.nextLine();
+			int contact;
+			while (true) {
+				try {
+					System.out.print("Contact number: ");
+					contact = sc.nextInt();
+					sc.nextLine();
+					break;
+				} catch (InputMismatchException e) {
+
+					System.out.println("Your contact is in incorrect format. Please re-enter");
+					sc.nextLine();
+				}
+			}
+			mg = new MovieGoer(name, email, contact);
+		}
+		System.out.println("Enter your review:");
+		String content = sc.nextLine();
+		sc.nextLine();
+		System.out.print("Enter your rate: ");
+		int rate;
+		while (true) {
+			try {
+				rate = sc.nextInt();
+				sc.nextLine();
+				break;
+			} catch (InputMismatchException e) {
+
+				System.out.println("Your rate is in incorrect format. Please re-enter");
+				sc.nextLine();
+			}
+		}
+		System.out.println();
+		Review reviewObj = new Review(content, rate, mg);
+		ArrayList<Review> rvList = (ArrayList<Review>) movie.getReviews();
+		movie.setReviews(rvList);
+		movieList.add(movie);
+		SerializeDB.writeSerializedObject("Movie.ser", movieList);
 	}
 
 	private static void staffLogin() {
@@ -131,7 +266,7 @@ public class Moblima {
 		if (!staff.login())
 			System.out.println("Incorrect ID or Password");
 		else
-			StaffFunctionsController.printStaffMenu();
+			staff.showStaffMenu();
 	}
 
 	public static ArrayList<Movie> searchMovies(String movieName) {
@@ -299,19 +434,17 @@ public class Moblima {
 		System.out.println("======================================");
 		System.out.println("|Enter 1. To start booking 2. To exit|");
 		System.out.println("======================================");
-		while(true)
-		{
+		while (true) {
 			try {
 				bchoice = sc.nextInt();
 				sc.nextLine();
 				break;
-			}
-			catch (Exception IllegalFormatException)
-			{
-				System.out.println("Your choice is in incorrect format. Please re-enter");
+			} catch (InputMismatchException e) {
+				System.out.println("Your choice is in incorrect format");
+				sc.nextLine();
 			}
 		}
-		
+
 		if (bchoice == 1) {
 
 			ShowTime selectedST = showtimePicker(movie.getShowTimes());
@@ -333,30 +466,27 @@ public class Moblima {
 			String email = sc.nextLine();
 			sc.nextLine();
 			System.out.print("Enter your contact number: ");
-			int contact=0;
-			while(true)
-			{
+			int contact = 0;
+			while (true) {
 				try {
-					contact= sc.nextInt();
+					contact = sc.nextInt();
 					sc.nextLine();
 					break;
-				}
-				catch (Exception IllegalFormatException)
-				{
-					System.out.println("Your choice is in incorrect format. Please re-enter");
+				} catch (InputMismatchException e) {
+					System.out.println("Your contact is in incorrect format");
+					sc.nextLine();
 				}
 			}
-			
 
 			for (int i = 0; i < mgList.size(); i++) {
 				movieGoer = mgList.get(i);
 				if (movieGoer.getEmail() == email && movieGoer.getContact() == contact) {
-					if (movieGoer.getTxnList().size() != 0) {
+					if (movieGoer.getMovieGoerTXN().size() != 0) {
 						System.out.println("\nYour booking history:");
 						System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
 								"No. of Tickets", "Total Payment");
-						for (int j = 0; j < movieGoer.getTxnList().size(); j++) {
-							txn = movieGoer.getTxnList().get(i);
+						for (int j = 0; j < movieGoer.getMovieGoerTXN().size(); j++) {
+							txn = movieGoer.getMovieGoerTXN().get(i);
 							System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(txn.getTransactionDate()),
 									txn.getMovieName(), dft.format(txn.getShowTime()), txn.getTickets().size(),
 									txn.getTotalPayment());
@@ -386,17 +516,15 @@ public class Moblima {
 		System.out.println("|2. Cancel booking                  |");
 		System.out.println("=====================================");
 		System.out.print("Enter your choice: ");
-		int choice =0;
-		while(true)
-		{
+		int choice = 0;
+		while (true) {
 			try {
 				choice = sc.nextInt();
 				sc.nextLine();
 				break;
-			}
-			catch (Exception IllegalFormatException)
-			{
-				System.out.println("Your choice is in incorrect format. Please re-enter");
+			} catch (InputMismatchException e) {
+				System.out.println("Your choice is in incorrect format");
+				sc.nextLine();
 			}
 		}
 		if (choice == 1) {
@@ -414,18 +542,17 @@ public class Moblima {
 		ShowTime st = null;
 		while (true) {
 			System.out.print("Enter the ShowTime ID you want to book: ");
-			int stID =0;
-			while(true)
-			{
+			int stID = 0;
+			while (true) {
 				try {
 					stID = sc.nextInt();
 					sc.nextLine();
 					break;
+				} catch (InputMismatchException e) {
+					System.out.println("Your choice is in incorrect format");
+					sc.nextLine();
 				}
-				catch (Exception IllegalFormatException)
-				{
-					System.out.println("Your choice is in incorrect format. Please re-enter");
-				}
+
 			}
 
 			for (int j = 0; j < stList.size(); j++) {
@@ -447,22 +574,18 @@ public class Moblima {
 			System.out.println("| Ticket type 1. Child 2. Adult 3. Senior Citizen |");
 			System.out.println("===================================================");
 			System.out.print("Enter your choice: ");
-			
-			
-			while(true)
-			{
+
+			while (true) {
 				try {
 					typeChoice = sc.nextInt();
 					sc.nextLine();
 					break;
+				} catch (InputMismatchException e) {
+					System.out.println("Your choice is in incorrect format");
+					sc.nextLine();
 				}
-				catch (Exception IllegalFormatException)
-				{
-					System.out.println("Your choice is in incorrect format. Please re-enter");
-				}
-			}
 
-			
+			}
 
 			if (typeChoice == 1)
 				return Ticket.CHILD;
@@ -484,19 +607,17 @@ public class Moblima {
 			System.out.println("|3. Go back to main menu            |");
 			System.out.println("=====================================");
 			System.out.print("Enter your choice: ");
-			
-			
-			while(true)
-			{
+
+			while (true) {
 				try {
 					choice = sc.nextInt();
 					sc.nextLine();
 					break;
+				} catch (InputMismatchException e) {
+					System.out.println("Your choice is in incorrect format");
+					sc.nextLine();
 				}
-				catch (Exception IllegalFormatException)
-				{
-					System.out.println("Your choice is in incorrect format. Please re-enter");
-				}
+
 			}
 			switch (choice) {
 			case 1:// pick a seat
@@ -506,8 +627,18 @@ public class Moblima {
 				Ticket[] tmpTickets = selectedST.getTickets();
 				// Seat selectedSeat = new Seat();
 				System.out.print("\nEnter the seat number: ");
-				int seatNum = sc.nextInt();
-				sc.nextLine();
+				int seatNum;
+
+				while (true) {
+					try {
+						seatNum = sc.nextInt();
+						sc.nextLine();
+						break;
+					} catch (InputMismatchException e) {
+						System.out.println("Your seat number is in incorrect format");
+						sc.nextLine();
+					}
+				}
 
 				col = seatNum / 10;
 				row = (seatNum - col) / 10;
@@ -536,8 +667,18 @@ public class Moblima {
 				String mgEmail = sc.nextLine();
 				sc.nextLine();
 				System.out.print("Contact: ");
-				int mgContact = sc.nextInt();
-				sc.nextLine();
+				int mgContact;
+
+				while (true) {
+					try {
+						mgContact = sc.nextInt();
+						sc.nextLine();
+						break;
+					} catch (InputMismatchException e) {
+						System.out.println("Your contact is in incorrect format");
+						sc.nextLine();
+					}
+				}
 
 				MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
 				Transaction txn = new Transaction(selectedST.getShowDateTime(), selectedST.getCinema().getCinemaCode(),
