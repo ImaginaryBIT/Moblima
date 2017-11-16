@@ -15,11 +15,9 @@ import entity.Ticket;
 import entity.Transaction;
 
 public class Moblima {
-	private static final long serialVersionUID = 1L;
 	private static Scanner sc = new Scanner(System.in);
 	private static List list;
-	// private static Person person;
-
+	
 	public static void main(String[] args) throws Exception {
 
 		int choice;
