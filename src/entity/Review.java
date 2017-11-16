@@ -1,34 +1,118 @@
 package entity;
 
-public class Review {
+import java.io.Serializable;
+
+/**
+ * 
+ * @author Group5
+ *
+ */
+public class Review implements Serializable{
+	/**
+	 * Used during deserialization to verify that the sender and receiver of a
+	 * serialized object have loaded classes for that object that are compatible
+	 * with respect to serialization
+	 */
+	private static final long serialVersionUID = 1L;
+	/** Review Id */
 	private int reviewId;
+	/** User Rating */
 	private float userRating;
-	private String review;
+	/** Comment */
+	private String comment;
+	/** User Name */
 	private String userName;
-        private String userEmail;
-
-	public Review(int reviewId, float userRating, String reviewContent, String name, String email) {
+	/** User Email */
+    private String userEmail;
+    
+    
+	/**
+	 * Constructor to instantiate Review Object with following inputs
+	 * @param reviewId
+	 * @param userRating
+	 * @param comment
+	 * @param userName
+	 * @param userEmail
+	 */
+	public Review(int reviewId, float userRating, String comment,
+			String userName, String userEmail) {
 		this.reviewId = reviewId;
-                this.review = reviewContent;
 		this.userRating = userRating;
-		this.userName = name;
-                this.userEmail = email;
+		this.comment = comment;
+		this.userName = userName;
+		this.userEmail = userEmail;
 	}
 
-	public String getContent() {
-		return review;
+	/**
+	 * @return the reviewId
+	 */
+	public int getReviewId() {
+		return reviewId;
 	}
-	public float getUserRating()
-	{
+
+	/**
+	 * @param reviewId the reviewId to set
+	 */
+	public void setReviewId(int reviewId) {
+		this.reviewId = reviewId;
+	}
+
+	/**
+	 * @return the userRating
+	 */
+	public float getUserRating() {
 		return userRating;
 	}
-	public String getUserName()
-	{
-		return userName;
+
+	/**
+	 * @param userRating the userRating to set
+	 */
+	public void setUserRating(float userRating) {
+		this.userRating = userRating;
 	}
-        
-        public String getUserEmail()
-	{
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return the userEmail
+	 */
+	public String getUserEmail() {
 		return userEmail;
 	}
+
+	/**
+	 * @param userEmail the userEmail to set
+	 */
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
+
 }
