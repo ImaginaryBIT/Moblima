@@ -663,7 +663,7 @@ public class Moblima {
                                 //base on ticket increase the price
                                 if(tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)){
                                     price -= SystemSettingController.getSystemSetting().getSeniorCitizenDiscount();
-                                }else if(tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)){
+                                }else if(tmpTickets[x].getTicketType().equals(Ticket.CHILD)){
                                     price -= SystemSettingController.getSystemSetting().getChildDiscount();
                                 }
                                 //increaste if holiday
@@ -680,27 +680,43 @@ public class Moblima {
 				bookedTickets.add(tmpTickets[x]);
 				break;
 			case 2: // confirm booking
-				System.out.print("Enter your name: ");
-				String mgName = sc.nextLine();
-				
-				System.out.print("Email: ");
-				String mgEmail = sc.nextLine();
-				
-				System.out.print("Contact: ");
-				int mgContact;
+                                if(bookedTickets.size() == 0){
+                                    System.out.println("You haven't selected any seat! ");
+                                    break;
+                                }
+				// ask for user's email
+                                List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+                                MovieGoer movieGoer = null;
+                                boolean foundEmail = false;
+                                System.out.print("Enter your email: ");
+                                String email = sc.nextLine();
+                                for (int i = 0; i < mgList.size(); i++) {
+                                        movieGoer = mgList.get(i);
+                                        if (movieGoer.getEmail().toLowerCase().equals(email.toLowerCase())) {
+                                                foundEmail = true;
+                                                break;
+                                        }
+                                }
+                                if (!foundEmail) {
+                                        System.out.println("\nThis is the first time you are here. Kindly provide us your info");
+                                        System.out.print("Enter your name: ");
+                                        String name = sc.nextLine();
+                                        int contact;
+                                        while (true) {
+                                                try {
+                                                        System.out.print("Contact number: ");
+                                                        contact = sc.nextInt();
+                                                        sc.nextLine();
+                                                        break;
+                                                } catch (InputMismatchException e) {
 
-				while (true) {
-					try {
-						mgContact = sc.nextInt();
-						sc.nextLine();
-						break;
-					} catch (InputMismatchException e) {
-						System.out.println("Your contact is in incorrect format");
-						sc.nextLine();
-					}
-				}
-
-				MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
+                                                        System.out.println("Your contact is in incorrect format. Please re-enter");
+                                                        sc.nextLine();
+                                                }
+                                        }
+                                        movieGoer = new MovieGoer(name, email, contact);
+                                        mgList.add(movieGoer);
+                                }
                                 float total_payment = 0;
                                 for(Ticket tk : bookedTickets){
                                     total_payment += tk.getPrice();
@@ -713,15 +729,10 @@ public class Moblima {
 				// proceed to purchase
 				if (purchaseTicket(bookedTickets)) {
 					System.out.println("Payment was successful!!!");
-                                        //set transcation price and ticket status
-                                        for(Ticket tk : bookedTickets){
-                                            tk.setStatus(Ticket.SOLD);
-                                        }
+                                        
                                         movieGoer.setMovieGoerTXN(txn);
-					// add movieGoer to database
-					List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
-							.readSerializedObject("MovieGoer.ser");
-					mgList.add(movieGoer);
+					
+					
 					SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
                                         //find the movie id index
                                         int index = 0;
