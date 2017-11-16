@@ -16,6 +16,8 @@ public class Person implements Serializable {
 	/** Person contact number */
 	private int contact;
 	
+	/* ******************** Constructors *************************/
+	
 	/**
 	 * Default Constructor to instantiate the Person Object
 	 */
@@ -34,6 +36,8 @@ public class Person implements Serializable {
 		this.email = email;
 		this.contact = contact;
 	}
+	
+	/* ******************** Getter and Setter Methods *********/
 	/**
 	 * Gets the name of this person
 	 * @return name The person's name
@@ -41,6 +45,7 @@ public class Person implements Serializable {
 	public String getName() {
 		return name;
 	}
+	
 	/**
 	 * Gets this person's email
 	 * @return email This person's email
@@ -48,6 +53,7 @@ public class Person implements Serializable {
 	public String getEmail() {
 		return email;
 	}
+	
 	/**
 	 * Gets this person's contact number
 	 * @return the contact
@@ -55,6 +61,7 @@ public class Person implements Serializable {
 	public int getContact() {
 		return contact;
 	}
+	
 	/**
 	 * Changes the name to a new one
 	 * @param name the name to set
@@ -62,6 +69,7 @@ public class Person implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	/**
 	 * Changes his/her email
 	 * @param email the email to set
@@ -69,6 +77,7 @@ public class Person implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	/**
 	 * Changes his/her contact number
 	 * @param contact the contact to set
@@ -76,6 +85,4 @@ public class Person implements Serializable {
 	public void setContact(int contact) {
 		this.contact = contact;
 	}
-	
-	
 }

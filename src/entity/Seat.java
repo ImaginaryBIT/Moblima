@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * This class represents a seat with its ID, row and column details
+ * Used for displaying seat layout and checking ticket's availability upon booking
  * @author Group5
  *
  */
@@ -15,6 +16,8 @@ public class Seat implements Serializable{
     private int row;
     /** The column number of this seat */
     private int column;
+    
+    /********************* Constructor *************************/
 	/**
 	 * This constructor instantiates a new seat object using its ID, row and column numbers
 	 * @param seatId This seat's ID
@@ -27,6 +30,8 @@ public class Seat implements Serializable{
         this.column = column;
     }
 
+    /* ******************** Getter and Setter Methods *********/
+    
     /**
      * Gets the ID of this seat
      * @return seatID 

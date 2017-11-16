@@ -14,9 +14,11 @@ import database.SerializeDB;
 public class PublicHoliday {
 	private ArrayList<GregorianCalendar> publicHoliday;
 
+	/* ******************** Default Constructor *************************/
 	public PublicHoliday() {
 	}
 
+	/* ******************** Methods ****************************/
 	/**
 	 * This method add date as public holiday to PublicHoliday.ser
 	 * @param date The date to add as holiday lists
