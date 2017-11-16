@@ -26,7 +26,7 @@ public class Movie implements Serializable {
 	private int movieId;
 	/** Movie Title */
 	private String title;
-	/** Movie Cast */
+	/** List of casts in this movie */
 	private List<String> cast;
 	/** Director of the Movie */
 	private String director;
@@ -294,12 +294,12 @@ public class Movie implements Serializable {
 	public float getOverallUserRating() {
 	
 		int total_rating = 0;
-		// loop through all reivew and sum total rating
+		// loop through all review and sum total rating
 		for (int i = 0; i < reviews.size(); i++) {
 			Review rv = (Review) reviews.get(i);
 			total_rating += rv.getUserRating();
 		}
-		// total rating devided by no is overall rating
+		// total rating divided by no is overall rating
 		if(reviews.isEmpty()) {
 			return 0;
 		}
@@ -315,20 +315,19 @@ public class Movie implements Serializable {
 		String rating = "NA";
 		System.out.println("Moive ID    : " + this.movieId);
 		System.out.println("Moive Title : " + this.title);
-		System.out.println("Synopisis   : " );
-		System.out.println("  "+Utilities.wrap(this.synopsis));
+		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
 		if (this.cast != null) {
 			System.out.print("Actors 	    : ");
 			for (String cast : this.cast) {
 				System.out.print(cast + ", ");
 			}
 		}
-		System.out.println("");
+		System.out.println();
 		System.out.println("Director    : " + this.director);
 		System.out.println("Language    : " + this.language);
 		System.out.println("Type        : " + this.movieType);
 		System.out.println("Rating      : " + this.rating);
-		System.out.println("RunTime     : " + this.runningTime + "(mins)");
+		System.out.println("RunTime     : " + this.runningTime);
 		float overallUserRating = this.getOverallUserRating();
 		if (this.getOverallUserRating() > 0) {
 			rating = String.valueOf(overallUserRating);
@@ -340,7 +339,7 @@ public class Movie implements Serializable {
 	
 	public void showMovieDetailWithReview(){
 		System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-		System.out.printf("%30s %10s%n", this.title, this.movieType);
+		System.out.printf("%30 %10s%n", this.title, this.movieType);
 		System.out.println("------------Reviews-------------");
 		
 
