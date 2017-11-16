@@ -1,17 +1,18 @@
 package application;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
-import entity.*;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
+import entity.Movie;
+import entity.MovieGoer;
+import entity.Review;
+import entity.ShowTime;
+import entity.Staff;
+import entity.Ticket;
+import entity.Transaction;
 
 public class Moblima {
 	private static final long serialVersionUID = 1L;
@@ -132,7 +133,7 @@ public class Moblima {
 		if (!staff.login())
 			System.out.println("Incorrect ID or Password");
 		else
-			staff.showStaffMenu();
+			StaffFunctionsController.printStaffMenu();
 	}
 
 	public static ArrayList<Movie> searchMovies(String movieName) {
@@ -352,12 +353,12 @@ public class Moblima {
 			for (int i = 0; i < mgList.size(); i++) {
 				movieGoer = mgList.get(i);
 				if (movieGoer.getEmail() == email && movieGoer.getContact() == contact) {
-					if (movieGoer.getMovieGoerTXN().size() != 0) {
+					if (movieGoer.getTxnList().size() != 0) {
 						System.out.println("\nYour booking history:");
 						System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
 								"No. of Tickets", "Total Payment");
-						for (int j = 0; j < movieGoer.getMovieGoerTXN().size(); j++) {
-							txn = movieGoer.getMovieGoerTXN().get(i);
+						for (int j = 0; j < movieGoer.getTxnList().size(); j++) {
+							txn = movieGoer.getTxnList().get(i);
 							System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(txn.getTransactionDate()),
 									txn.getMovieName(), dft.format(txn.getShowTime()), txn.getTickets().size(),
 									txn.getTotalPayment());
