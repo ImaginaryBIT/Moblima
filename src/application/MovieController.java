@@ -191,49 +191,72 @@ public class MovieController {
 					System.out.println("You have chosen:");
 					System.out.println(cinema.getClassType() + " " + cinema.getCinemaCode() + " from "
 							+ cinema.getCineplex().getName());
-					
+
+					List<String> temp = new ArrayList();
+					int count = 0;
 					System.out.println("=====Movie Show Time Slot=====");
-					if(cinema.getTimeSlot()[0].getDate().compareTo(cinema.getTimeSlot()[1].getDate())!=0) {
-						System.out.println(cinema.getTimeSlot()[0].getDate());
-					}
-					for(int i = 1; i < cinema.getTimeSlot().length; i++) {
-						if(cinema.getTimeSlot()[i].getDate().compareTo(cinema.getTimeSlot()[i-1].getDate())!=0) {
-							System.out.println(cinema.getTimeSlot()[i].getDate());
+					System.out.println("total number of slot is: " + cinema.getTimeSlot().size());
+
+					if (cinema.getTimeSlot().size() == 1) {
+						System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
+						temp.add(cinema.getTimeSlot().get(0).getDate());
+					} 
+					else 
+					{
+						System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
+						temp.add(cinema.getTimeSlot().get(0).getDate());
+						count++;
+
+						for (int i = 1; i < cinema.getTimeSlot().size(); i++) 
+						{
+							if (cinema.getTimeSlot().get(i).getDate()
+									.compareTo(cinema.getTimeSlot().get(i-1).getDate()) != 0) 
+							{
+								System.out.println(count + ". " + cinema.getTimeSlot().get(i).getDate());
+								temp.add(cinema.getTimeSlot().get(i).getDate());
+								count++;
+							}
 						}
 					}
 
 					while (!showTimeCheck) {
 
-						System.out.println("Enter the date in dd-mm-yyyy: ");
-						String day_string = sc.next();
-
-						boolean date_check = false;
-						int slot_count = 0;
-						// list to store the menu
-						List<TimeSlot> timeSlotArray = new ArrayList();
-
-						for (int i = 0; i < cinema.getTimeSlot().length; i++) {
-							if (cinema.getTimeSlot()[i].getDate().equals(day_string)
-									&& cinema.getTimeSlot()[i].getStatus().equals(TimeSlot.AVAILABLE)) {
-								slot_count++;
-								System.out.println(slot_count + ": " + cinema.getTimeSlot()[i].getTime() + " ");
-								timeSlotArray.add(cinema.getTimeSlot()[i]);
-								date_check = true;
-							}
-						}
-						if (date_check == false) {
-							// no time slot found ask to enther again
-							System.out.println("No time slot found for input " + day_string + ".");
-
+						System.out.println("Please choose the date: ");
+						int choseDay = sc.nextInt();
+						if (choseDay > count || choseDay < 0) {
+							System.out.println("out of range! Please re-choose date");
+							showTimeCheck = false;
 						} else {
-							int time_slot_no = 0;
-							do {
-								System.out.println("Please select a time slot (1 to " + slot_count + "): ");
-								time_slot_no = sc.nextInt();
-							} while (time_slot_no < 0 || time_slot_no > slot_count);
+							String day_string = temp.get(choseDay);
 
-							chosen_timeSlot = timeSlotArray.get(time_slot_no - 1).getDateTime();
-							showTimeCheck = true;
+							boolean date_check = false;
+							int slot_count = 0;
+							// list to store the menu
+							List<TimeSlot> timeSlotArray = new ArrayList();
+
+							for (int i = 0; i < cinema.getTimeSlot().size(); i++) {
+								if (cinema.getTimeSlot().get(i).getDate().equals(day_string)
+										&& cinema.getTimeSlot().get(i).getStatus().equals(TimeSlot.AVAILABLE)) {
+									slot_count++;
+									System.out.println(slot_count + ": " + cinema.getTimeSlot().get(i).getTime() + " ");
+									timeSlotArray.add(cinema.getTimeSlot().get(i));
+									date_check = true;
+								}
+							}
+							if (date_check == false) {
+								// no time slot found ask to enther again
+								System.out.println("No time slot found for input " + day_string + ".");
+
+							} else {
+								int time_slot_no = 0;
+								do {
+									System.out.println("Please select a time slot (1 to " + slot_count + "): ");
+									time_slot_no = sc.nextInt();
+								} while (time_slot_no < 0 || time_slot_no > slot_count);
+
+								chosen_timeSlot = timeSlotArray.get(time_slot_no - 1).getDateTime();
+								showTimeCheck = true;
+							}
 						}
 
 					}
@@ -302,7 +325,7 @@ public class MovieController {
 		try {
 			System.out.println("Enter the updating movie name: ");
 			title = sc.nextLine();
-			//System.out.print("");
+			// System.out.print("");
 			System.out.println("Enter the updating Movie Type: ");
 			movieType = sc.nextLine();
 
@@ -505,18 +528,18 @@ public class MovieController {
 							List<TimeSlot> timeSlotArray = new ArrayList();
 							System.out.println("=====Show Time Slot bewlow=====");
 
-							for (int c = 0; c < cinema.getTimeSlot().length; c++) {
-								System.out.println(c + ". Date:" + cinema.getTimeSlot()[c].getDate() + " Time:"
-										+ cinema.getTimeSlot()[c].getTime() + " Status: "
-										+ cinema.getTimeSlot()[c].getStatus()); 
+							for (int c = 0; c < cinema.getTimeSlot().size(); c++) {
+								System.out.println(c + ". Date:" + cinema.getTimeSlot().get(c).getDate() + " Time:"
+										+ cinema.getTimeSlot().get(c).getTime() + " Status: "
+										+ cinema.getTimeSlot().get(c).getStatus());
 							}
-							
+
 							while (!slotCheck) {
 								System.out.print("Please choose the available show time slot: ");
 								int showTimeSlot = sc.nextInt();
 
-								if (showTimeSlot >= 0 && showTimeSlot < cinema.getTimeSlot().length) {
-									chosen_timeSlot = cinema.getTimeSlot()[showTimeSlot].getDateTime();
+								if (showTimeSlot >= 0 && showTimeSlot < cinema.getTimeSlot().size()) {
+									chosen_timeSlot = cinema.getTimeSlot().get(showTimeSlot).getDateTime();
 									slotCheck = true;
 								} else {
 									System.out.println("No time slot found for this input!");

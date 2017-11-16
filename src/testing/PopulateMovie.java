@@ -47,9 +47,9 @@ public class PopulateMovie {
                                     
                                 }
                                 //get first 3 timeslot and create show time
-                                for(int ts = 0 ; ts < cnma.getTimeSlot().length ; ts ++){
-                                    cnma.getTimeSlot()[ts].setStatus(TimeSlot.UNAVAILABLE);
-                                    ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot()[ts].getDateTime(),tckt);
+                                for(int ts = 0 ; ts < cnma.getTimeSlot().size() ; ts ++){
+                                    cnma.getTimeSlot().get(ts).setStatus(TimeSlot.UNAVAILABLE);
+                                    ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot().get(ts).getDateTime(),tckt);
                                     showtimeList.add(st);
                                     if(ts == 3){
                                         break;
