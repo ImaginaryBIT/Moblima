@@ -33,8 +33,6 @@ public class Movie implements Serializable {
 	private String synopsis;
 	/** Movie Running Time (minute) */
 	private int runningTime;
-	/** Overall User Rating */
-	private float overallUserRate;
 	/** Movie Reviews */
 	private List<Review> reviews;
 	/** Movie Type ( ) */
@@ -64,8 +62,7 @@ public class Movie implements Serializable {
 	 * @param status
 	 */
 	public Movie(int movieId, String title, List<String> cast, String director,
-			String language, String synopsis, int runningTime,
-			float overallUserRate, List<Review> reviews, String movieType,
+			String language, String synopsis, int runningTime,List<Review> reviews, String movieType,
 			String rating, List<ShowTime> showTimes, String status) {
 
 		this.movieId = movieId;
@@ -75,7 +72,6 @@ public class Movie implements Serializable {
 		this.language = language;
 		this.synopsis = synopsis;
 		this.runningTime = runningTime;
-		this.overallUserRate = overallUserRate;
 		this.reviews = reviews;
 		this.movieType = movieType;
 		this.rating = rating;
@@ -137,13 +133,7 @@ public class Movie implements Serializable {
 		return runningTime;
 	}
 
-	/**
-	 * @return the overallUserRate
-	 */
-	public float getOverallUserRate() {
-		return overallUserRate;
-	}
-
+	
 	/**
 	 * @return the reviews
 	 */
@@ -235,14 +225,7 @@ public class Movie implements Serializable {
 		this.runningTime = runningTime;
 	}
 
-	/**
-	 * @param overallUserRate
-	 *            the overallUserRate to set
-	 */
-	public void setOverallUserRate(float overallUserRate) {
-		this.overallUserRate = overallUserRate;
-	}
-
+	
 	/**
 	 * @param reviews
 	 *            the reviews to set
@@ -306,6 +289,7 @@ public class Movie implements Serializable {
 	 * @return rating
 	 */
 	public float getOverallUserRating() {
+	
 		int total_rating = 0;
 		// loop through all reivew and sum total rating
 		for (int i = 0; i < reviews.size(); i++) {
@@ -335,14 +319,29 @@ public class Movie implements Serializable {
 		System.out.println("Type        : " + this.movieType);
 		System.out.println("Rating      : " + this.rating);
 		System.out.println("RunTime     : " + this.runningTime);
-		if (this.overallUserRate > 0) {
-			rating = String.valueOf(this.overallUserRate);
+		float overallUserRating = this.getOverallUserRating();
+		if (this.getOverallUserRating() > 0) {
+			rating = String.valueOf(overallUserRating);
 		}
 		System.out.println("Rating      : " + rating);
 		System.out.println("Status      : " + this.status);
 
 	}
+	
+	public void showMovieDetailWithReview(){
+		System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
+		System.out.printf("%30 %10s%n", this.title, this.movieType);
+		System.out.println("------------Reviews-------------");
+		
 
+		List<Review> reviewList = this.reviews;
+		for (Review review : reviewList) {
+			System.out.printf("Posted by: %50s Rate: %10d%n",
+					review.getUserName(), review.getUserRating());
+			System.out.printf("%150s%n", review.getContent());
+			System.out.println();
+		}
+	}
 	/**
 	 * @method add review to movie
 	 */
