@@ -237,7 +237,7 @@ public class Moblima {
 		movie.setReviews(rvList);
         int index = movieList.indexOf(movie);
         movieList.set(index, movie);
-        SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
+        SerializeDB.writeSerializedObject("Movie.ser", movieList);
 		return movie;
 	}
 
