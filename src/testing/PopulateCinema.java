@@ -75,7 +75,7 @@ public class PopulateCinema {
                             }
                         }
                         
-                        ArrayList<TimeSlot[]> timeSlotListArrayList = new ArrayList<>();
+                        ArrayList<List<TimeSlot>> timeSlotListArrayList = new ArrayList<>();
                         ArrayList<TimeSlot> timeSlotList;
                         
                         //make 12 time slots
@@ -115,9 +115,8 @@ public class PopulateCinema {
                                 timeSlotList.add(new TimeSlot(timeSlotTime,TimeSlot.AVAILABLE));
 
                             }
-                            TimeSlot[] timeSlotArray = new TimeSlot[timeSlotList.size()];
-                            timeSlotArray = timeSlotList.toArray(timeSlotArray);
-                            timeSlotListArrayList.add(timeSlotArray);
+                            
+                            timeSlotListArrayList.add(timeSlotList);
                         }
                         int[] aisle;
                         //cineplex1
@@ -171,16 +170,7 @@ public class PopulateCinema {
                                 int prevRow = 0;
                                 //print time slots
                                 String prevDate = "";
-                                for(int s=0; s<cnma.getTimeSlot().length; s++) {
-                                    if(!prevDate.equals(cnma.getTimeSlot()[s].getDate())){
-                                        //System.out.println(" ");
-                                        //System.out.println(cnma.getTimeSlot()[s].getDate());
-                                    }
-  
-                                    //System.out.print(cnma.getTimeSlot()[s].getTime()+" ("+cnma.getTimeSlot()[s].getStatus()+")"+" ");
-                                    
-                                    prevDate = cnma.getTimeSlot()[s].getDate();
-                                }
+                                
                                 System.out.println(" ");
                                 System.out.println("----------SCREEN------------");
                                 //loop the whole seat list

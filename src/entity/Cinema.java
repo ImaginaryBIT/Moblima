@@ -13,10 +13,10 @@ public class Cinema implements Serializable {
     private Cineplex cineplex;
     private Seat[] seat;
     private String classType;
-    private TimeSlot[] timeSlot;
+    private List<TimeSlot> timeSlot;
     private List<Integer> aisleColumns;
  
-    public Cinema(int cinemaId, String cinemaCode, Cineplex cineplex, Seat[] seat, String classType, TimeSlot[] timeSlot,List<Integer> aisleColumns) {
+    public Cinema(int cinemaId, String cinemaCode, Cineplex cineplex, Seat[] seat, String classType, List<TimeSlot> timeSlot,List<Integer> aisleColumns) {
         this.cinemaId = cinemaId;
         this.cinemaCode = cinemaCode;
         this.cineplex = cineplex;
@@ -74,11 +74,11 @@ public class Cinema implements Serializable {
         this.classType = classType;
     }
 
-    public TimeSlot[] getTimeSlot() {
+    public List<TimeSlot> getTimeSlot() {
         return timeSlot;
     }
 
-    public void setTimeSlot(TimeSlot[] timeSlot) {
+    public void setTimeSlot(List<TimeSlot> timeSlot) {
         this.timeSlot = timeSlot;
     }
 
@@ -91,9 +91,9 @@ public class Cinema implements Serializable {
     }
     
     public boolean setTimeSlotStatus(Date date,String status){
-        for(int i = 0 ; i < this.timeSlot.length ; i ++){
-            if(date.equals(timeSlot[i].getDateTime())){
-                timeSlot[i].setStatus(status);
+        for(TimeSlot ts :this.timeSlot){
+            if(date.equals(ts.getDateTime())){
+                ts.setStatus(status);
                 return true;
             }
         }
