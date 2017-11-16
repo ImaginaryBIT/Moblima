@@ -22,6 +22,10 @@ public class SystemSetting implements Serializable {
 	private float standardTicketPrice;
 	/** Premium Ticket Price */
 	private float premiumTicketPrice;
+        /** 3D Price */
+	private float increment3D;
+	/** Blockbuster Price */
+	private float incrementBlockbuster;
 	/** Child Discount Price */
 	private float childDiscount;
 	/** Senior Citizen Discount */
@@ -126,6 +130,30 @@ public class SystemSetting implements Serializable {
 	public void setSeniorCitizenDiscount(float seniorCitizenDiscount) {
 		this.seniorCitizenDiscount = seniorCitizenDiscount;
 	}
+        /**
+	 * @return 3d increment
+	 */
+        public float getIncrement3D() {
+            return increment3D;
+        }
+        /**
+	 * @param  3d increment  to set
+	 */
+        public void setIncrement3D(float increment3D) {
+            this.increment3D = increment3D;
+        }
+        /**
+	 * @return blockbuster increment
+	 */
+        public float getIncrementBlockbuster() {
+            return incrementBlockbuster;
+        }
+        /**
+	 * @param incrementBlockbuster increment  to set
+	 */
+        public void setIncrementBlockbuster(float incrementBlockbuster) {
+            this.incrementBlockbuster = incrementBlockbuster;
+        }
 
 	/**
 	 * @param holidayIncrement the holidayIncrement to set
