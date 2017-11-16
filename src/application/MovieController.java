@@ -38,16 +38,14 @@ public class MovieController {
 	private static String synopsis;// 6
 	/** Movie Running Time (minute) */
 	private static int runningTime;// 7
-	/** Overall User Rating */
-	private static float overallUserRate;// 8
 	/** Movie Reviews */
-	private static List<Review> reviews;// 9
+	private static List<Review> reviews;// 8
 	/** Movie Restrict Level */
-	private static String rating;// 10
+	private static String rating;// 9
 	/** Show Times */
-	private static List<ShowTime> showTimes;// 11
+	private static List<ShowTime> showTimes;// 10
 	/** Status */
-	private static String status;// 12
+	private static String status;// 11
 
 	private static int showTimeId;
 	private static Cinema cinema;
@@ -79,7 +77,27 @@ public class MovieController {
 
 				// 2 movieType
 				System.out.print("Enter the Movie type: ");
-				movieType = sc.nextLine();
+                                System.out.println("Choose the Movie type: ");
+                                System.out.println("1. Digital");
+                                System.out.println("2. 3D");
+                                System.out.println("3. Blockbuster ");
+                                do {
+                                    rchoice = sc.nextInt();
+                                    sc.nextLine();
+                                    switch (rchoice) {
+                                    case 1:
+                                            movieType = Movie.DIGITAL;
+                                            break;
+                                    case 2:
+                                            movieType = Movie.THREED;
+                                            break;
+                                    case 3:
+                                            movieType = Movie.BLOCKBUSTER;
+                                            break;
+                                    default:
+                                            System.out.println("No such choice");
+                                    }
+                                } while (rchoice < 1 || rchoice > 3);
 
 				// 4 director
 				System.out.print("Enter the Movie Director: ");
@@ -112,16 +130,11 @@ public class MovieController {
 					System.out.print("Enter the Movie running time: ");
 					runningTime = sc.nextInt();
 					sc.nextLine();
-
-					// 8 overallUserRate
-					System.out.print("Enter the Movie overall user rate: ");
-					overallUserRate = sc.nextFloat();
-					sc.nextLine();
-
-					// 9 reviews
+                                        
+					// 8 reviews
 					reviews = new ArrayList();
 
-					// 10 rating
+					// 9 rating
 					System.out.println("Choose the Movie rating: ");
 					System.out.println("1. G");
 					System.out.println("2. PG");
@@ -162,7 +175,7 @@ public class MovieController {
 						}
 					} while (rchoice < 1 || rchoice > 7);
 
-					// 11 showTimes
+					// 10 showTimes
 					int showTimeId = showTimeList.size() + 1;
 
 					for (Cinema cinema : cinemaList) {
@@ -269,7 +282,7 @@ public class MovieController {
 					ShowTime st = new ShowTime(showTimeId, cinema, chosen_timeSlot, tickets);
 					showTimeList.add(st);
 
-					// 12 status
+					// 11 status
 					System.out.println("Select the Movie show status: ");
 					System.out.println("1. Coming Soon");
 					System.out.println("2. Preview");
@@ -334,8 +347,27 @@ public class MovieController {
 			System.out.println("Enter the updating movie name: ");
 			title = sc.nextLine();
 			//sc.nextLine();
-			System.out.println("Enter the updating Movie Type: ");
-			movieType = sc.nextLine();
+                        System.out.println("Choose the Movie type: ");
+                        System.out.println("1. Digital");
+                        System.out.println("2. 3D");
+                        System.out.println("3. Blockbuster ");
+                        do {
+                            rchoice = sc.nextInt();
+                            sc.nextLine();
+                            switch (rchoice) {
+                            case 1:
+                                    movieType = Movie.DIGITAL;
+                                    break;
+                            case 2:
+                                    movieType = Movie.THREED;
+                                    break;
+                            case 3:
+                                    movieType = Movie.BLOCKBUSTER;
+                                    break;
+                            default:
+                                    System.out.println("No such choice");
+                            }
+                        } while (rchoice < 1 || rchoice > 3);
 
 			for (int i = 0; i < movieList.size(); i++) {
 				Movie movie = (Movie) movieList.get(i);
@@ -368,8 +400,28 @@ public class MovieController {
 							break;
 
 						case 2: // 2 movieType
-							System.out.print("Enter the new Movie movieType: ");
-							movieType = sc.nextLine();
+                                                        System.out.print("Enter the Movie type: ");
+                                                        System.out.println("Choose the Movie type: ");
+                                                        System.out.println("1. Digital");
+                                                        System.out.println("2. 3D");
+                                                        System.out.println("3. Blockbuster ");
+                                                        do {
+                                                            rchoice = sc.nextInt();
+                                                            sc.nextLine();
+                                                            switch (rchoice) {
+                                                            case 1:
+                                                                    movieType = Movie.DIGITAL;
+                                                                    break;
+                                                            case 2:
+                                                                    movieType = Movie.THREED;
+                                                                    break;
+                                                            case 3:
+                                                                    movieType = Movie.BLOCKBUSTER;
+                                                                    break;
+                                                            default:
+                                                                    System.out.println("No such choice");
+                                                            }
+                                                        } while (rchoice < 1 || rchoice > 3);
 							movie.setMovieType(movieType);
 							break;
 
