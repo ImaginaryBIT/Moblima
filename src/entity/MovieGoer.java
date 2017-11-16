@@ -24,7 +24,7 @@ public class MovieGoer {
 	{
 		return name;
 	}
-	public String email()
+	public String getEmail()
 	{
 		return email;
 	}
@@ -54,8 +54,8 @@ public class MovieGoer {
 	{
 		this.contact=contact;
 	}
-	public void setMovieGoerTXN(Transaction txn)
-	{
-		this.txnList.add(txn);
-	}
+public void setMovieGoerTXN(Transaction txn)
+{
+	this.txnList.add(txn);
+}
 }
