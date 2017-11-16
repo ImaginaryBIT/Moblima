@@ -733,10 +733,11 @@ public class MovieController {
 
 	public static List<Movie> viewAllMovie(){
 		System.out.println("============All Movies================");
+		int sn = 0;
 		for(Movie movie : movieList){
+			sn++;
+			System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
 			
-			movie.showMovieDetail();
-			System.out.println("------------------------------");
 		}
 		System.out.println("======================================");
 		return movieList;

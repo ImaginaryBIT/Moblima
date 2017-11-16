@@ -71,7 +71,7 @@ private static void generateSaleReport(){
 		List<MovieGoer> goerList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
 		List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
 		
-		ArrayList<Transaction> transList;
+		List<Transaction> transList;
 		int numberOfSoldTickets = 0;
 		float amountOfSales = 0;
 		

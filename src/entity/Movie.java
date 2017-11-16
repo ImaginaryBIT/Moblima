@@ -307,18 +307,14 @@ public class Movie implements Serializable {
 	 */
 	public float getOverallUserRating() {
 
-		int total_rating = 0;
-		// loop through all reivew and sum total rating
-		for (int i = 0; i < reviews.size(); i++) {
-			Review rv = (Review) reviews.get(i);
-			total_rating += rv.getUserRating();
-		}
-		// total rating devided by no is overall rating
-		if (reviews.isEmpty()) {
+		float totalRating = 0;
+		if(reviews.isEmpty()) {
 			return 0;
-		} else {
-			return total_rating / reviews.size();
 		}
+		for (Review review : reviews){
+			totalRating += review.getUserRating();
+		}
+		return totalRating / reviews.size();
 	}
 
 	/**
