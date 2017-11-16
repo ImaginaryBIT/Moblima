@@ -80,7 +80,7 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s\n", i + 1, top5movies.get(i).getTitle());
 					System.out.println("");
 				}
 				break;
@@ -492,7 +492,7 @@ public class Moblima {
 			}
 		
 			int availSeatNum = selectedShowTime.getNoOfTicketsAvailable();
-			System.out.printf("%d \t", selectedShowTime.getShowTimeId());
+			System.out.printf("%d \t", selectedShowTime.getShowTimeId()+1);
 			System.out.print(selectedShowTime.getShowDateTime());
 			System.out.printf("\t\t\t%s \t\t\t%d%n", selectedShowTime.getCinema().getCinemaId(), availSeatNum);
 			if (availSeatNum > 0) {
