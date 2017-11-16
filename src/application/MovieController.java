@@ -298,7 +298,7 @@ public class MovieController {
 					} while (choice < 1 || choice > 4);
 
 					Movie mov = new Movie(movieId, title, cast, director, language, synopsis, runningTime,
-							overallUserRate, reviews, movieType, rating, showTimeList, status);
+							 reviews, movieType, rating, showTimeList, status);
 					movieList.add(mov);
 					SerializeDB.writeSerializedObject("Movie.ser", movieList);
 
@@ -351,12 +351,11 @@ public class MovieController {
 						System.out.println("5. Update the Movie language");
 						System.out.println("6. Update the Movie synopsis");
 						System.out.println("7. Update the Movie running time");
-						System.out.println("8. Update the Movie overall User Rate");
-						System.out.println("9. Update the Movie rating");
-						System.out.println("10. Remove the Movie showtimes");
-						System.out.println("11. Add the Movie showtimes");
-						System.out.println("12. Update the Movie status");
-						System.out.println("13. Exit");
+						System.out.println("8. Update the Movie rating");
+						System.out.println("9. Remove the Movie showtimes");
+						System.out.println("10. Add the Movie showtimes");
+						System.out.println("11. Update the Movie status");
+						System.out.println("12. Exit");
 						System.out.print("Choice: ");
 						choice = sc.nextInt();
 						sc.nextLine();
@@ -413,13 +412,7 @@ public class MovieController {
 							movie.setRunningTime(runningTime);
 							break;
 
-						case 8:// 8 overallUserRate
-							System.out.print("Enter the Movie overall user rate: ");
-							overallUserRate = sc.nextFloat();
-							movie.setOverallUserRate(overallUserRate);
-							break;
-
-						case 9:// 9 rating
+						case 8:// 9 rating
 							System.out.println("Choose the new Movie rating: ");
 							System.out.println("1. G");
 							System.out.println("2. PG");
@@ -463,7 +456,7 @@ public class MovieController {
 							movie.setRating(rating);
 							break;
 
-						case 10:// 10 remove showTimes
+						case 9:// 10 remove showTimes
 							List<ShowTime> temp = movie.getShowTimes();
 							ShowTime st = null;
 							boolean idCheck = false;
@@ -496,7 +489,7 @@ public class MovieController {
 							System.out.println("Showtime removed");
 
 							break;
-						case 11:// 11 add showTimes
+						case 10:// 11 add showTimes
 							int showTimeId = showTimeList.size() + 1;
 
 							for (Cinema cinema : cinemaList) {
@@ -607,7 +600,7 @@ public class MovieController {
 							System.out.println("Show time added!");
 							//sc.nextLine();
 							break;
-						case 12:// 12 status
+						case 11:// 12 status
 							System.out.println("Select the new Movie show status: ");
 							System.out.println("1. Coming Soon");
 							System.out.println("2. Preview");
@@ -636,7 +629,7 @@ public class MovieController {
 							} while (rchoice < 1 || rchoice > 4);
 							movie.setStatus(status);
 							break;
-						case 13: // write into DB
+						case 12: // write into DB
 							SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
 							SerializeDB.writeSerializedObject("Movie.ser", movieList);
 							choiceCheck = true;
@@ -682,12 +675,31 @@ public class MovieController {
 		return false;
 	}
 
-	public static void viewAllMovie() {
+	public static List<Movie> viewAllMovie(){
 
-		for (Movie movie : movieList) {
-			System.out.println("=========Available Movies========");
+		for(Movie movie : movieList){
+			System.out.println("============All Movies===========");
 			movie.showMovieDetail();
 			System.out.println("=================================");
 		}
+		
+		return movieList;
+	}
+	
+	/**
+	 * Search Movies by name and return all the movies that contain the searched name
+	 * @param movieName
+	 * @return List<Movie> List of Movie search by name
+	 */
+	public static List<Movie> searchMovies(String movieName) {
+		// empty array list for the result
+		List<Movie> returnMovieList = new ArrayList<>();
+		for(Movie movie : movieList){
+			if(movie.getTitle().toLowerCase().contains(movieName.toLowerCase())){
+			 // if search name is in movie title add to list
+				returnMovieList.add(movie);
+			}
+		}
+		return movieList;
 	}
 }
