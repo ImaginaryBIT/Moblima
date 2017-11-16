@@ -1,12 +1,15 @@
 package testing;
 
-import java.io.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import database.SerializeDB;
-import entity.*;
-import java.util.Date;
+import entity.Cinema;
+import entity.Movie;
+import entity.Review;
+import entity.ShowTime;
+import entity.Ticket;
+import entity.TimeSlot;
 
 public class PopulateMovie {
 
@@ -38,11 +41,9 @@ public class PopulateMovie {
                                     float price = 0.0f;
                                     //if holiday add 
                                     price += 2.0;
-                                    if(s == 10 || s == 11 || s == 12){
-                                        tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.SOLD);
-                                    }else{
-                                        tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
-                                    }
+                                   
+                                    tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
+                                    
                                     
                                 }
                                 //get first 3 timeslot and create show time
@@ -59,9 +60,10 @@ public class PopulateMovie {
                                 break;
                         }
                         
-                        newMovie = new Movie(0,"Test Mv1",myStringArray, "Unknown","en", "description movie",90,0.5f,reviewList,"anything","PG13", showtimeList, "now showing");
+                        newMovie = new Movie(1,"Test Mv1",myStringArray, "Unknown","en", "description movie",90,0.5f,reviewList,"anything","PG13", showtimeList, "now showing");
                         movieList.add(newMovie);
 			SerializeDB.writeSerializedObject("Movie.ser", movieList);
+			SerializeDB.writeSerializedObject("Cinema.ser", list);
                         //try print the created movie
                         list = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Movie.ser");
 			for (int i = 0; i < list.size(); i++) {
