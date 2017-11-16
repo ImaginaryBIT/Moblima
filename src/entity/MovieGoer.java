@@ -18,7 +18,7 @@ public class MovieGoer extends Person {
 	/** The ID of this moviegoer */
 	private String movieGoerId;
 	/** The list of transctions that this moviegoer has made */
-	private ArrayList<Transaction> txnList;
+	private List<Transaction> txnList;
 	
 	/* ******************** Constructor ************************/
 	
@@ -31,7 +31,7 @@ public class MovieGoer extends Person {
 	public MovieGoer(String name, String email, int contact)
 	{
 		super(name, email, contact);
-		this.txnList = new ArrayList();
+		this.txnList = new ArrayList<>();
 	}
 
 	/* ******************** Getter and Setter Methods *********/
@@ -48,7 +48,7 @@ public class MovieGoer extends Person {
 	 * Gets all the transactions this moviegoer has made
 	 * @return the txnList
 	 */
-	public ArrayList<Transaction> getTxnList() {
+	public List<Transaction> getTxnList() {
 		return txnList;
 	}
 	
@@ -64,7 +64,7 @@ public class MovieGoer extends Person {
 	 * Changes the transactions list that the moviegoer has made
 	 * @param txnList The transaction list to set
 	 */
-	public void setTxnList(ArrayList<Transaction> txnList) {
+	public void setTxnList(List<Transaction> txnList) {
 		this.txnList = txnList;
 	}
 	
@@ -75,7 +75,7 @@ public class MovieGoer extends Person {
 	public void setMovieGoerTXN(Transaction txn)
 	{
 		if(this.txnList.isEmpty()) {
-			this.txnList = new ArrayList();
+			this.txnList = new ArrayList<>();
 			this.txnList.add(txn);
 		}else {
 			this.txnList.add(txn);
