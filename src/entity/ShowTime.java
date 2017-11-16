@@ -92,7 +92,7 @@ public class ShowTime implements Serializable {
 
 	/**
 	 * Changes the ID of this show time
-	 * @param showTimeId
+	 * @param showTimeId The ID of show time
 	 */
 	public void setShowTimeID(int showTimeId) {
 		this.showTimeId = showTimeId;
@@ -100,7 +100,7 @@ public class ShowTime implements Serializable {
 
 	/**
 	 * Changes the cinema having this show time
-	 * @param cinema
+	 * @param cinema The cinema having this show time
 	 */
 	public void setCinema(Cinema cinema) {
 		this.cinema = cinema;
@@ -108,7 +108,7 @@ public class ShowTime implements Serializable {
 
 	/**
 	 * Changes the list of tickets on sale
-	 * @param tickets
+	 * @param tickets The list of tickets for sale in this show time
 	 */
 	public void setTickets(Ticket[] tickets) {
 		this.tickets = tickets;

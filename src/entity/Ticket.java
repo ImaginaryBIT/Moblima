@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * This represents a ticket with its availability, seat details, price and type
+ * Used for booking process and creating transaction
  * @author group5
  *
  */
@@ -75,7 +76,7 @@ public class Ticket implements Serializable  {
 
     /**
      * Gets the type of this ticket
-     * @return
+     * @return ticketType
      */
     public String getTicketType() {
         return ticketType;
@@ -83,7 +84,7 @@ public class Ticket implements Serializable  {
 
     /**
      * Gets the availability of this ticket
-     * @return
+     * @return status
      */
     public String getStatus() {
         return status;

@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import database.SerializeDB;
 
 /**
+ * Accessed by Staff and the system
  * This class implemented to do action, add or delete public holidays from PublicHoliday.ser
  * @author Group5
  *

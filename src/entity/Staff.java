@@ -2,6 +2,7 @@ package entity;
 
 /**
  * This represents a staff who inherits a person's behaviors and signatures
+ * Instantiates a Staff object and grant the admin the access to functions and classes dedicated to Staff
  * @author group5
  *
  */

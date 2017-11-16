@@ -2,6 +2,13 @@ package entity;
 
 import java.io.Serializable;
 
+/**
+ * The parent class inherited by MovieGoer and Staff
+ * Stores a person information: name, email and their contact
+ * @author group5
+ *
+ */
+
 public class Person implements Serializable {
 	/**
 	 * Used during deserialization to verify that the sender and receiver of a

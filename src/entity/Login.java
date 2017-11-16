@@ -7,6 +7,7 @@ import database.SerializeDB;
 
 /**
  * This class implement the login function
+ * Accessed by Staff to query functions and classes dedicated to Staff
  * @author Group5
  *
  */

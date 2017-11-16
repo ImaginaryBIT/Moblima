@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * This class is implemented for storing information of a particular time slot
+ * It will then be used by the staff during creation of show time
  * 
  * @author group5
  */
@@ -74,7 +75,7 @@ public class TimeSlot implements Serializable {
 
 	/**
 	 * Set the availability of this time slot
-	 * @param status
+	 * @param status The availability of this time slot
 	 */
 	public void setStatus(String status) {
 		this.status = status;
