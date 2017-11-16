@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 
+ * This class meant for settings which will be used to calculate the price of tickets
+ * based on the date booked, the type of movie, type of cinema, and the age of moviegoer
  * @author Group5
  *
  */
@@ -28,34 +29,33 @@ public class SystemSetting implements Serializable {
 	private float seniorCitizenDiscount;
 	/** Holiday Increment */
 	private float holidayIncrement;
-	/** Holidays */
+	/** List of Holidays */
 	private List<Date> holidays;
 	/** 3D movie type price increment */
 	private float threeDTypeIncrement;
 	/** BlockBuster movie type price increment */
 	private float blockBusterTypeIncrement;
-	/** 3igital movie type price increment */
+	/** Digital movie type price increment */
 	private float digitalTypeIncrement;
 	
 	/* ******************** Constructors *********************/
 	
-	
-	/** Default Constructor to instantiate the SystemSetting obj */
+	/** Default Constructor to instantiate the SystemSetting object */
 	public SystemSetting() {
 		//Do Nothing
 	}
 
 	/**
 	 * Constructor to instantiate the SystemSetting Object with following inputs:
-	 * @param standardTicketPrice
-	 * @param premiumTicketPrice
-	 * @param childDiscount
-	 * @param seniorCitizenDiscount
-	 * @param holidayIncrement
-	 * @param holidays
-	 * @param threeDTypeIncrement
-	 * @param blockBusterTypeIncrement
-	 * @param digitalTypeIncrement
+	 * @param standardTicketPrice Price for standard tickets
+	 * @param premiumTicketPrice Price for premium tickets
+	 * @param childDiscount Discount for child
+	 * @param seniorCitizenDiscount Discount for senior citizen
+	 * @param holidayIncrement The increment on holiday
+	 * @param holidays The list of holidays
+	 * @param threeDTypeIncrement The increment on 3D movies
+	 * @param blockBusterTypeIncrement The increment on Block Buster movies
+	 * @param digitalTypeIncrement The increment on Digital movies
 	 */
 	public SystemSetting(float standardTicketPrice, float premiumTicketPrice,
 			float childDiscount, float seniorCitizenDiscount,
@@ -75,6 +75,7 @@ public class SystemSetting implements Serializable {
 
 	/* ******************** Getter and Setter Methods *********/
 	/**
+	 * Gets the price for standard tickets
 	 * @return the standardTicketPrice
 	 */
 	public float getStandardTicketPrice() {
@@ -82,6 +83,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Gets the price for premium tickets
 	 * @return the premiumTicketPrice
 	 */
 	public float getPremiumTicketPrice() {
@@ -89,6 +91,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Gets the discount for kids
 	 * @return the childDiscount
 	 */
 	public float getChildDiscount() {
@@ -96,6 +99,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Gets the discounts for senior citizens
 	 * @return the seniorCitizenDiscount
 	 */
 	public float getSeniorCitizenDiscount() {
@@ -103,6 +107,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Gets the increment for holidays
 	 * @return the holidayIncrement
 	 */
 	public float getHolidayIncrement() {
@@ -110,70 +115,31 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Gets the list of holidays
 	 * @return the holidays
 	 */
 	public List<Date> getHolidays() {
 		return holidays;
 	}
-
-	/**
-	 * @param standardTicketPrice the standardTicketPrice to set
-	 */
-	public void setStandardTicketPrice(float standardTicketPrice) {
-		this.standardTicketPrice = standardTicketPrice;
-	}
-
-	/**
-	 * @param premiumTicketPrice the premiumTicketPrice to set
-	 */
-	public void setPremiumTicketPrice(float premiumTicketPrice) {
-		this.premiumTicketPrice = premiumTicketPrice;
-	}
-
-	/**
-	 * @param childDiscount the childDiscount to set
-	 */
-	public void setChildDiscount(float childDiscount) {
-		this.childDiscount = childDiscount;
-	}
-
-	/**
-	 * @param seniorCitizenDiscount the seniorCitizenDiscount to set
-	 */
-	public void setSeniorCitizenDiscount(float seniorCitizenDiscount) {
-		this.seniorCitizenDiscount = seniorCitizenDiscount;
-	}
-
-	/**
-	 * @param holidayIncrement the holidayIncrement to set
-	 */
-	public void setHolidayIncrement(float holidayIncrement) {
-		this.holidayIncrement = holidayIncrement;
-	}
-
-	/**
-	 * @param holidays the holidays to set
-	 */
-	public void setHolidays(List<Date> holidays) {
-		this.holidays = holidays;
-	}
-	
 	
 	/**
+	 * Gets the increment for 3D movies
 	 * @return the threeDTypeIncrement
 	 */
 	public float getThreeDTypeIncrement() {
 		return threeDTypeIncrement;
 	}
-
+	
 	/**
+	 * Changes the increment for Block Buster movies
 	 * @return the blockBusterTypeIncrement
 	 */
 	public float getBlockBusterTypeIncrement() {
 		return blockBusterTypeIncrement;
 	}
-
+	
 	/**
+	 * Gets the increment for Digital movies 
 	 * @return the digitalTypeIncrement
 	 */
 	public float getDigitalTypeIncrement() {
@@ -181,6 +147,55 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Changes the standard ticket price
+	 * @param standardTicketPrice The standardTicketPrice to set
+	 */
+	public void setStandardTicketPrice(float standardTicketPrice) {
+		this.standardTicketPrice = standardTicketPrice;
+	}
+
+	/**
+	 * Changes the premium ticket price
+	 * @param premiumTicketPrice the premiumTicketPrice to set
+	 */
+	public void setPremiumTicketPrice(float premiumTicketPrice) {
+		this.premiumTicketPrice = premiumTicketPrice;
+	}
+
+	/**
+	 * Changes the discount for kids
+	 * @param childDiscount the childDiscount to set
+	 */
+	public void setChildDiscount(float childDiscount) {
+		this.childDiscount = childDiscount;
+	}
+
+	/**
+	 * Changes the discount for senior citizen
+	 * @param seniorCitizenDiscount the seniorCitizenDiscount to set
+	 */
+	public void setSeniorCitizenDiscount(float seniorCitizenDiscount) {
+		this.seniorCitizenDiscount = seniorCitizenDiscount;
+	}
+
+	/**
+	 * Changes the holiday increment
+	 * @param holidayIncrement the holidayIncrement to set
+	 */
+	public void setHolidayIncrement(float holidayIncrement) {
+		this.holidayIncrement = holidayIncrement;
+	}
+
+	/**
+	 * Changes the list of holidays
+	 * @param holidays the holidays to set
+	 */
+	public void setHolidays(List<Date> holidays) {
+		this.holidays = holidays;
+	}
+
+	/**
+	 * Changes the increment for 3D movies
 	 * @param threeDTypeIncrement the threeDTypeIncrement to set
 	 */
 	public void setThreeDTypeIncrement(float threeDTypeIncrement) {
@@ -188,6 +203,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Changes the increment for Block Buster movies
 	 * @param blockBusterTypeIncrement the blockBusterTypeIncrement to set
 	 */
 	public void setBlockBusterTypeIncrement(float blockBusterTypeIncrement) {
@@ -195,6 +211,7 @@ public class SystemSetting implements Serializable {
 	}
 
 	/**
+	 * Changes the increment for Digital movies
 	 * @param digitalTypeIncrement the digitalTypeIncrement to set
 	 */
 	public void setDigitalTypeIncrement(float digitalTypeIncrement) {
@@ -203,6 +220,7 @@ public class SystemSetting implements Serializable {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
+	 * This method is printing out the details of current settings for prices, discounts and increments
 	 */
 	@Override
 	public String toString() {
@@ -227,6 +245,9 @@ public class SystemSetting implements Serializable {
 		return super.toString();
 	}
 	
+	/**
+	 * This method prints all holidays in dd-MM-yyyy format
+	 */
 	public void printHoliday(){
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		int count = 0;

@@ -8,44 +8,76 @@ package entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
- *
- * @author nyinyithwin
+ * This class is implemented for storing information of a particular time slot
+ * 
+ * @author group5
  */
-public class TimeSlot implements Serializable  {
-        public static final String AVAILABLE = "available";
-        public static final String UNAVAILABLE = "unavailable";
-        private Date dateTime;
-        private String status;
+public class TimeSlot implements Serializable {
+	/** Status of this time slot as "available" */
+	public static final String AVAILABLE = "available";
+	/* Status of this time slot as "unavailable" */
+	public static final String UNAVAILABLE = "unavailable";
 
-        public TimeSlot(Date dateTime, String status) {
-            this.dateTime = dateTime;
-            this.status = status;
-        }
+	/** The date time of this time slot */
+	private Date dateTime;
+	/** The status of this time slot */
+	private String status;
 
-        
+	/* ******************** Constructor *************************/
+	/**
+	 * This initializes a new time slot with given date time and availability
+	 * @param dateTime The date time of this time slot
+	 * @param status The status of this time slot
+	 */
+	public TimeSlot(Date dateTime, String status) {
+		this.dateTime = dateTime;
+		this.status = status;
+	}
 
-        public String getStatus() {
-            return status;
-        }
-        public String getTime() {
+	/* ******************** Getter and Setter Methods *********/
+
+	/**
+	 * Gets the availability
+	 * @return status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * Gets the time as in HH:mm format
+	 * @return string of time in HH:mm format
+	 */
+	public String getTime() {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm");
 		return dateFormatter.format(dateTime.getTime());
 	}
 
-        public String getDate() {
+	/**
+	 * Gets the date as in dd-MM-yyyy format
+	 * @return string of date in dd-MM-yyyy format
+	 */
+	public String getDate() {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		return dateFormatter.format(dateTime.getTime());
-        }
+	}
 
-        public Date getDateTime() {
-                return dateTime;
-        }
+	/**
+	 * Gets both date and time of this time slot	
+	 * @return dateTime
+	 */
+	public Date getDateTime() {
+		return dateTime;
+	}
 
-        public void setStatus(String status) {
-                this.status = status;
-        }
-        
-        
+	/**
+	 * Set the availability of this time slot
+	 * @param status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }
