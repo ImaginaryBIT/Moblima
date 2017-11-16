@@ -33,7 +33,8 @@ public class Moblima {
 			System.out.println("|1. List Movies                     |");
 			System.out.println("|2. Top 5 Ranking                   |");
 			System.out.println("|3. Search and Book                 |");
-			System.out.println("|4. Staff Login                     |");
+			System.out.println("|4. View past booking               |");
+			System.out.println("|5. Staff Login                     |");
 			System.out.println("=====================================");
 
 			System.out.print("Enter your choice: ");
@@ -72,7 +73,6 @@ public class Moblima {
 						sc.nextLine();
 					}
 				}
-				//sc.nextLine();
 				if (choice == 1)
 					rankBy = "sales";
 				else if (choice == 2)
@@ -80,7 +80,8 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s\n", i + 1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+					System.out.println("");
 				}
 				break;
 			case 3:
@@ -91,17 +92,18 @@ public class Moblima {
 					System.out.println("No movie found");
 				}
 				else{
-					//int sn = 0;
+					int sn = 1;
 					for(Movie movie : searchMovieList){
-						System.out.println(movie.getMovieId() +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+						sn++;
 					}
 				}
 				menuAfterList(searchMovieList);
 				break;
-
-			
-
-			case 4: // staff login
+			case 4:
+				pastBooking();
+				break;
+			case 5: // staff login
 				staffLogin();
 				break;
 
@@ -128,8 +130,7 @@ public class Moblima {
 				System.out.println("=======Options =========");
 				System.out.println("|1. Start a new booking ");
 				System.out.println("|2. View Movie Detail   ");
-				System.out.println("|3. View past booking   ");
-				System.out.println("|4. Go Back to Main Menu");
+				System.out.println("|3. Go Back to Main Menu");
 				System.out.print("  Your Choice : ");
 				int no = sc.nextInt();
 				switch(no){
@@ -160,9 +161,6 @@ public class Moblima {
 					}
 					break;
 				case 3:
-					pastBooking();
-					break;
-				case 4:
 					return;
 				default:
 					System.out.println("Sorry, there is choice no. " + no);
@@ -324,47 +322,36 @@ public class Moblima {
 		MovieGoer movieGoer;
 		Transaction txn;
 
-		ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
 
-		while (!foundMG) {
+		
 			System.out.print("Enter your email: ");
 			String email = sc.nextLine();
-			sc.nextLine();
-			System.out.print("Enter your contact number: ");
-			int contact = 0;
-			while (true) {
-				try {
-					contact = sc.nextInt();
-					sc.nextLine();
-					break;
-				} catch (InputMismatchException e) {
-					System.out.println("Your contact is in incorrect format");
-					sc.nextLine();
-				}
-			}
-
-			for (int i = 0; i < mgList.size(); i++) {
-				movieGoer = mgList.get(i);
-				if (movieGoer.getEmail() == email && movieGoer.getContact() == contact) {
-					if (movieGoer.getTxnList().size() != 0) {
-						System.out.println("\nYour booking history:");
-						System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
-								"No. of Tickets", "Total Payment");
-						for (int j = 0; j < movieGoer.getTxnList().size(); j++) {
-							txn = movieGoer.getTxnList().get(i);
-							System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(txn.getTransactionDate()),
-									txn.getMovieName(), dft.format(txn.getShowTime()), txn.getTickets().size(),
-									txn.getTotalPayment());
-						}
-					} else
-						System.out.println("No transaction found");
-					foundMG = true;
-					break;
+			if(!mgList.isEmpty()) {
+				for (int i = 0; i < mgList.size(); i++) {
+					movieGoer = mgList.get(i);
+					if (movieGoer.getEmail().equalsIgnoreCase(email)) {
+						if (!movieGoer.getTxnList().isEmpty()){
+							System.out.println("\nYour booking history:");
+							System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
+									"No. of Tickets", "Total Payment");
+							
+							for(Transaction trans : movieGoer.getTxnList()) {
+								System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(trans.getTransactionDate()),
+										trans.getMovieName(), dft.format(trans.getShowTime()), trans.getTickets().size(),
+										trans.getTotalPayment());
+							}
+							
+						} 
+						
+						foundMG = true;
+						break;
+					}
 				}
 			}
 			if (!foundMG)
-				System.out.println("Your input information is not found. Please re-enter");
-		}
+				System.out.println("No transaction found");
+		
 	}
 
 	private static void printTXN(String movieTitle, int seatNum, float totalPayment) {
@@ -479,9 +466,8 @@ public class Moblima {
 		do {
 		
 			List<ShowTime> showTimes = movie.getShowTimes();
-
-                System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
-                System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
+                        System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
+                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
 			int index = 0;
                         for (ShowTime showTime : showTimes){
                             System.out.println("");
@@ -506,7 +492,7 @@ public class Moblima {
 			}
 		
 			int availSeatNum = selectedShowTime.getNoOfTicketsAvailable();
-			System.out.printf("%d \t", selectedShowTime.getShowTimeId()+1);
+			System.out.printf("%d \t", selectedShowTime.getShowTimeId());
 			System.out.print(selectedShowTime.getShowDateTime());
 			System.out.printf("\t\t\t%s \t\t\t%d%n", selectedShowTime.getCinema().getCinemaId(), availSeatNum);
 			if (availSeatNum > 0) {
@@ -534,10 +520,11 @@ public class Moblima {
 			}
 
 			if (bchoice == 1) {
-	
 				
 				startBooking(selectedShowTime, movie);
+				return;
 			} // end of booking
+			
 			
 		}while(true);
 		
@@ -582,9 +569,9 @@ public class Moblima {
 						seatNum = sc.nextInt();
 						sc.nextLine();
                                                 row = seatNum / 10;
-                                                col = (seatNum - row) / 10;
+                                                col = (seatNum - (row*10));
                                                 boolean foundSeat = false;
-                                                System.out.println("Debug: row is :" + row + ", col is :" + col);
+                                                
                                                 for (x = 0; x < tmpTickets.length; x++) {
                                                         if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
                                                                         && tmpTickets[x].getStatus().equals(Ticket.AVAILABLE)) {
@@ -654,10 +641,10 @@ public class Moblima {
 			case 2: // confirm booking
 				System.out.print("Enter your name: ");
 				String mgName = sc.nextLine();
-				sc.nextLine();
+				
 				System.out.print("Email: ");
 				String mgEmail = sc.nextLine();
-				sc.nextLine();
+				
 				System.out.print("Contact: ");
 				int mgContact;
 
@@ -691,20 +678,21 @@ public class Moblima {
                                         }
                                         movieGoer.setMovieGoerTXN(txn);
 					// add movieGoer to database
-					ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
+					List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
 							.readSerializedObject("MovieGoer.ser");
 					mgList.add(movieGoer);
 					SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
                                         int index = movieList.indexOf(selectedMv);
                                         movieList.set(index, selectedMv);
-                                        SerializeDB.writeSerializedObject("MovieGoer.ser", movieList);
+                                        SerializeDB.writeSerializedObject("Movie.ser", movieList);
+                    return;
 				}
 				break;
 			case 3: // back to main menu
                                 for(Ticket tk : bookedTickets){
                                     tk.setStatus(Ticket.AVAILABLE);
                                 }
-				break;
+                return;
 			default:
 				System.out.println("Option not found");
 			}
