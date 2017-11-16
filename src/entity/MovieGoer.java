@@ -20,7 +20,7 @@ public class MovieGoer extends Person {
 	public MovieGoer(String name, String email, int contact)
 	{
 		super(name, email, contact);
-		this.txnList = new ArrayList<>();
+		this.txnList = new ArrayList();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class MovieGoer extends Person {
 	public void setMovieGoerTXN(Transaction txn)
 	{
 		if(this.txnList.isEmpty()) {
-			this.txnList = new ArrayList<>();
+			this.txnList = new ArrayList();
 			this.txnList.add(txn);
 		}else {
 			this.txnList.add(txn);

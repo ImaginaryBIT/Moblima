@@ -1,8 +1,13 @@
 package entity;
 
-import java.io.Serializable;
 
-public class Staff extends Person implements Serializable{
+public class Staff extends Person {
+	/**
+	 * Used during deserialization to verify that the sender and receiver of a
+	 * serialized object have loaded classes for that object that are compatible
+	 * with respect to serialization
+	 */
+	private static final long serialVersionUID = 1L;
 	private String staffID;
 	private String password;
 

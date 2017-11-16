@@ -1,10 +1,11 @@
 package entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Transaction {
+public class Transaction implements Serializable{
 	private String transactionId;
 	private List<Ticket> tickets;
 	private float totalPayment;

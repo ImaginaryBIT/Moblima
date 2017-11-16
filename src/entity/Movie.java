@@ -315,19 +315,20 @@ public class Movie implements Serializable {
 		String rating = "NA";
 		System.out.println("Moive ID    : " + this.movieId);
 		System.out.println("Moive Title : " + this.title);
-		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
+		System.out.println("Synopisis   : " );
+		System.out.println("  "+Utilities.wrap(this.synopsis));
 		if (this.cast != null) {
 			System.out.print("Actors 	    : ");
 			for (String cast : this.cast) {
 				System.out.print(cast + ", ");
 			}
 		}
-		System.out.println();
+		System.out.println("");
 		System.out.println("Director    : " + this.director);
 		System.out.println("Language    : " + this.language);
 		System.out.println("Type        : " + this.movieType);
 		System.out.println("Rating      : " + this.rating);
-		System.out.println("RunTime     : " + this.runningTime);
+		System.out.println("RunTime     : " + this.runningTime + "(mins)");
 		float overallUserRating = this.getOverallUserRating();
 		if (this.getOverallUserRating() > 0) {
 			rating = String.valueOf(overallUserRating);
@@ -339,7 +340,7 @@ public class Movie implements Serializable {
 	
 	public void showMovieDetailWithReview(){
 		System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-		System.out.printf("%30 %10s%n", this.title, this.movieType);
+		System.out.printf("%30s %10s%n", this.title, this.movieType);
 		System.out.println("------------Reviews-------------");
 		
 
