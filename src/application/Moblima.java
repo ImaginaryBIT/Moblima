@@ -86,7 +86,7 @@ public class Moblima {
 			case 3:
 				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
-				sc.nextLine();
+				//sc.nextLine();
 				List<Movie> searchMovieList = MovieController.searchMovies(movieTitle);
 				if(searchMovieList.isEmpty()){
 					System.out.println("No movie found");
@@ -136,9 +136,10 @@ public class Moblima {
 				int no = sc.nextInt();
 				switch(no){
 				case 1:
-					System.out.print("Enter Movie No to View Detail: ");
+					System.out.print("Enter Movie No to process booking: ");
 					try{
 						int selectedIndex = sc.nextInt();
+						sc.nextLine();
 						Movie movie = movieLst.get(selectedIndex-1);
 						bookTicket(movie);
 						
@@ -152,6 +153,7 @@ public class Moblima {
 					System.out.print("Enter Movie No to View Detail: ");
 					try{
 						int selectedIndex = sc.nextInt();
+						sc.nextLine();
 						Movie movie = movieLst.get(selectedIndex-1);
 						viewMovieDetail(movie);
 						
