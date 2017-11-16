@@ -1,29 +1,21 @@
 package entity;
 
-import java.util.Scanner;
 
-import application.MovieController;
-import application.SystemSettingController;
-
-public class Staff {
-	private String staffName;
-	private int staffContact;
-	private String staffMail;
+public class Staff extends Person {
 	private String staffID;
 	private String password;
 
-	public Staff() {
-
-	}
 	
 	public Staff (String name, String id, String pw, String mail, int contact){
-		staffName = name;
-		staffContact = contact;
-		staffMail = mail;
+		super(name, mail, contact);
 		staffID = id;
 		password = pw;
 	}
 	
+	public Staff() {
+		super();
+	}
+
 	public String getStaffID() {
 		return staffID;
 	}
