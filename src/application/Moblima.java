@@ -2,6 +2,7 @@ package application;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,6 @@ import entity.ShowTime;
 import entity.Staff;
 import entity.Ticket;
 import entity.Transaction;
-import java.util.Calendar;
 
 public class Moblima {
 	private static final long serialVersionUID = 1L;
@@ -177,13 +177,15 @@ public class Moblima {
 
 		// ask for user's email
 		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
-		MovieGoer mg = null;
 		boolean foundEmail = false;
-		System.out.print("\nEnter your email: ");
+		MovieGoer mg = null;
+		System.out.print("Enter your email: ");
+		sc.nextLine();
 		String email = sc.nextLine();
 		sc.nextLine();
 		for(MovieGoer moviegoer : mgList){
 			if(moviegoer.getEmail().equalsIgnoreCase(email)){
+				mg = moviegoer;
 				foundEmail = true;
 				break;
 			}
@@ -193,7 +195,6 @@ public class Moblima {
 			System.out.println("\nThis is the first time you are here. Kindly provide us your info");
 			System.out.print("Enter your name: ");
 			String name = sc.nextLine();
-			sc.nextLine();
 			int contact;
 			while (true) {
 				try {
@@ -215,14 +216,12 @@ public class Moblima {
 		String content = sc.nextLine();
 		sc.nextLine();
 		System.out.print("Enter your rating 1 to 5 (Best)");
-		int rate;
+		float rate;
 		while (true) {
 			try {
-				rate = sc.nextInt();
-				sc.nextLine();
+				rate = sc.nextFloat();
 				break;
 			} catch (InputMismatchException e) {
-
 				System.out.println("Your rate is in incorrect format. Please re-enter");
 			
 			}
@@ -230,6 +229,9 @@ public class Moblima {
 		System.out.println();
         if(!movie.addReview(mg.getName(), mg.getEmail(), rate, content)){
         	System.out.println("You had written review for this Movie");
+        }
+        else{
+        	System.out.println("Review added successfully!");
         }
       	List<Review> rvList = movie.getReviews();
 		movie.setReviews(rvList);
