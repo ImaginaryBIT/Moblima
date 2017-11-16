@@ -30,6 +30,12 @@ public class SystemSetting implements Serializable {
 	private float holidayIncrement;
 	/** Holidays */
 	private List<Date> holidays;
+	/** 3D movie type price increment */
+	private float threeDTypeIncrement;
+	/** BlockBuster movie type price increment */
+	private float blockBusterTypeIncrement;
+	/** 3igital movie type price increment */
+	private float digitalTypeIncrement;
 	
 	/* ******************** Constructors *********************/
 	/**
@@ -139,6 +145,49 @@ public class SystemSetting implements Serializable {
 	 */
 	public void setHolidays(List<Date> holidays) {
 		this.holidays = holidays;
+	}
+	
+	
+	/**
+	 * @return the threeDTypeIncrement
+	 */
+	public float getThreeDTypeIncrement() {
+		return threeDTypeIncrement;
+	}
+
+	/**
+	 * @return the blockBusterTypeIncrement
+	 */
+	public float getBlockBusterTypeIncrement() {
+		return blockBusterTypeIncrement;
+	}
+
+	/**
+	 * @return the digitalTypeIncrement
+	 */
+	public float getDigitalTypeIncrement() {
+		return digitalTypeIncrement;
+	}
+
+	/**
+	 * @param threeDTypeIncrement the threeDTypeIncrement to set
+	 */
+	public void setThreeDTypeIncrement(float threeDTypeIncrement) {
+		this.threeDTypeIncrement = threeDTypeIncrement;
+	}
+
+	/**
+	 * @param blockBusterTypeIncrement the blockBusterTypeIncrement to set
+	 */
+	public void setBlockBusterTypeIncrement(float blockBusterTypeIncrement) {
+		this.blockBusterTypeIncrement = blockBusterTypeIncrement;
+	}
+
+	/**
+	 * @param digitalTypeIncrement the digitalTypeIncrement to set
+	 */
+	public void setDigitalTypeIncrement(float digitalTypeIncrement) {
+		this.digitalTypeIncrement = digitalTypeIncrement;
 	}
 
 	/* (non-Javadoc)
