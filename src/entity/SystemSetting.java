@@ -208,14 +208,14 @@ public class SystemSetting implements Serializable {
 	public String toString() {
 		
 		System.out.println("========Current System Config=========");
-		System.out.println(" Standard Ticket Price      : "+this.standardTicketPrice);
-		System.out.println(" Premium Ticket Price       : "+this.premiumTicketPrice);
-		System.out.println(" Child Discount             : "+this.childDiscount);
-		System.out.println(" Senior Citizen Discount    : "+this.seniorCitizenDiscount);
-		System.out.println(" Holiday Increment          : "+this.holidayIncrement);
-		System.out.println(" 3D Type Increment          : "+this.threeDTypeIncrement);
-		System.out.println(" Blockbuster Type Increment : "+this.blockBusterTypeIncrement);
-		System.out.println(" Digital Type Increment		: "+this.digitalTypeIncrement);
+		System.out.println(" Standard Ticket Price      : $"+this.standardTicketPrice);
+		System.out.println(" Premium Ticket Price       : $"+this.premiumTicketPrice);
+		System.out.println(" Child Discount             : $"+this.childDiscount);
+		System.out.println(" Senior Citizen Discount    : $"+this.seniorCitizenDiscount);
+		System.out.println(" Holiday Increment          : $"+this.holidayIncrement);
+		System.out.println(" 3D Type Increment          : $"+this.threeDTypeIncrement);
+		System.out.println(" Blockbuster Type Increment : $"+this.blockBusterTypeIncrement);
+		System.out.println(" Digital Type Increment     : $"+this.digitalTypeIncrement);
 		System.out.println(" Holidays : ");
 		int count= 0;
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
