@@ -1,18 +1,19 @@
 package application;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import database.SerializeDB;
-import entity.*;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
+import entity.Movie;
+import entity.MovieGoer;
+import entity.Review;
+import entity.ShowTime;
+import entity.Staff;
+import entity.Ticket;
+import entity.Transaction;
 
 public class Moblima {
 	private static final long serialVersionUID = 1L;
@@ -47,10 +48,31 @@ public class Moblima {
 
 			switch (choice) {
 			case 1: // list all movies
-				MovieController.viewAllMovie();
+				List<Movie> movieLst = MovieController.viewAllMovie();
+				System.out.println("=======Options =========");
+				System.out.println("|1. Start a new booking ");
+				System.out.println("|2. View Movie Detail   ");
+				System.out.println("|3. View past booking   ");
+				System.out.println("|4. Go Back to Main Menu");
+				System.out.print("  Your Choice : ");
+				int no = sc.nextInt();
+				if(no == 1 ){
+					System.out.print("Enter Movie No to View Detail: ");
+					try{
+						int selectedIndex = sc.nextInt();
+						Movie movie = movieLst.get(selectedIndex-1);
+						viewMovieDetail(movie);
+						
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
+					}
+					
+				}
 				break;
 
 			case 2: // search for movies
+			case 4:
 				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
 				sc.nextLine();
@@ -59,60 +81,44 @@ public class Moblima {
 					System.out.println("No movie found");
 				}
 				else{
+					int sn = 0;
 					for(Movie movie : movieList){
-						System.out.printf("%30s %10s%n", "Movie Name", "Movie Type");
-						System.out.printf("%30 %10s%n", movie.getTitle(), movie.getMovieType());
-						System.out.println("------------Reviews-------------");
+						sn = sn+1;
+						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
+					}
+				}
+				
+				System.out.println("=======Options =========");
+				System.out.println("|1. View Movie Detail   ");
+				System.out.println("|2. Start a new booking ");
+				System.out.println("|3. View past booking   ");
+				System.out.println("|4. Go Back to Main Menu");
+				System.out.print("  Your Choice : ");
+				no = sc.nextInt();
+				switch(no){
+				case 1:
+					System.out.print("Enter Movie No to View Detail: ");
+					try{
+						int selectedIndex = sc.nextInt();
+						Movie movie = movieList.get(selectedIndex-1);
+						viewMovieDetail(movie);
 						
-
-						List<Review> reviewList = movie.getReviews();
-						for (Review review : reviewList) {
-							System.out.printf("Posted by: %50s Rate: %10d%n",
-									review.getUserName(), review.getUserRating());
-							System.out.printf("%150s%n", review.getContent());
-							System.out.println();
-						}
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
 					}
+					break;
+				
+				case 2:
+					
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
 				}
-		
-					System.out.println("============================================");
-					System.out.println("Enter 1. To write your own review 2. To exit");
-					System.out.println("============================================");
-					int rchoice;
-					while (true) {
-						try {
-							rchoice = sc.nextInt();
-							sc.nextLine();
-							break;
-						} catch (InputMismatchException e) {
-							System.out.println("Your choice is in incorrect format");
-							sc.nextLine();
-						}
-					}
-					if (rchoice == 1) {
-						boolean foundType = false;
-						Movie movie = null;
-						String mvType = "";
-
-						do {
-							System.out.print("Enter the movie type: ");
-							mvType = sc.nextLine().toLowerCase();
-
-							sc.nextLine();
-							for (int i = 0; i < movieList.size(); i++) {
-								movie = movieList.get(i);
-								if (movie.getMovieType().toLowerCase() == mvType) {
-									movieList.remove(i);
-									foundType = true;
-									break;
-								}
-							}
-							if (!foundType)
-								System.out.println("Type not found. Re-enter the type");
-						} while (!foundType);
-						writeReview(movieList, movie);
-					}
-				}
+				
+				
 				break;
 
 			case 3: // top 5 ranking
@@ -139,47 +145,11 @@ public class Moblima {
 					rankBy = "sales";
 				else if (choice == 2)
 					rankBy = "review";
-				ArrayList<Movie> top5movies = showTopRank(rankBy);
+				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
 					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
 				}
-				break;
-
-			case 4: // booking and purchasing tickets
-				do {
-					System.out.println("=====================================");
-					System.out.println("|1. Start a new booking             |");
-					System.out.println("|2. View past booking               |");
-					System.out.println("|3. Back to main menu               |");
-					System.out.println("=====================================");
-					System.out.print("Enter your choice: ");
-					while (true) {
-						try {
-							choice = sc.nextInt();
-							sc.nextLine();
-							break;
-						} catch (InputMismatchException e) {
-							System.out.println("Your choice is in incorrect format");
-							sc.nextLine();
-						}
-					}
-					sc.nextLine();
-
-					switch (choice) {
-					case 1:
-						bookTicket();
-						break;
-					case 2:
-						pastBooking();
-						break;
-					case 3:
-						break;
-					default:
-						System.out.print("No such choice. Re-enter your choice");
-						break;
-					}
-				} while (choice != 3);
 				break;
 
 			case 5: // staff login
@@ -202,7 +172,7 @@ public class Moblima {
 			}
 		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
-
+	
 	private static void writeReview(ArrayList<Movie> movieList, Movie movie) {
 
 		// ask for user's email
@@ -257,8 +227,7 @@ public class Moblima {
 			}
 		}
 		System.out.println();
-		Review reviewObj = new Review(content, rate, mg);
-		ArrayList<Review> rvList = (ArrayList<Review>) movie.getReviews();
+		List<Review> rvList = (ArrayList<Review>) movie.getReviews();
 		movie.setReviews(rvList);
 		movieList.add(movie);
 		SerializeDB.writeSerializedObject("Movie.ser", movieList);
@@ -269,7 +238,7 @@ public class Moblima {
 		if (!staff.login())
 			System.out.println("Incorrect ID or Password");
 		else
-			staff.showStaffMenu();
+			StaffFunctionsController.printStaffMenu();
 	}
 
 	public static ArrayList<Movie> searchMovies(String movieName) {
@@ -294,21 +263,21 @@ public class Moblima {
 	}
 
 	// get top 5 sort by review or no_of_ticket_sold
-	public static ArrayList<Movie> showTopRank(String rankBy) {
+	public static List<Movie> showTopRank(String rankBy) {
 		// temp movie to hold during sort
 		Movie temp_movie;
 		list = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
 		// change to normal list to do the sort
-		Movie[] MovieList = new Movie[list.size()];
-		MovieList = (Movie[]) list.toArray(MovieList);
+		Movie[] movieList = new Movie[list.size()];
+		movieList = (Movie[]) list.toArray(movieList);
 		if (rankBy == "review") {
 			// do insertion sort
-			for (int i = 0; i < MovieList.length - 1; i++) {
+			for (int i = 0; i < movieList.length - 1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (MovieList[i].getOverallUserRating() > MovieList[i + 1].getOverallUserRating()) {
-						temp_movie = MovieList[i];
-						MovieList[i] = MovieList[i + 1];
-						MovieList[i + 1] = temp_movie;
+					if (movieList[i].getOverallUserRating() > movieList[i + 1].getOverallUserRating()) {
+						temp_movie = movieList[i];
+						movieList[i] = movieList[i + 1];
+						movieList[i + 1] = temp_movie;
 					} else {
 						break;
 					}
@@ -316,12 +285,12 @@ public class Moblima {
 			}
 		} else {
 			// do insertion sort
-			for (int i = 0; i < MovieList.length - 1; i++) {
+			for (int i = 0; i < movieList.length - 1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (MovieList[i].getTicketSold() > MovieList[i + 1].getTicketSold()) {
-						temp_movie = MovieList[i];
-						MovieList[i] = MovieList[i + 1];
-						MovieList[i + 1] = temp_movie;
+					if (movieList[i].getTicketSold() > movieList[i + 1].getTicketSold()) {
+						temp_movie = movieList[i];
+						movieList[i] = movieList[i + 1];
+						movieList[i + 1] = temp_movie;
 					} else {
 						break;
 					}
@@ -329,10 +298,10 @@ public class Moblima {
 			}
 		}
 		// return only top 5
-		ArrayList<Movie> top5List = new ArrayList<>();
-		for (int i = 0; i < MovieList.length; i++) {
+		List<Movie> top5List = new ArrayList<>();
+		for (int i = 0; i < movieList.length; i++) {
 			if (i < 5) {
-				top5List.add(MovieList[i]);
+				top5List.add(movieList[i]);
 			} else {
 				break;
 			}
@@ -348,7 +317,9 @@ public class Moblima {
 				System.out.println("");
 			}
 			// print layout [00] ,[XX]
-
+		    if(st.getCinema().getAisleColumns().contains(st.getCinema().getSeat()[z].getColumn())){
+                System.out.print("  ");
+            }
 			if (st.getTickets()[z].getStatus().equals(Ticket.AVAILABLE)) {
 				System.out.print(
 						"[" + st.getTickets()[z].getSeat().getRow() + st.getTickets()[z].getSeat().getColumn() + "]");
@@ -360,100 +331,7 @@ public class Moblima {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private static void bookTicket() throws Exception {
-		// display all now showing movies
-		System.out.println("Now showing movies:");
-		showAllMovies();
-		int movieId;
-		// ask user for movie title
-		ArrayList<Movie> movieList;
-		String movieTitle;
-		String movieType = "";
-		Movie movie = null;
 
-		// ask user to choose a movie
-		do {
-			System.out.print("Enter the movie name: ");
-			movieTitle = sc.nextLine().toLowerCase();
-			sc.nextLine();
-			movieList = searchMovies(movieTitle);
-			if (movieList.size() == 0)
-				System.out.println("No movie found. Re-enter the movie title");
-			else {
-				System.out.println("Your movie is available in:");
-				for (int a = 0; a > movieList.size(); a++) {
-					movie = movieList.get(a);
-					System.out.printf("%d   %s", a, movie.getMovieType());
-				}
-				// ask user to choose the type
-				boolean foundType = false;
-				do {
-					System.out.print("\nEnter the movie type: ");
-					movieType = sc.nextLine();
-					sc.nextLine().toLowerCase();
-					for (int b = 0; b < movieList.size(); b++) {
-						movie = movieList.get(b);
-						if (movie.getMovieType().toLowerCase() == movieType) {
-							foundType = true;
-							break;
-						}
-					}
-					if (!foundType)
-						System.out.println("Type not found. Please re-enter the type");
-				} while (!foundType);
-			}
-		} while (movieList.size() == 0);
-
-		// print out showtime for selected movie
-		if (movie.getStatus() == "Coming Soon") {
-			System.out.println("The movie is coming soon. Please come back later");
-		} else if (movie.getStatus() == "End of Showing") {
-			System.out.println("Sorry, the showing period for this movie has ended");
-		} else {// printing showtime for "Now showing" and "Preview" movies
-			for (int i = 0; i < movie.getShowTimes().size(); i++) {
-				System.out.printf("Showtime for %s in %s\n", i, movie.getTitle(), movie.getMovieType());
-				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
-				List<ShowTime> stList = movie.getShowTimes();
-				for (int j = 0; j < stList.size(); j++) {
-					ShowTime st = stList.get(j);
-					int availSeatNum = st.getNoOfTicketsAvailable();
-					System.out.printf("%d \t", st.getShowTimeId());
-					System.out.print(st.getShowDateTime());
-					System.out.printf("\t\t\t%s \t\t\t%d%n", st.getCinema().getCinemaId(), availSeatNum);
-					if (availSeatNum > 0) {
-						System.out.println("--------Seat layout--------");
-						printingSeatLayout(st);
-						System.out.println("---------------------------");
-						System.out.println();
-					}
-				}
-
-			}
-		} // end of printing all showtime
-
-		// ask user to start booking
-		int bchoice;
-		System.out.println("======================================");
-		System.out.println("|Enter 1. To start booking 2. To exit|");
-		System.out.println("======================================");
-		while (true) {
-			try {
-				bchoice = sc.nextInt();
-				sc.nextLine();
-				break;
-			} catch (InputMismatchException e) {
-				System.out.println("Your choice is in incorrect format");
-				sc.nextLine();
-			}
-		}
-
-		if (bchoice == 1) {
-
-			ShowTime selectedST = showtimePicker(movie.getShowTimes());
-			startBooking(selectedST, movie.getTitle());
-		} // end of booking
-	}
 
 	private static void pastBooking() {
 		SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:MM");
@@ -484,12 +362,12 @@ public class Moblima {
 			for (int i = 0; i < mgList.size(); i++) {
 				movieGoer = mgList.get(i);
 				if (movieGoer.getEmail() == email && movieGoer.getContact() == contact) {
-					if (movieGoer.getMovieGoerTXN().size() != 0) {
+					if (movieGoer.getTxnList().size() != 0) {
 						System.out.println("\nYour booking history:");
 						System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
 								"No. of Tickets", "Total Payment");
-						for (int j = 0; j < movieGoer.getMovieGoerTXN().size(); j++) {
-							txn = movieGoer.getMovieGoerTXN().get(i);
+						for (int j = 0; j < movieGoer.getTxnList().size(); j++) {
+							txn = movieGoer.getTxnList().get(i);
 							System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(txn.getTransactionDate()),
 									txn.getMovieName(), dft.format(txn.getShowTime()), txn.getTickets().size(),
 									txn.getTotalPayment());
@@ -513,7 +391,7 @@ public class Moblima {
 		System.out.println("Total price: " + totalPayment);
 	}
 
-	private static boolean purchaseTicket(ArrayList<Ticket> bookedTickets) {
+	private static boolean purchaseTicket(List<Ticket> bookedTickets) {
 		System.out.println("=====================================");
 		System.out.println("|1. Make payment                    |");
 		System.out.println("|2. Cancel booking                  |");
@@ -540,35 +418,7 @@ public class Moblima {
 		return false;
 	}
 
-	private static ShowTime showtimePicker(List<ShowTime> stList) {
-		// List<ShowTime> stList;
-		ShowTime st = null;
-		while (true) {
-			System.out.print("Enter the ShowTime ID you want to book: ");
-			int stID = 0;
-			while (true) {
-				try {
-					stID = sc.nextInt();
-					sc.nextLine();
-					break;
-				} catch (InputMismatchException e) {
-					System.out.println("Your choice is in incorrect format");
-					sc.nextLine();
-				}
 
-			}
-
-			for (int j = 0; j < stList.size(); j++) {
-				st = stList.get(j);
-				if (st.getShowTimeId() == stID) {
-					return st;
-				}
-
-			}
-
-			System.out.println("ShowTime ID not found. Re-enter the ShowTime ID");
-		} // end while
-	}
 
 	private static String ticketTypePicker() {
 		int typeChoice;
@@ -599,9 +449,107 @@ public class Moblima {
 		} while (typeChoice > 0 && typeChoice < 4);
 	}
 
-	@SuppressWarnings("null")
+
+	private static void viewMovieDetail(Movie movie) throws Exception{
+		try {
+			movie.showMovieDetailWithReview();
+			
+			do {
+				System.out.println("===What would you like to do?========");
+				System.out.println("|1. Book this Movie                  |");
+				System.out.println("|2. Write Review                     |");
+				System.out.println("|3. Go back to Main Menu             |");
+				System.out.println("======================================");				
+				System.out.print("Enter your choice: ");
+				int choice = sc.nextInt();
+				switch (choice) {
+				case 1:
+					if (movie.getStatus().equalsIgnoreCase("Coming Soon")) {
+						System.out.println("The movie is coming soon. Please come back later");
+					} else if (movie.getStatus().equalsIgnoreCase("End of Showing")) {
+						System.out.println("Sorry, the showing period for this movie has ended");
+					}else{
+						//book
+						bookTicket(movie);
+					}
+					
+					break;
+				case 2:
+					MovieController.addMovie();
+					break;
+				case 3:
+					return;
+				default:
+					System.out.println("Sorry, there is no " + choice);
+				}
+			}while(true);
+		} catch (Exception e) {
+			
+			System.out.println("Exception >> " + e.getMessage());
+			throw e;
+		}
+	}
+
+	private static void bookTicket(Movie movie) throws Exception {
+		// ask user to choose a movie
+		do {
+			int sn = 0;
+			List<ShowTime> showTimes = movie.getShowTimes();
+			for (ShowTime showTime : showTimes){
+				sn = sn +1;
+				System.out.printf("Showtime for %s in %s\n", sn, movie.getTitle(), movie.getMovieType());
+				System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
+			}
+			System.out.print("Please enter showtime no: ");
+			int selectedNo = sc.nextInt();
+			ShowTime selectedShowTime = null;
+			try{
+				selectedShowTime = showTimes.get(selectedNo-1);
+			} catch (Exception e) {
+				System.out.println("ShowTime ID not found. Re-enter the ShowTime ID");
+				return;
+			}
+		
+			int availSeatNum = selectedShowTime.getNoOfTicketsAvailable();
+			System.out.printf("%d \t", selectedShowTime.getShowTimeId());
+			System.out.print(selectedShowTime.getShowDateTime());
+			System.out.printf("\t\t\t%s \t\t\t%d%n", selectedShowTime.getCinema().getCinemaId(), availSeatNum);
+			if (availSeatNum > 0) {
+				System.out.println("--------Seat layout--------");
+				printingSeatLayout(selectedShowTime);
+				System.out.println("---------------------------");
+				System.out.println();
+			}
+			
+			// ask user to start booking
+			int bchoice;
+			System.out.println("======================================");
+			System.out.println("|Enter 1. To start booking 2. To exit|");
+			System.out.println("======================================");
+			while (true) {
+				try {
+					bchoice = sc.nextInt();
+					sc.nextLine();
+					break;
+				} catch (InputMismatchException e) {
+					System.out.println("Your choice is in incorrect format");
+					sc.nextLine();
+				}
+			}
+
+			if (bchoice == 1) {
+	
+				
+				startBooking(selectedShowTime, movie.getTitle());
+			} // end of booking
+			
+		}while(true);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
 	private static void startBooking(ShowTime selectedST, String movieTitle) {
-		ArrayList<Ticket> bookedTickets = null;
+		List<Ticket> bookedTickets = new ArrayList<>();
 		int choice;
 		do {
 			System.out.println("=====================================");
@@ -707,4 +655,5 @@ public class Moblima {
 
 		} while (choice != 3);
 	}
+	
 }
