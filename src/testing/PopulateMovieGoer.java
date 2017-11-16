@@ -5,9 +5,14 @@
  */
 package testing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import database.SerializeDB;
 import entity.MovieGoer;
-import java.util.ArrayList;
+import entity.Ticket;
+import entity.Transaction;
+import java.util.Date;
 
 /**
  *
@@ -22,12 +27,19 @@ public class PopulateMovieGoer {
         // TODO code application logic here
         /////////////////////////////// STAFF //////////////////////////////////////////
         // Create new data
-        ArrayList moveGoerList = new ArrayList();
+        List<MovieGoer> moveGoerList = new ArrayList<>();
         MovieGoer MovieGoer = new MovieGoer("thiwn","thwin",123);
         // add to list
         moveGoerList.add(MovieGoer);
 
         SerializeDB.writeSerializedObject("MovieGoer.ser", moveGoerList);
+        List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
+				.readSerializedObject("MovieGoer.ser");
+        List<Ticket> tickets = new ArrayList<>();
+        Transaction transaction = new Transaction(new Date(), "TEST", "Test Movie", tickets, (float)12.90);
+        MovieGoer.setMovieGoerTXN(transaction);
+		mgList.add(MovieGoer);
+		SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
     }
     
 }
