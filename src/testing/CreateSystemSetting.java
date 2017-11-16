@@ -19,6 +19,7 @@ public class CreateSystemSetting {
 		holidays.add(SystemSettingController.convertDate("25-12-2017"));
 		SystemSetting systemSetting = new SystemSetting((float)8.00, (float)10.00, (float)3.00, (float)5.00, (float)3.00, holidays,(float)4.00,(float)5.00,(float)2.00);
 		List<SystemSetting> systemSettings = new ArrayList<SystemSetting>();
+		systemSettings.add(systemSetting);
 		SerializeDB.writeSerializedObject("SystemSetting.ser", systemSettings);
 		
 	//	List<SystemSetting> systemSettings = SerializeDB.readSerializedObject("SystemSetting.ser");
