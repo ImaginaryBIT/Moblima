@@ -18,20 +18,20 @@ import entity.Transaction;
 public class Moblima {
 	private static final long serialVersionUID = 1L;
 	private static Scanner sc = new Scanner(System.in);
-	private static List list;
+	private static List<Movie> movieList = new ArrayList<>();
 	// private static Person person;
 
 	public static void main(String[] args) throws Exception {
-
+		
 		int choice;
+		movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
 		do {
 
 			System.out.println("=====================================");
 			System.out.println("|1. List Movies                     |");
-			System.out.println("|2. Search Movie                    |");
-			System.out.println("|3. Top 5 Ranking                   |");
-			System.out.println("|4. Booking and Purchasing Tickets  |");
-			System.out.println("|5. Staff Login                     |");
+			System.out.println("|2. Top 5 Ranking                   |");
+			System.out.println("|3. Search and Book					|");
+			System.out.println("|4. Staff Login                     |");
 			System.out.println("=====================================");
 
 			System.out.print("Enter your choice: ");
@@ -45,30 +45,10 @@ public class Moblima {
 					sc.nextLine();
 				}
 			}
-
+			
 			switch (choice) {
 			case 1: // list all movies
-				List<Movie> movieLst = MovieController.viewAllMovie();
-				System.out.println("=======Options =========");
-				System.out.println("|1. Start a new booking ");
-				System.out.println("|2. View Movie Detail   ");
-				System.out.println("|3. View past booking   ");
-				System.out.println("|4. Go Back to Main Menu");
-				System.out.print("  Your Choice : ");
-				int no = sc.nextInt();
-				if(no == 1 ){
-					System.out.print("Enter Movie No to View Detail: ");
-					try{
-						int selectedIndex = sc.nextInt();
-						Movie movie = movieLst.get(selectedIndex-1);
-						viewMovieDetail(movie);
-						
-					} catch (InputMismatchException e) {
-						System.out.println("Your choice is in incorrect format");
-						sc.nextLine();
-					}
-					
-				}
+				movieList = MovieController.viewAllMovie();
 				break;
 
 			case 2: // search for movies
@@ -76,49 +56,18 @@ public class Moblima {
 				System.out.print("Enter movie name to search: ");
 				String movieTitle = sc.nextLine();
 				sc.nextLine();
-				List<Movie> movieList = MovieController.searchMovies(movieTitle);
-				if(movieList.isEmpty()){
+				List<Movie> searchMovieList = MovieController.searchMovies(movieTitle);
+				if(searchMovieList.isEmpty()){
 					System.out.println("No movie found");
 				}
 				else{
 					int sn = 0;
-					for(Movie movie : movieList){
+					for(Movie movie : searchMovieList){
 						sn = sn+1;
 						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
 					}
 				}
-				
-				System.out.println("=======Options =========");
-				System.out.println("|1. View Movie Detail   ");
-				System.out.println("|2. Start a new booking ");
-				System.out.println("|3. View past booking   ");
-				System.out.println("|4. Go Back to Main Menu");
-				System.out.print("  Your Choice : ");
-				no = sc.nextInt();
-				switch(no){
-				case 1:
-					System.out.print("Enter Movie No to View Detail: ");
-					try{
-						int selectedIndex = sc.nextInt();
-						Movie movie = movieList.get(selectedIndex-1);
-						viewMovieDetail(movie);
-						
-					} catch (InputMismatchException e) {
-						System.out.println("Your choice is in incorrect format");
-						sc.nextLine();
-					}
-					break;
-				
-				case 2:
-					
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				}
-				
-				
+				menuAfterList(searchMovieList);
 				break;
 
 			case 3: // top 5 ranking
@@ -173,11 +122,62 @@ public class Moblima {
 		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
 	
-	private static void writeReview(ArrayList<Movie> movieList, Movie movie) {
+	private static void menuAfterList(List<Movie> movieLst){
+		try{
+			do{
+				System.out.println("=======Options =========");
+				System.out.println("|1. Start a new booking ");
+				System.out.println("|2. View Movie Detail   ");
+				System.out.println("|3. View past booking   ");
+				System.out.println("|4. Go Back to Main Menu");
+				System.out.print("  Your Choice : ");
+				int no = sc.nextInt();
+				switch(no){
+				case 1:
+					System.out.print("Enter Movie No to View Detail: ");
+					try{
+						int selectedIndex = sc.nextInt();
+						Movie movie = movieLst.get(selectedIndex-1);
+						bookTicket(movie);
+						
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
+					}
+					
+					break;
+				case 2:
+					System.out.print("Enter Movie No to View Detail: ");
+					try{
+						int selectedIndex = sc.nextInt();
+						Movie movie = movieLst.get(selectedIndex-1);
+						viewMovieDetail(movie);
+						
+					} catch (InputMismatchException e) {
+						System.out.println("Your choice is in incorrect format");
+						sc.nextLine();
+					}
+					break;
+				case 3:
+					pastBooking();
+					break;
+				case 4:
+					return;
+				default:
+					System.out.println("Sorry, there is choice no. " + no);
+				}
+			}
+			while(true);
+		}
+		catch(Exception e){
+			System.out.println("Invalid Input");
+		}
+		
+	}
+	private static Movie writeReview(Movie movie) {
 
 		// ask for user's email
-
-		ArrayList<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
 		MovieGoer mg = null;
 		boolean foundEmail = false;
 		System.out.print("\nEnter your email: ");
@@ -229,8 +229,7 @@ public class Moblima {
 		System.out.println();
 		List<Review> rvList = (ArrayList<Review>) movie.getReviews();
 		movie.setReviews(rvList);
-		movieList.add(movie);
-		SerializeDB.writeSerializedObject("Movie.ser", movieList);
+		return movie;
 	}
 
 	private static void staffLogin() {
@@ -241,43 +240,22 @@ public class Moblima {
 			StaffFunctionsController.printStaffMenu();
 	}
 
-	public static ArrayList<Movie> searchMovies(String movieName) {
-		// empty array list for movie
-		ArrayList<Movie> movieList = new ArrayList<>();
-
-		// pull from database and add to movieList
-		list = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
-		for (int i = 0; i < list.size(); i++) {
-			Movie mv = (Movie) list.get(i);
-			if (mv.getTitle().toLowerCase().contains(movieName.toLowerCase())) {
-				// if search name is in movie title add to list
-				movieList.add(mv);
-			}
-		}
-		return movieList;
-	}
-
-	// get all the Movies as Arraylist
-	public static ArrayList<Movie> showAllMovies() {
-		return (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
-	}
 
 	// get top 5 sort by review or no_of_ticket_sold
 	public static List<Movie> showTopRank(String rankBy) {
 		// temp movie to hold during sort
 		Movie temp_movie;
-		list = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
 		// change to normal list to do the sort
-		Movie[] movieList = new Movie[list.size()];
-		movieList = (Movie[]) list.toArray(movieList);
+		Movie[] newMovieList = new Movie[movieList.size()];
+		newMovieList = (Movie[]) movieList.toArray(newMovieList);
 		if (rankBy == "review") {
 			// do insertion sort
-			for (int i = 0; i < movieList.length - 1; i++) {
+			for (int i = 0; i < newMovieList.length - 1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (movieList[i].getOverallUserRating() > movieList[i + 1].getOverallUserRating()) {
-						temp_movie = movieList[i];
-						movieList[i] = movieList[i + 1];
-						movieList[i + 1] = temp_movie;
+					if (newMovieList[i].getOverallUserRating() > newMovieList[i + 1].getOverallUserRating()) {
+						temp_movie = newMovieList[i];
+						newMovieList[i] = newMovieList[i + 1];
+						newMovieList[i + 1] = temp_movie;
 					} else {
 						break;
 					}
@@ -285,12 +263,12 @@ public class Moblima {
 			}
 		} else {
 			// do insertion sort
-			for (int i = 0; i < movieList.length - 1; i++) {
+			for (int i = 0; i < newMovieList.length - 1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (movieList[i].getTicketSold() > movieList[i + 1].getTicketSold()) {
-						temp_movie = movieList[i];
-						movieList[i] = movieList[i + 1];
-						movieList[i + 1] = temp_movie;
+					if (newMovieList[i].getTicketSold() > newMovieList[i + 1].getTicketSold()) {
+						temp_movie = newMovieList[i];
+						newMovieList[i] = newMovieList[i + 1];
+						newMovieList[i + 1] = temp_movie;
 					} else {
 						break;
 					}
@@ -299,9 +277,9 @@ public class Moblima {
 		}
 		// return only top 5
 		List<Movie> top5List = new ArrayList<>();
-		for (int i = 0; i < movieList.length; i++) {
+		for (int i = 0; i < newMovieList.length; i++) {
 			if (i < 5) {
-				top5List.add(movieList[i]);
+				top5List.add(newMovieList[i]);
 			} else {
 				break;
 			}
@@ -458,7 +436,7 @@ public class Moblima {
 				System.out.println("===What would you like to do?========");
 				System.out.println("|1. Book this Movie                  |");
 				System.out.println("|2. Write Review                     |");
-				System.out.println("|3. Go back to Main Menu             |");
+				System.out.println("|3. Exit				             |");
 				System.out.println("======================================");				
 				System.out.print("Enter your choice: ");
 				int choice = sc.nextInt();
@@ -475,7 +453,7 @@ public class Moblima {
 					
 					break;
 				case 2:
-					MovieController.addMovie();
+					writeReview(movie);
 					break;
 				case 3:
 					return;
@@ -633,7 +611,7 @@ public class Moblima {
 
 				MovieGoer movieGoer = new MovieGoer(mgName, mgEmail, mgContact);
 				Transaction txn = new Transaction(selectedST.getShowDateTime(), selectedST.getCinema().getCinemaCode(),
-						movieTitle, bookedTickets, movieGoer);
+						movieTitle, bookedTickets);
 				movieGoer.setMovieGoerTXN(txn);
 
 				printTXN(movieTitle, bookedTickets.size(), txn.getTotalPayment());
