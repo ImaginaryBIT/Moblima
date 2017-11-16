@@ -12,15 +12,16 @@ import database.SerializeDB;
 import entity.SystemSetting;
 
 public class SystemSettingController  {
-	private int configChoice = 0;
-	private boolean errorFlag = false;
-	private SystemSetting systemSetting = new SystemSetting();
-	private List<Date> holidays = new ArrayList<Date>();
+	private static int configChoice = 0;
+	private static boolean errorFlag = false;
+	private static SystemSetting systemSetting = new SystemSetting();
+	private static List<Date> holidays = new ArrayList<Date>();
 	@SuppressWarnings("unchecked")
-	private List<SystemSetting> systemSettingDb = (ArrayList<SystemSetting>) SerializeDB.readSerializedObject("SystemSetting.ser");
+	private static List<SystemSetting> systemSettingDb = (ArrayList<SystemSetting>) SerializeDB.readSerializedObject("SystemSetting.ser");
 	
-	public void printMenu(){
+	public static void printMenu(){
 		
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		systemSetting = systemSettingDb.get(0);
 		holidays = systemSetting.getHolidays();
@@ -106,7 +107,7 @@ public class SystemSettingController  {
 	
 	}
 	
-	private Date checkDuplicateHoliday(String datestr){
+	private static Date checkDuplicateHoliday(String datestr){
 		Date date = convertDate(datestr);
 		for(Date holiday : holidays){
 			if(holiday.equals(date)){
@@ -121,7 +122,7 @@ public class SystemSettingController  {
 	 * Create SystemSetting to SerialDatabase
 	 * @param systemSeting
 	 */
-	private void createSystemSetting(SystemSetting systemSeting){
+	private static void createSystemSetting(SystemSetting systemSeting){
 		List<SystemSetting> systems = new ArrayList<SystemSetting>();
 		systems.add(systemSeting);
 		SerializeDB.writeSerializedObject("SystemSetting.ser", systems);
@@ -132,7 +133,7 @@ public class SystemSettingController  {
 	 * @param dateString	Date information in string format
 	 * @return				Date object that contains date information
 	 */
-	public Date convertDate(String dateString) {
+	public static Date convertDate(String dateString) {
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); 
 		Date date = null;
 		try {
