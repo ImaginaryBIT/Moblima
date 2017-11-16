@@ -22,10 +22,6 @@ public class SystemSetting implements Serializable {
 	private float standardTicketPrice;
 	/** Premium Ticket Price */
 	private float premiumTicketPrice;
-        /** 3D Price */
-	private float increment3D;
-	/** Blockbuster Price */
-	private float incrementBlockbuster;
 	/** Child Discount Price */
 	private float childDiscount;
 	/** Senior Citizen Discount */
@@ -42,28 +38,39 @@ public class SystemSetting implements Serializable {
 	private float digitalTypeIncrement;
 	
 	/* ******************** Constructors *********************/
+	
+	
+	/** Default Constructor to instantiate the SystemSetting obj */
+	public SystemSetting() {
+		//Do Nothing
+	}
+
 	/**
+	 * Constructor to instantiate the SystemSetting Object with following inputs:
 	 * @param standardTicketPrice
 	 * @param premiumTicketPrice
 	 * @param childDiscount
 	 * @param seniorCitizenDiscount
 	 * @param holidayIncrement
 	 * @param holidays
+	 * @param threeDTypeIncrement
+	 * @param blockBusterTypeIncrement
+	 * @param digitalTypeIncrement
 	 */
 	public SystemSetting(float standardTicketPrice, float premiumTicketPrice,
 			float childDiscount, float seniorCitizenDiscount,
-			float holidayIncrement, List<Date> holidays) {
+			float holidayIncrement, List<Date> holidays,
+			float threeDTypeIncrement, float blockBusterTypeIncrement,
+			float digitalTypeIncrement) {
 		this.standardTicketPrice = standardTicketPrice;
 		this.premiumTicketPrice = premiumTicketPrice;
 		this.childDiscount = childDiscount;
 		this.seniorCitizenDiscount = seniorCitizenDiscount;
 		this.holidayIncrement = holidayIncrement;
 		this.holidays = holidays;
-	}
-	
-	/** Default Constructor to instantiate the SystemSetting obj */
-	public SystemSetting() {
-		//Do Nothing
+		this.threeDTypeIncrement = threeDTypeIncrement;
+		this.blockBusterTypeIncrement = blockBusterTypeIncrement;
+		this.digitalTypeIncrement = digitalTypeIncrement;
 	}
 
 	/* ******************** Getter and Setter Methods *********/
@@ -136,30 +143,6 @@ public class SystemSetting implements Serializable {
 	public void setSeniorCitizenDiscount(float seniorCitizenDiscount) {
 		this.seniorCitizenDiscount = seniorCitizenDiscount;
 	}
-        /**
-	 * @return 3d increment
-	 */
-        public float getIncrement3D() {
-            return increment3D;
-        }
-        /**
-	 * @param  3d increment  to set
-	 */
-        public void setIncrement3D(float increment3D) {
-            this.increment3D = increment3D;
-        }
-        /**
-	 * @return blockbuster increment
-	 */
-        public float getIncrementBlockbuster() {
-            return incrementBlockbuster;
-        }
-        /**
-	 * @param incrementBlockbuster increment  to set
-	 */
-        public void setIncrementBlockbuster(float incrementBlockbuster) {
-            this.incrementBlockbuster = incrementBlockbuster;
-        }
 
 	/**
 	 * @param holidayIncrement the holidayIncrement to set
@@ -225,12 +208,14 @@ public class SystemSetting implements Serializable {
 	public String toString() {
 		
 		System.out.println("========Current System Config=========");
-		System.out.println(" Standard Ticket Price   : "+this.getStandardTicketPrice());
-		System.out.println(" Premium Ticket Price    : "+this.getPremiumTicketPrice());
-		System.out.println(" Child Discount          : "+this.getChildDiscount());
-		System.out.println(" Senior Citizen Discount : "+this.getSeniorCitizenDiscount());
-		System.out.println(" Holiday Increment       : "+this.getHolidayIncrement());
-		System.out.println("");
+		System.out.println(" Standard Ticket Price      : "+this.standardTicketPrice);
+		System.out.println(" Premium Ticket Price       : "+this.premiumTicketPrice);
+		System.out.println(" Child Discount             : "+this.childDiscount);
+		System.out.println(" Senior Citizen Discount    : "+this.seniorCitizenDiscount);
+		System.out.println(" Holiday Increment          : "+this.holidayIncrement);
+		System.out.println(" 3D Type Increment          : "+this.threeDTypeIncrement);
+		System.out.println(" Blockbuster Type Increment : "+this.blockBusterTypeIncrement);
+		System.out.println(" Digital Type Increment		: "+this.digitalTypeIncrement);
 		System.out.println(" Holidays : ");
 		int count= 0;
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
