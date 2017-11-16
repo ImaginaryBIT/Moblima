@@ -7,18 +7,13 @@ import java.util.ArrayList;
  * @author Group5
  *
  */
-public class MovieGoer {
+public class MovieGoer extends Person {
 	private String movieGoerId;
-	private String name;
-	private String email;
-	private int contact;
 	private ArrayList<Transaction> txnList;
 	
 	public MovieGoer(String name, String email, int contact)
 	{
-		this.name=name;
-		this.email=email;
-		this.contact=contact;
+		super(name, email, contact);
 	}
 
 	/**
@@ -26,27 +21,6 @@ public class MovieGoer {
 	 */
 	public String getMovieGoerId() {
 		return movieGoerId;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * @return the contact
-	 */
-	public int getContact() {
-		return contact;
 	}
 
 	/**
@@ -62,27 +36,6 @@ public class MovieGoer {
 	 */
 	public void setMovieGoerId(String movieGoerId) {
 		this.movieGoerId = movieGoerId;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
-	 * @param contact the contact to set
-	 */
-	public void setContact(int contact) {
-		this.contact = contact;
 	}
 
 	/**
