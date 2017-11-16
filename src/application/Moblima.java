@@ -332,7 +332,7 @@ public class Moblima {
 	/**
 	 * Print the seat layout of a particular movie at a particular show time and cinema.
 	 * The seat layout will show users the arrangement of seats, the screen, the exit as well as aisle between seat rows
-	 * @param st
+	 * @param st Show time of selected movie
 	 */
 	private static void printingSeatLayout(ShowTime st) {
 		int prevRow = 0;
@@ -356,8 +356,10 @@ public class Moblima {
 		}
 	}
 
-
-
+	/**
+	 * Shows user their booking history based on their email address
+	 * "No transaction found" message will be return if the user has never made any booking 
+	 */
 	private static void pastBooking() {
 		SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:MM");
 
@@ -366,7 +368,6 @@ public class Moblima {
 		Transaction txn;
 
 		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
-
 		
 			System.out.print("Enter your email: ");
 			String email = sc.nextLine();
@@ -393,10 +394,15 @@ public class Moblima {
 				}
 			}
 			if (!foundMG)
-				System.out.println("No transaction found");
-		
+				System.out.println("No transaction found");		
 	}
 
+	/**
+	 * Print the transaction of a booked ticket based on movie title, selected seat and total payment
+	 * @param movieTitle The selected movie title
+	 * @param seatNum The selected seat number
+	 * @param totalPayment The total payment calculated by the system
+	 */
 	private static void printTXN(String movieTitle, int seatNum, float totalPayment) {
 		System.out.println("Your ticket(s) is/are booked");
 		System.out.println("------ Transaction details -----");
@@ -405,6 +411,13 @@ public class Moblima {
 		System.out.println("Total price: " + totalPayment);
 	}
 
+	/**
+	 * Offers the moviegoer the mean to make payment. By which, their personal details and the new transaction will be written into the database MovieGoer.ser
+	 * The limitation of this method is that no real payment is actually processed. The system acts as if the payment is real and updates the databases accordingly to the change
+	 * @param bookedTickets The list of tickets being booked by the user
+	 * @return true if the payment is successful, and false otherwise
+	 * Note: The payment is always successful in this project
+	 */
 	private static boolean purchaseTicket(List<Ticket> bookedTickets) {
 		System.out.println("=====================================");
 		System.out.println("|1. Make payment                    |");
@@ -432,8 +445,10 @@ public class Moblima {
 		return false;
 	}
 
-
-
+	/**
+	 * Gives the users options to pick a ticket type
+	 * @return ticket type in String
+	 */
 	private static String ticketTypePicker() {
 		int typeChoice;
 		do {
@@ -463,7 +478,12 @@ public class Moblima {
 		} while (typeChoice > 0 && typeChoice < 4);
 	}
 
-
+	/**
+	 * Displays to user the full details of selected movie
+	 * Afterwards, offers them the options to book the movie or write a review for it
+	 * @param movie The selected movie
+	 * @throws Exception 
+	 */
 	private static void viewMovieDetail(Movie movie) throws Exception{
 		try {
 			movie.showMovieDetailWithReview();
@@ -504,6 +524,11 @@ public class Moblima {
 		}
 	}
 
+	/**
+	 * Guides the user through the whole process of booking tickets
+	 * @param movie The selected movie
+	 * @throws Exception
+	 */
 	private static void bookTicket(Movie movie) throws Exception {
 		// ask user to choose a movie
 		do {
@@ -573,6 +598,13 @@ public class Moblima {
 		
 	}
 	
+	/**
+	 * Complements to bookTicket() methods, this method allows user to choose a seat, and get a ticket for that seat
+	 * Multiple seats can be selected before the user proceeds to confirm booking
+	 * Once booking is confirmed, the user can make a payment or just cancel the booking
+	 * @param selectedST The selected show time
+	 * @param selectedMv The selected movie
+	 */
 	@SuppressWarnings("unchecked")
 	private static void startBooking(ShowTime selectedST, Movie selectedMv) {
 		List<Ticket> bookedTickets = new ArrayList<>();
@@ -603,155 +635,151 @@ public class Moblima {
 				int x = 0;
 				Ticket[] tmpTickets = selectedST.getTickets();
 				// Seat selectedSeat = new Seat();
-				
+
 				int seatNum;
 
 				while (true) {
 					try {
-                                                System.out.print("\nEnter the seat number: ");
+						System.out.print("\nEnter the seat number: ");
 						seatNum = sc.nextInt();
 						sc.nextLine();
-                                                row = seatNum / 10;
-                                                col = (seatNum - (row*10));
-                                                boolean foundSeat = false;
-                                                
-                                                for (x = 0; x < tmpTickets.length; x++) {
-                                                        if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
-                                                                        && tmpTickets[x].getStatus().equals(Ticket.AVAILABLE)) {
-                                                                foundSeat = true;
-                                                                tmpTickets[x].setStatus(Ticket.SOLD);
-                                                                break;
-                                                        }
-                                                }
-                                                if(foundSeat){
-                                                    break;
-                                                }else{
-                                                    System.out.println("Seat not available. Re-enter seat number");
-                                                    
-                                                }
-                                                
+						row = seatNum / 10;
+						col = (seatNum - (row * 10));
+						boolean foundSeat = false;
+
+						for (x = 0; x < tmpTickets.length; x++) {
+							if (tmpTickets[x].getSeat().getRow() == row && tmpTickets[x].getSeat().getColumn() == col
+									&& tmpTickets[x].getStatus().equals(Ticket.AVAILABLE)) {
+								foundSeat = true;
+								tmpTickets[x].setStatus(Ticket.SOLD);
+								break;
+							}
+						}
+						if (foundSeat) {
+							break;
+						} else {
+							System.out.println("Seat not available. Re-enter seat number");
+
+						}
+
 					} catch (InputMismatchException e) {
 						System.out.println("Your seat number is in incorrect format");
 						sc.nextLine();
 					}
 				}
 
-				
-
 				String ticketType = ticketTypePicker();
 				tmpTickets[x].setTicketType(ticketType);
-                                System.out.println("-----------SCREEN-----------");
+				System.out.println("-----------SCREEN-----------");
 				printingSeatLayout(selectedST);
-                                System.out.println("");
+				System.out.println("");
 				System.out.println("----------ENTRANCE----------");
 				System.out.println();
-                                //get the price base on cinema type,movietype,tickettype and showtime date
-                                float price = 0;
-                                //base on cinema set the price
-                                if(selectedST.getCinema().getClassType().equals(Cinema.CINEMA_CLASS_PLATINIUM)){
-                                    price = SystemSettingController.getSystemSetting().getPremiumTicketPrice();
-                                }else{
-                                    price = SystemSettingController.getSystemSetting().getStandardTicketPrice();
-                                }
-                                //base on movie type increse the price
-                                if(selectedMv.getMovieType().equals(Movie.BLOCKBUSTER)){
-                                    price += SystemSettingController.getSystemSetting().getBlockBusterTypeIncrement();
-                                }else if(selectedMv.getMovieType().equals(Movie.THREED)){
-                                    price += SystemSettingController.getSystemSetting().getThreeDTypeIncrement();
-                                }
-                               
-                                //base on ticket increase the price
-                                if(tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)){
-                                    price -= SystemSettingController.getSystemSetting().getSeniorCitizenDiscount();
-                                }else if(tmpTickets[x].getTicketType().equals(Ticket.CHILD)){
-                                    price -= SystemSettingController.getSystemSetting().getChildDiscount();
-                                }
-                                //increaste if holiday
-                                Calendar c1 = Calendar.getInstance();
-                                c1.setTime(selectedST.getShowDateTime());
-                                if (c1.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY 
-                                        || c1.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-                                        || SystemSettingController.getSystemSetting().getHolidays().contains(selectedST.getShowDateTime())){
-                                    
-                                    price += SystemSettingController.getSystemSetting().getHolidayIncrement();
-                                }
-                                tmpTickets[x].setPrice(price);
-                                
+				// get the price base on cinema type,movietype,tickettype and showtime date
+				float price = 0;
+				// base on cinema set the price
+				if (selectedST.getCinema().getClassType().equals(Cinema.CINEMA_CLASS_PLATINIUM)) {
+					price = SystemSettingController.getSystemSetting().getPremiumTicketPrice();
+				} else {
+					price = SystemSettingController.getSystemSetting().getStandardTicketPrice();
+				}
+				// base on movie type increse the price
+				if (selectedMv.getMovieType().equals(Movie.BLOCKBUSTER)) {
+					price += SystemSettingController.getSystemSetting().getBlockBusterTypeIncrement();
+				} else if (selectedMv.getMovieType().equals(Movie.THREED)) {
+					price += SystemSettingController.getSystemSetting().getThreeDTypeIncrement();
+				}
+
+				// base on ticket increase the price
+				if (tmpTickets[x].getTicketType().equals(Ticket.CENIOR_CITIZEN)) {
+					price -= SystemSettingController.getSystemSetting().getSeniorCitizenDiscount();
+				} else if (tmpTickets[x].getTicketType().equals(Ticket.CHILD)) {
+					price -= SystemSettingController.getSystemSetting().getChildDiscount();
+				}
+				// increaste if holiday
+				Calendar c1 = Calendar.getInstance();
+				c1.setTime(selectedST.getShowDateTime());
+				if (c1.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || c1.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+						|| SystemSettingController.getSystemSetting().getHolidays()
+								.contains(selectedST.getShowDateTime())) {
+
+					price += SystemSettingController.getSystemSetting().getHolidayIncrement();
+				}
+				tmpTickets[x].setPrice(price);
+
 				bookedTickets.add(tmpTickets[x]);
 				break;
 			case 2: // confirm booking
-                                if(bookedTickets.size() == 0){
-                                    System.out.println("You haven't selected any seat! ");
-                                    break;
-                                }
+				if (bookedTickets.size() == 0) {
+					System.out.println("You haven't selected any seat! ");
+					break;
+				}
 				// ask for user's email
-                                List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
-                                MovieGoer movieGoer = null;
-                                boolean foundEmail = false;
-                                System.out.print("Enter your email: ");
-                                String email = sc.nextLine();
-                                for (int i = 0; i < mgList.size(); i++) {
-                                        movieGoer = mgList.get(i);
-                                        if (movieGoer.getEmail().toLowerCase().equals(email.toLowerCase())) {
-                                                foundEmail = true;
-                                                break;
-                                        }
-                                }
-                                if (!foundEmail) {
-                                        System.out.println("\nThis is the first time you are here. Kindly provide us your info");
-                                        System.out.print("Enter your name: ");
-                                        String name = sc.nextLine();
-                                        int contact;
-                                        while (true) {
-                                                try {
-                                                        System.out.print("Contact number: ");
-                                                        contact = sc.nextInt();
-                                                        sc.nextLine();
-                                                        break;
-                                                } catch (InputMismatchException e) {
+				List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+				MovieGoer movieGoer = null;
+				boolean foundEmail = false;
+				System.out.print("Enter your email: ");
+				String email = sc.nextLine();
+				for (int i = 0; i < mgList.size(); i++) {
+					movieGoer = mgList.get(i);
+					if (movieGoer.getEmail().toLowerCase().equals(email.toLowerCase())) {
+						foundEmail = true;
+						break;
+					}
+				}
+				if (!foundEmail) {
+					System.out.println("\nThis is the first time you are here. Kindly provide us your info");
+					System.out.print("Enter your name: ");
+					String name = sc.nextLine();
+					int contact;
+					while (true) {
+						try {
+							System.out.print("Contact number: ");
+							contact = sc.nextInt();
+							sc.nextLine();
+							break;
+						} catch (InputMismatchException e) {
 
-                                                        System.out.println("Your contact is in incorrect format. Please re-enter");
-                                                        sc.nextLine();
-                                                }
-                                        }
-                                        movieGoer = new MovieGoer(name, email, contact);
-                                        mgList.add(movieGoer);
-                                }
-                                float total_payment = 0;
-                                for(Ticket tk : bookedTickets){
-                                    total_payment += tk.getPrice();
-                                }
+							System.out.println("Your contact is in incorrect format. Please re-enter");
+							sc.nextLine();
+						}
+					}
+					movieGoer = new MovieGoer(name, email, contact);
+					mgList.add(movieGoer);
+				}
+				float total_payment = 0;
+				for (Ticket tk : bookedTickets) {
+					total_payment += tk.getPrice();
+				}
 				Transaction txn = new Transaction(selectedST.getShowDateTime(), selectedST.getCinema().getCinemaCode(),
-						selectedMv.getTitle(), bookedTickets,total_payment);
-				
-                                
+						selectedMv.getTitle(), bookedTickets, total_payment);
+
 				printTXN(selectedMv.getTitle(), bookedTickets.size(), txn.getTotalPayment());
 				// proceed to purchase
 				if (purchaseTicket(bookedTickets)) {
 					System.out.println("Payment was successful!!!");
-                                        
-                                        movieGoer.setMovieGoerTXN(txn);
-					
-					
+
+					movieGoer.setMovieGoerTXN(txn);
+
 					SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
-                                        //find the movie id index
-                                        int index = 0;
-                                        for(Movie mv: movieList){
-                                            if(mv.getMovieId() == selectedMv.getMovieId()){
-                                                break;
-                                            }
-                                            index++;
-                                        }
-                                        movieList.set(index, selectedMv);
-                                        SerializeDB.writeSerializedObject("Movie.ser", movieList);
-                    return;
+					// find the movie id index
+					int index = 0;
+					for (Movie mv : movieList) {
+						if (mv.getMovieId() == selectedMv.getMovieId()) {
+							break;
+						}
+						index++;
+					}
+					movieList.set(index, selectedMv);
+					SerializeDB.writeSerializedObject("Movie.ser", movieList);
+					return;
 				}
 				break;
 			case 3: // back to main menu
-                                for(Ticket tk : bookedTickets){
-                                    tk.setStatus(Ticket.AVAILABLE);
-                                }
-                return;
+				for (Ticket tk : bookedTickets) {
+					tk.setStatus(Ticket.AVAILABLE);
+				}
+				return;
 			default:
 				System.out.println("Option not found");
 			}

@@ -11,14 +11,31 @@ import java.util.Scanner;
 import database.SerializeDB;
 import entity.SystemSetting;
 
+/**
+ * This class is used by staff to configure system settings. Which will be used to calculate the price of tickets
+ * based on the date booked, the type of movie, type of cinema, and the age of moviegoer
+ * @author group5
+ *
+ */
 public class SystemSettingController  {
+	
+	/** The choice the staff has made */
 	private static int configChoice = 0;
+	/** The error flag to handle any error */
 	private static boolean errorFlag = false;
+	/** The SystemSetting object */
 	private static SystemSetting systemSetting = new SystemSetting();
+	/** List of holidays */
 	private static List<Date> holidays = new ArrayList<Date>();
 	@SuppressWarnings("unchecked")
+	/** The list of setting stored in database */
 	private static List<SystemSetting> systemSettingDb = (ArrayList<SystemSetting>) SerializeDB.readSerializedObject("SystemSetting.ser");
 	
+	/**
+	 * This method simply prints out all available option for staff to choose
+	 * Based on the choice chose, the staff can start to edit the ticket price, discount, increment, holiday
+	 * or to view current system setting
+	 */
 	public static void printMenu(){
 		
 		@SuppressWarnings("resource")
@@ -102,11 +119,14 @@ public class SystemSettingController  {
 			
 			} catch (Exception e) {
 				System.out.println("Exception >> " + e.getMessage());
-				
 			}
-	
 	}
 	
+	/**
+	 * Checks if there is any holiday in the database duplicated with input holiday
+	 * @param datestr The holiday in String format
+	 * @return the input date as in Date format. The actual comparison will be made in printMenu() method
+	 */
 	private static Date checkDuplicateHoliday(String datestr){
 		Date date = convertDate(datestr);
 		for(Date holiday : holidays){
@@ -114,8 +134,7 @@ public class SystemSettingController  {
 				errorFlag = true;
 			}
 		}
-		return date;
-		
+		return date;		
 	}
 	
 	/**
@@ -146,7 +165,7 @@ public class SystemSettingController  {
 	
 	/**
 	 * Get SystemSetting from SerialDatabase
-	 * @param 
+	 * @return the system setting object in the database
 	 */
 	public static SystemSetting getSystemSetting(){
             return systemSettingDb.get(0);

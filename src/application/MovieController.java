@@ -17,8 +17,15 @@ import entity.ShowTime;
 import entity.Ticket;
 import entity.TimeSlot;
 
-public class MovieController {
+/**
+ * This controller class is meant for staff to change update add or remove movies and their associated details
+ * Any changes will be written to the database Movie.ser
+ * @author group5
+ *
+ */
 
+public class MovieController {
+	/** List of movies */
 	private static List<Movie> list;
 	/** Movie Id */
 	private static int movieId;
@@ -44,20 +51,32 @@ public class MovieController {
 	private static String rating;// 9
 	/** Show Times */
 	private static List<ShowTime> showTimes;// 10
-	/** Status */
+	/** Status of the movie*/
 	private static String status;// 11
 
+	/** The show time ID */
 	private static int showTimeId;
+	/** The cinema showing movies */
 	private static Cinema cinema;
+	/** The tickets generated for a particular movie */
 	private static Ticket[] tickets;
 
 	private static Scanner sc = new Scanner(System.in);
+	/** The list of movie grabbed from the database Movie.ser */
 	private static List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
+	/** The list of cinema grabbed from the database Cinema.ser */
 	private static List<Cinema> cinemaList = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
 
+	/** The size of movie list */
 	private static int size = movieList.size();
+	/** The list of available show time */
 	private static List<ShowTime> showTimeList = new ArrayList();
 
+	/**
+	 * Allows staff to add new movie to the database
+	 * The method will guide the staff through the whole process of entering movie details and assigning its show time and location
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static boolean addMovie() {
 
@@ -212,7 +231,7 @@ public class MovieController {
 					List<String> temp = new ArrayList();
 					int count = 0;
 					System.out.println("=====Movie Show Time Slot=====");
-					System.out.println("total number of slot is: " + cinema.getTimeSlot().size());
+					System.out.println("Total number of slots is: " + cinema.getTimeSlot().size());
 
 					if (cinema.getTimeSlot().size() == 1) {
 						System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
@@ -337,9 +356,13 @@ public class MovieController {
 		}
 	}
 
+	/**
+	 * This method allows staff to update details of a movie
+	 * @return true if the update is successful, false otherwise
+	 */
 	public static boolean updateMovie() {
 		int choice, rchoice;
-		boolean choiceCheck = false;	
+		boolean choiceCheck = false;
 		boolean codeCheck = false;
 		boolean dateCheck = false;
 		boolean showTimeCheck;
@@ -347,28 +370,28 @@ public class MovieController {
 		try {
 			System.out.println("Enter the updating movie name: ");
 			title = sc.nextLine();
-			//sc.nextLine();
-                        System.out.println("Choose the Movie type: ");
-                        System.out.println("1. Digital");
-                        System.out.println("2. 3D");
-                        System.out.println("3. Blockbuster ");
-                        do {
-                            rchoice = sc.nextInt();
-                            sc.nextLine();
-                            switch (rchoice) {
-                            case 1:
-                                    movieType = Movie.DIGITAL;
-                                    break;
-                            case 2:
-                                    movieType = Movie.THREED;
-                                    break;
-                            case 3:
-                                    movieType = Movie.BLOCKBUSTER;
-                                    break;
-                            default:
-                                    System.out.println("No such choice");
-                            }
-                        } while (rchoice < 1 || rchoice > 3);
+			// sc.nextLine();
+			System.out.println("Choose the Movie type: ");
+			System.out.println("1. Digital");
+			System.out.println("2. 3D");
+			System.out.println("3. Blockbuster ");
+			do {
+				rchoice = sc.nextInt();
+				sc.nextLine();
+				switch (rchoice) {
+				case 1:
+					movieType = Movie.DIGITAL;
+					break;
+				case 2:
+					movieType = Movie.THREED;
+					break;
+				case 3:
+					movieType = Movie.BLOCKBUSTER;
+					break;
+				default:
+					System.out.println("No such choice");
+				}
+			} while (rchoice < 1 || rchoice > 3);
 
 			for (int i = 0; i < movieList.size(); i++) {
 				Movie movie = (Movie) movieList.get(i);
@@ -403,28 +426,28 @@ public class MovieController {
 							break;
 
 						case 2: // 2 movieType
-                                                        System.out.print("Enter the Movie type: ");
-                                                        System.out.println("Choose the Movie type: ");
-                                                        System.out.println("1. Digital");
-                                                        System.out.println("2. 3D");
-                                                        System.out.println("3. Blockbuster ");
-                                                        do {
-                                                            rchoice = sc.nextInt();
-                                                            sc.nextLine();
-                                                            switch (rchoice) {
-                                                            case 1:
-                                                                    movieType = Movie.DIGITAL;
-                                                                    break;
-                                                            case 2:
-                                                                    movieType = Movie.THREED;
-                                                                    break;
-                                                            case 3:
-                                                                    movieType = Movie.BLOCKBUSTER;
-                                                                    break;
-                                                            default:
-                                                                    System.out.println("No such choice");
-                                                            }
-                                                        } while (rchoice < 1 || rchoice > 3);
+							System.out.print("Enter the Movie type: ");
+							System.out.println("Choose the Movie type: ");
+							System.out.println("1. Digital");
+							System.out.println("2. 3D");
+							System.out.println("3. Blockbuster ");
+							do {
+								rchoice = sc.nextInt();
+								sc.nextLine();
+								switch (rchoice) {
+								case 1:
+									movieType = Movie.DIGITAL;
+									break;
+								case 2:
+									movieType = Movie.THREED;
+									break;
+								case 3:
+									movieType = Movie.BLOCKBUSTER;
+									break;
+								default:
+									System.out.println("No such choice");
+								}
+							} while (rchoice < 1 || rchoice > 3);
 							movie.setMovieType(movieType);
 							break;
 
@@ -586,18 +609,14 @@ public class MovieController {
 							if (cinema.getTimeSlot().size() == 1) {
 								System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
 								temp2.add(cinema.getTimeSlot().get(0).getDate());
-							} 
-							else 
-							{
+							} else {
 								System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
 								temp2.add(cinema.getTimeSlot().get(0).getDate());
 								count++;
 
-								for (int j = 1; j < cinema.getTimeSlot().size(); j++) 
-								{
+								for (int j = 1; j < cinema.getTimeSlot().size(); j++) {
 									if (cinema.getTimeSlot().get(j).getDate()
-											.compareTo(cinema.getTimeSlot().get(j-1).getDate()) != 0) 
-									{
+											.compareTo(cinema.getTimeSlot().get(j - 1).getDate()) != 0) {
 										System.out.println(count + ". " + cinema.getTimeSlot().get(j).getDate());
 										temp2.add(cinema.getTimeSlot().get(j).getDate());
 										count++;
@@ -626,7 +645,8 @@ public class MovieController {
 										if (cinema.getTimeSlot().get(k).getDate().equals(day_string)
 												&& cinema.getTimeSlot().get(k).getStatus().equals(TimeSlot.AVAILABLE)) {
 											slot_count++;
-											System.out.println(slot_count + ": " + cinema.getTimeSlot().get(k).getTime() + " ");
+											System.out.println(
+													slot_count + ": " + cinema.getTimeSlot().get(k).getTime() + " ");
 											timeSlotArray.add(cinema.getTimeSlot().get(k));
 											date_check = true;
 										}
@@ -654,7 +674,7 @@ public class MovieController {
 							ShowTime showtime = new ShowTime(showTimeId, cinema, chosen_timeSlot, tickets);
 							movie.getShowTimes().add(showtime);
 							System.out.println("Show time added!");
-							//sc.nextLine();
+							// sc.nextLine();
 							break;
 						case 11:// 12 status
 							System.out.println("Select the new Movie show status: ");
@@ -705,9 +725,17 @@ public class MovieController {
 		}
 		System.out.println("Movie not found in Database.");
 		return false;
-
 	}
 
+	/**
+	 * This method is used by both moviegoer and staff to add a review to a particular movie
+	 * @param MovieId The ID of selected movie
+	 * @param name The name of reviewer
+	 * @param email Their email
+	 * @param rating Their rating
+	 * @param review Their review's content
+	 * @return true if adding is successful, false otherwise
+	 */
 	public static boolean addReview(int MovieId, String name, String email, float rating, String review) {
 		for (Movie mv : movieList) {
 			if (mv.getMovieId() == MovieId) {
@@ -719,6 +747,13 @@ public class MovieController {
 		return false;
 	}
 
+	/**
+	 * This method supplements addMovie() method. Which checks for duplicate of the movie, input by the user, and the database 
+	 * @param name Name of the movie
+	 * @param director The director of the movie
+	 * @param type The movie's type
+	 * @return true if there is duplicate, false otherwise
+	 */
 	private static boolean checkDuplicateMovie(String name, String director, String type) {
 
 		for (Movie movie : movieList) {
@@ -731,18 +766,22 @@ public class MovieController {
 		return false;
 	}
 
-	public static List<Movie> viewAllMovie(){
+	/**
+	 * This method simply shows all movies in the database
+	 * @return
+	 */
+	public static List<Movie> viewAllMovie() {
 		System.out.println("============All Movies================");
 		int sn = 0;
-		for(Movie movie : movieList){
+		for (Movie movie : movieList) {
 			sn++;
-			System.out.println(sn +". "+ movie.getTitle()+", ("+movie.getStatus()+")");
-			
+			System.out.println(sn + ". " + movie.getTitle() + ", (" + movie.getStatus() + ")");
+
 		}
 		System.out.println("======================================");
 		return movieList;
 	}
-	
+
 	/**
 	 * Search Movies by name and return all the movies that contain the searched name
 	 * @param movieName
