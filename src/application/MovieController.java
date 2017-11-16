@@ -66,7 +66,7 @@ public class MovieController {
 		int rchoice, choice;
 		boolean flag = false;
 		boolean codeCheck = false;
-		boolean showTimeCheck = false;
+		boolean showTimeCheck;
 		Date chosen_timeSlot = new Date();
 		try {
 			while (true) {
@@ -111,10 +111,12 @@ public class MovieController {
 					// 7 runningTime
 					System.out.print("Enter the Movie running time: ");
 					runningTime = sc.nextInt();
+					sc.nextLine();
 
 					// 8 overallUserRate
 					System.out.print("Enter the Movie overall user rate: ");
 					overallUserRate = sc.nextFloat();
+					sc.nextLine();
 
 					// 9 reviews
 					reviews = new ArrayList();
@@ -170,6 +172,7 @@ public class MovieController {
 					while (!codeCheck) {
 						System.out.print("Enter the cinema id: ");
 						int cinemaId = sc.nextInt();
+						sc.nextLine();
 
 						for (Cinema cnma : cinemaList) {
 							if (cnma.getCinemaId() == cinemaId) {
@@ -218,12 +221,13 @@ public class MovieController {
 							}
 						}
 					}
-
+					showTimeCheck = false;
 					while (!showTimeCheck) {
 
 						System.out.println("Please choose the date: ");
 						int choseDay = sc.nextInt();
-						if (choseDay > count || choseDay < 0) {
+						sc.nextLine();
+						if (choseDay >= count || choseDay < 0) {
 							System.out.println("out of range! Please re-choose date");
 							showTimeCheck = false;
 						} else {
@@ -252,6 +256,7 @@ public class MovieController {
 								do {
 									System.out.println("Please select a time slot (1 to " + slot_count + "): ");
 									time_slot_no = sc.nextInt();
+									sc.nextLine();
 								} while (time_slot_no < 0 || time_slot_no > slot_count);
 
 								chosen_timeSlot = timeSlotArray.get(time_slot_no - 1).getDateTime();
@@ -273,6 +278,7 @@ public class MovieController {
 					System.out.print("Choice: ");
 					do {
 						choice = sc.nextInt();
+						sc.nextLine();
 						switch (choice) {
 						case 1:
 							status = "Coming Soon";
@@ -302,10 +308,10 @@ public class MovieController {
 					SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
 					return true;
 				} else {
-					System.out.println("Movie already in database.");
 					System.out.println("Choose 1 to Add another movie.");
 					System.out.println("Choose 2 to Back to menu.");
 					choice = sc.nextInt();
+					sc.nextLine();
 					if (choice == 2)
 						return false;
 					;
@@ -319,13 +325,15 @@ public class MovieController {
 
 	public static boolean updateMovie() {
 		int choice, rchoice;
-		boolean choiceCheck = false;
+		boolean choiceCheck = false;	
+		boolean codeCheck = false;
 		boolean dateCheck = false;
+		boolean showTimeCheck;
 		Date chosen_timeSlot = new Date();
 		try {
 			System.out.println("Enter the updating movie name: ");
 			title = sc.nextLine();
-			// System.out.print("");
+			//sc.nextLine();
 			System.out.println("Enter the updating Movie Type: ");
 			movieType = sc.nextLine();
 
@@ -335,7 +343,7 @@ public class MovieController {
 				if (movie.getTitle().equals(title) && movie.getMovieType().equals(movieType)) {
 					while (!choiceCheck) {
 						System.out.println("Which detail do you want to update?");
-						System.out.println(movie.getTitle());
+						System.out.println("Current movie title <" + movie.getTitle() + ">");
 						System.out.println("1. Update the Movie Name");
 						System.out.println("2. Update the Movie Type");
 						System.out.println("3. Update the Movie Cast");
@@ -401,6 +409,7 @@ public class MovieController {
 						case 7:// 7 runningTime
 							System.out.print("Enter the Movie running time: ");
 							runningTime = sc.nextInt();
+							sc.nextLine();
 							movie.setRunningTime(runningTime);
 							break;
 
@@ -458,7 +467,6 @@ public class MovieController {
 							List<ShowTime> temp = movie.getShowTimes();
 							ShowTime st = null;
 							boolean idCheck = false;
-							boolean codeCheck = false;
 							if (temp.size() == 0) {
 								System.out.println("No showtime to remove: ");
 								break;
@@ -491,14 +499,14 @@ public class MovieController {
 						case 11:// 11 add showTimes
 							int showTimeId = showTimeList.size() + 1;
 
-							for (Cinema cnma : cinemaList) {
-								System.out.println(cnma.getCinemaId() + ": " + cnma.getClassType() + " "
-										+ cnma.getCinemaCode() + " from " + cnma.getCineplex().getName());
+							for (Cinema cinema : cinemaList) {
+								System.out.println(cinema.getCinemaId() + ": " + cinema.getClassType() + " "
+										+ cinema.getCinemaCode() + " from " + cinema.getCineplex().getName());
 							}
-							codeCheck = false;
 							while (!codeCheck) {
 								System.out.print("Enter the cinema id: ");
 								int cinemaId = sc.nextInt();
+								sc.nextLine();
 
 								for (Cinema cnma : cinemaList) {
 									if (cnma.getCinemaId() == cinemaId) {
@@ -515,43 +523,89 @@ public class MovieController {
 										codeCheck = true;
 									}
 								}
-								System.out.println("Out of range! Please Enter again!");
 							}
 
 							System.out.println("You have chosen:");
 							System.out.println(cinema.getClassType() + " " + cinema.getCinemaCode() + " from "
 									+ cinema.getCineplex().getName());
 
-							boolean slotCheck = false;
-							int slot_count = 0;
-							// list to store the menu
-							List<TimeSlot> timeSlotArray = new ArrayList();
-							System.out.println("=====Show Time Slot bewlow=====");
+							List<String> temp2 = new ArrayList();
+							int count = 0;
+							System.out.println("=====Movie Show Time Slot=====");
+							System.out.println("total number of slot is: " + cinema.getTimeSlot().size());
 
-							for (int c = 0; c < cinema.getTimeSlot().size(); c++) {
-								System.out.println(c + ". Date:" + cinema.getTimeSlot().get(c).getDate() + " Time:"
-										+ cinema.getTimeSlot().get(c).getTime() + " Status: "
-										+ cinema.getTimeSlot().get(c).getStatus());
-							}
+							if (cinema.getTimeSlot().size() == 1) {
+								System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
+								temp2.add(cinema.getTimeSlot().get(0).getDate());
+							} 
+							else 
+							{
+								System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
+								temp2.add(cinema.getTimeSlot().get(0).getDate());
+								count++;
 
-							while (!slotCheck) {
-								System.out.print("Please choose the available show time slot: ");
-								int showTimeSlot = sc.nextInt();
-
-								if (showTimeSlot >= 0 && showTimeSlot < cinema.getTimeSlot().size()) {
-									chosen_timeSlot = cinema.getTimeSlot().get(showTimeSlot).getDateTime();
-									slotCheck = true;
-								} else {
-									System.out.println("No time slot found for this input!");
-									slotCheck = false;
+								for (int j = 1; j < cinema.getTimeSlot().size(); j++) 
+								{
+									if (cinema.getTimeSlot().get(j).getDate()
+											.compareTo(cinema.getTimeSlot().get(j-1).getDate()) != 0) 
+									{
+										System.out.println(count + ". " + cinema.getTimeSlot().get(j).getDate());
+										temp2.add(cinema.getTimeSlot().get(j).getDate());
+										count++;
+									}
 								}
+							}
+							showTimeCheck = false;
+
+							while (!showTimeCheck) {
+
+								System.out.println("Please choose the date: ");
+								int choseDay = sc.nextInt();
+								sc.nextLine();
+								if (choseDay >= count || choseDay < 0) {
+									System.out.println("out of range! Please re-choose date");
+									showTimeCheck = false;
+								} else {
+									String day_string = temp2.get(choseDay);
+
+									boolean date_check = false;
+									int slot_count = 0;
+									// list to store the menu
+									List<TimeSlot> timeSlotArray = new ArrayList();
+
+									for (int k = 0; k < cinema.getTimeSlot().size(); k++) {
+										if (cinema.getTimeSlot().get(k).getDate().equals(day_string)
+												&& cinema.getTimeSlot().get(k).getStatus().equals(TimeSlot.AVAILABLE)) {
+											slot_count++;
+											System.out.println(slot_count + ": " + cinema.getTimeSlot().get(k).getTime() + " ");
+											timeSlotArray.add(cinema.getTimeSlot().get(k));
+											date_check = true;
+										}
+									}
+									if (date_check == false) {
+										// no time slot found ask to enter again
+										System.out.println("No time slot found for input " + day_string + ".");
+
+									} else {
+										int time_slot_no = 0;
+										do {
+											System.out.println("Please select a time slot (1 to " + slot_count + "): ");
+											time_slot_no = sc.nextInt();
+											sc.nextLine();
+										} while (time_slot_no < 0 || time_slot_no > slot_count);
+
+										chosen_timeSlot = timeSlotArray.get(time_slot_no - 1).getDateTime();
+										showTimeCheck = true;
+									}
+								}
+
 							}
 
 							cinema.setTimeSlotStatus(chosen_timeSlot, TimeSlot.UNAVAILABLE);
 							ShowTime showtime = new ShowTime(showTimeId, cinema, chosen_timeSlot, tickets);
 							movie.getShowTimes().add(showtime);
 							System.out.println("Show time added!");
-							sc.nextLine(); // ?
+							//sc.nextLine();
 							break;
 						case 12:// 12 status
 							System.out.println("Select the new Movie show status: ");

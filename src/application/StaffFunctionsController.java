@@ -32,8 +32,9 @@ public class StaffFunctionsController {
 				System.out.println("|5. Configure System Settings.       |");
 				System.out.println("|6. Logout                           |");
 				System.out.println("======================================");				
-				System.out.print("Enter your choice: ");
+				System.out.println("Enter your choice: ");
 				int choice = sc.nextInt();
+				sc.nextLine();
 				switch (choice) {
 				case 1:
 					MovieController.viewAllMovie();
