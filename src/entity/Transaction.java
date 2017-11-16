@@ -11,15 +11,14 @@ public class Transaction {
 	private String movieName;
 	private Date transactionDate;
 	private Date showTime;
-	private MovieGoer movieGoer;
 
-	public Transaction(Date showTime, String cinemaCode, String movieName, List<Ticket> tickets, MovieGoer movieGoer) {
+	public Transaction(Date showTime, String cinemaCode, String movieName, List<Ticket> tickets,float totalPayment) {
 		setTxnId(showTime, cinemaCode);
 		this.tickets = tickets;
 		this.showTime = showTime;
 		this.movieName = movieName;
+                this.totalPayment = totalPayment;
 		transactionDate = new Date();
-		this.movieGoer= movieGoer;
 	}
 
 	
@@ -75,17 +74,6 @@ public class Transaction {
 		return showTime;
 	}
 
-
-
-	/**
-	 * @return the movieGoer
-	 */
-	public MovieGoer getMovieGoer() {
-		return movieGoer;
-	}
-
-
-
 	/**
 	 * @param transactionId the transactionId to set
 	 */
@@ -137,15 +125,6 @@ public class Transaction {
 	 */
 	public void setShowTime(Date showTime) {
 		this.showTime = showTime;
-	}
-
-
-
-	/**
-	 * @param movieGoer the movieGoer to set
-	 */
-	public void setMovieGoer(MovieGoer movieGoer) {
-		this.movieGoer = movieGoer;
 	}
 
 
