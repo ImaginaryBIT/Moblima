@@ -65,11 +65,11 @@ public class Moblima {
 				while (true) {
 					try {
 						choice = sc.nextInt();
-						sc.nextLine();
+						//sc.nextLine();
 						break;
 					} catch (InputMismatchException e) {
 						System.out.println("Your choice is in incorrect format");
-						sc.nextLine();
+						//sc.nextLine();
 					}
 				}
 				sc.nextLine();
@@ -80,7 +80,7 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+					System.out.printf("%d\t%s%n", i + 1, top5movies.get(i).getTitle());
 				}
 				break;
 			case 3:

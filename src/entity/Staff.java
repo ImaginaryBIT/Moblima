@@ -1,7 +1,8 @@
 package entity;
 
+import java.io.Serializable;
 
-public class Staff extends Person {
+public class Staff extends Person implements Serializable{
 	private String staffID;
 	private String password;
 

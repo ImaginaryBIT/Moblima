@@ -720,9 +720,10 @@ public class MovieController {
 	}
 
 	public static List<Movie> viewAllMovie() {
+		
+		System.out.println("============All Movies===========");
 
 		for (Movie movie : movieList) {
-			System.out.println("============All Movies===========");
 			movie.showMovieDetail();
 			System.out.println("=================================");
 		}
