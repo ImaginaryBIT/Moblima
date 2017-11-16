@@ -3,7 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 /**
- * This represents a moviegoer which inherits person's behaviours
+ * This represents a moviegoer which inherits person's behaviors and signatures
  * Contains Transaction list, uUsed to store all transactions purchased by the MovieGoer
  * @author Group5
  *
@@ -20,6 +20,8 @@ public class MovieGoer extends Person {
 	/** The list of transctions that this moviegoer has made */
 	private ArrayList<Transaction> txnList;
 	
+	/* ******************** Constructor ************************/
+	
 	/**
 	 * This contructs the MovieGoer with his/her personal information
 	 * @param name This is moviegoer's name
@@ -32,6 +34,8 @@ public class MovieGoer extends Person {
 		this.txnList = new ArrayList();
 	}
 
+	/* ******************** Getter and Setter Methods *********/
+	
 	/**
 	 * Gets the ID of this moviegoer
 	 * @return the movieGoerId
