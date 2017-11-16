@@ -6,7 +6,8 @@ import java.io.*;
 import database.SerializeDB;
 
 /**
- * This class implement the login function
+ * This class implement the login function. 
+ * Used by Staff to query all functions and classes dedicated to Staff
  * @author Group5
  *
  */
@@ -16,7 +17,7 @@ public class Login {
 	/** User Id */
 	private String id;
 	
-	/** Password */
+	/** User's Password */
 	private String pw;
 	
 	
@@ -24,11 +25,12 @@ public class Login {
 	Scanner sc = new Scanner(System.in);
 	
 	/**
-	 * This method return the message if login is successful or not
+	 * This method returns the result of logging in.
+	 * Returns true if user has entered correct ID and password
+	 * Return false otherwise
 	 * @return boolean
 	 */
-	public boolean authenticate(){
-		
+	public boolean authenticate(){		
 		try{
 			System.out.print("Enter Login ID: ");
 			String id = sc.nextLine();
@@ -51,10 +53,7 @@ public class Login {
 		}
 		catch (Exception e ) {
 			System.out.println( "Exception >> " + e.getMessage() );
-		}
-		
+		}		
 		return false;
-	}
-	
-
+	}	
 }
