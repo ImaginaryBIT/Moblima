@@ -1,6 +1,5 @@
 package entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +7,7 @@ import java.util.ArrayList;
  * @author Group5
  *
  */
-public class MovieGoer extends Person{
+public class MovieGoer extends Person {
 	/**
 	 * Used during deserialization to verify that the sender and receiver of a
 	 * serialized object have loaded classes for that object that are compatible
