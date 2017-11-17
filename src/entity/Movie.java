@@ -321,15 +321,19 @@ public class Movie implements Serializable {
 	 * Print Movie Detail
 	 */
 	public void showMovieDetail() {
+		System.out.println("============Movie Detail===========");
 		String rating = "NA";
 		System.out.println("Moive ID    : " + this.movieId);
 		System.out.println("Moive Title : " + this.title);
 		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
-		if (this.cast != null) {
+		if (this.cast.isEmpty()) {
 			System.out.print("Actors 	    : ");
 			for (String cast : this.cast) {
 				System.out.print(cast + ", ");
 			}
+		}
+		else{
+			System.out.println("Actors      : NA");
 		}
 		System.out.println("Director    : " + this.director);
 		System.out.println("Language    : " + this.language);
@@ -342,7 +346,7 @@ public class Movie implements Serializable {
 		}
 		System.out.println("Rating      : " + rating);
 		System.out.println("Status      : " + this.status);
-
+		
 	}
 	
 	/**
@@ -351,16 +355,17 @@ public class Movie implements Serializable {
 	public void showMovieDetailWithReview(){
 		//System.out.printf("%s %30s%n", "Movie Name", "Movie Type");
 		//System.out.printf("%s %20s%n", this.title, this.movieType);
-                showMovieDetail();
-		System.out.println("------------Reviews-------------");
+        showMovieDetail();
 		
-
 		List<Review> reviewList = this.reviews;
-		for (Review review : reviewList) {
-			System.out.println("Posted by: "+review.getUserName());
-                        System.out.println("Rating: "+review.getUserRating());
-			System.out.println("Review:\n"+ review.getComment());
-			System.out.println();
+		if(!this.reviews.isEmpty()){
+			System.out.println("------------Reviews-------------");
+			for (Review review : reviewList) {
+				System.out.println("Posted by: "+review.getUserName());
+	            System.out.println("Rating: "+review.getUserRating());
+				System.out.println("Review:\n"+ review.getComment());
+				System.out.println();
+			}
 		}
 	}
 
