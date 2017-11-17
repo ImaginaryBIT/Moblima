@@ -142,7 +142,7 @@ public class Moblima {
 					}
 				}
 			}
-		} while (choice <= 4 && choice > 0); // end of do-while loop
+		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
 	
 	/**
