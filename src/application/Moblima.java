@@ -11,7 +11,6 @@ import database.SerializeDB;
 import entity.Cinema;
 import entity.Movie;
 import entity.MovieGoer;
-import entity.Review;
 import entity.ShowTime;
 import entity.Staff;
 import entity.Ticket;
@@ -66,6 +65,7 @@ public class Moblima {
 			switch (choice) {
 			case 1: // list all movies
 				movieList = MovieController.viewAllMovie();
+				menuAfterList(movieList);
 				break;
 
 			case 2: // top 5 ranking
@@ -103,6 +103,7 @@ public class Moblima {
                             System.out.printf("%d\t%s : %s/5", i + 1, top5movies.get(i).getTitle(),top5movies.get(i).getOverallUserRating());
 					System.out.println("");
 				}
+				menuAfterList(top5movies);
 				break;
 			case 3:
 				System.out.print("Enter movie name to search: ");
