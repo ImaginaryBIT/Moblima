@@ -118,8 +118,9 @@ public class Moblima {
 						System.out.println(sn +". "+ movie.getTitle()+",( "+movie.getStatus()+")");
 						sn++;
 					}
+					menuAfterList(searchMovieList);
 				}
-				menuAfterList(searchMovieList);
+				
 				break;
 			case 4:
 				pastBooking();
@@ -142,7 +143,7 @@ public class Moblima {
 					}
 				}
 			}
-		} while (choice <= 5 && choice > 0); // end of do-while loop
+		} while (choice <= 4 && choice > 0); // end of do-while loop
 	}
 	
 	/**
@@ -544,11 +545,11 @@ public class Moblima {
 		
 			List<ShowTime> showTimes = movie.getShowTimes();
                         System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
-                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\t\tAvailable Seats");
+                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
 			int index = 0;
                         for (ShowTime showTime : showTimes){
                             System.out.println("");
-                            System.out.printf("%s \t\t%s %s %20s %20s \t\t%s",
+                            System.out.printf("%s \t\t%s \t%s %s %s \t%s",
                                                 (index+1),
                                                 showTime.getShowTime(),
                                                 showTime.getShowDate(),
@@ -557,7 +558,7 @@ public class Moblima {
                                                 showTime.getNoOfTicketsAvailable());
                             index++;
 			}
-            System.out.println("");
+                        System.out.println("");
 			System.out.print("Please enter showtime no: ");
 			int selectedNo = sc.nextInt();
 			ShowTime selectedShowTime = null;
@@ -579,29 +580,9 @@ public class Moblima {
 				System.out.println("----------ENTRANCE----------");
 				System.out.println();
 			}
-			
-			// ask user to start booking
-			int bchoice;
-			System.out.println("======================================");
-			System.out.println("|Enter 1. To start booking 2. To exit|");
-			System.out.println("======================================");
-			while (true) {
-				try {
-					bchoice = sc.nextInt();
-					sc.nextLine();
-					break;
-				} catch (InputMismatchException e) {
-					System.out.println("Your choice is in incorrect format");
-					sc.nextLine();
-				}
-			}
-
-			if (bchoice == 1) {
-				
-				startBooking(selectedShowTime, movie);
-				return;
-			} // end of booking
-			
+			//Start Booking
+			startBooking(selectedShowTime, movie);
+			return;
 			
 		}while(true);
 		
@@ -668,6 +649,7 @@ public class Moblima {
 							break;
 						} else {
 							System.out.println("Seat not available. Re-enter seat number");
+							break;
 
 						}
 
