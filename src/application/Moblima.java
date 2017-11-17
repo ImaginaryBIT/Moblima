@@ -143,7 +143,7 @@ public class Moblima {
 					}
 				}
 			}
-		} while (choice <= 4 && choice > 0); // end of do-while loop
+		} while (choice <= 5 && choice > 0); // end of do-while loop
 	}
 	
 	/**
@@ -545,11 +545,11 @@ public class Moblima {
 		
 			List<ShowTime> showTimes = movie.getShowTimes();
                         System.out.printf("Showtime for %s in %s\n", movie.getTitle(), movie.getMovieType());
-                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\tAvailable Seats");
+                        System.out.printf("ShowTime ID \tDateTime \t\t\tCinema \t\t\t\tAvailable Seats");
 			int index = 0;
                         for (ShowTime showTime : showTimes){
                             System.out.println("");
-                            System.out.printf("%s \t\t%s \t%s %s %s \t%s",
+                            System.out.printf("%s \t\t%s %s %20s %20s \t\t%s",
                                                 (index+1),
                                                 showTime.getShowTime(),
                                                 showTime.getShowDate(),
@@ -558,7 +558,7 @@ public class Moblima {
                                                 showTime.getNoOfTicketsAvailable());
                             index++;
 			}
-                        System.out.println("");
+            System.out.println("");
 			System.out.print("Please enter showtime no: ");
 			int selectedNo = sc.nextInt();
 			ShowTime selectedShowTime = null;
