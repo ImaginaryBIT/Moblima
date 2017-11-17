@@ -1,5 +1,6 @@
 package application;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +8,8 @@ import java.util.Scanner;
 import database.SerializeDB;
 import entity.Movie;
 import entity.MovieGoer;
+import entity.ShowTime;
+import entity.Ticket;
 import entity.Transaction;
 /**
  * This class controller is used by staff. 
