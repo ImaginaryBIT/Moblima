@@ -341,10 +341,11 @@ public class Movie implements Serializable {
 		System.out.println("Rating      : " + this.rating);
 		System.out.println("RunTime     : " + this.runningTime);
 		float overallUserRating = this.getOverallUserRating();
-		if (this.getOverallUserRating() > 0) {
-			rating = String.valueOf(overallUserRating);
-		}
-		System.out.println("Rating      : " + rating);
+		if(overallUserRating == 0)
+                    System.out.printf("Rating      : NA");
+                else
+                    System.out.printf("Rating      : %.1f",overallUserRating);
+                System.out.println("");
 		System.out.println("Status      : " + this.status);
 		
 	}
