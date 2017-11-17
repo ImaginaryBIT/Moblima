@@ -19,11 +19,9 @@ import entity.TimeSlot;
 import java.util.InputMismatchException;
 
 /**
- * This controller class is mostly meant for staff to change update add or
- * remove movies and their associated details Any changes will be written to the
- * database Movie.ser In addition to that, there are methods, which involve
- * movie searching, also implemented here
- * 
+ * This controller class is mostly meant for staff to change update add or remove movies and their associated details
+ * Any changes will be written to the database Movie.ser
+ * In addition to that, there are methods, which involve movie searching, also implemented here
  * @author group5
  *
  */
@@ -55,7 +53,7 @@ public class MovieController {
 	private static String rating;// 9
 	/** Show Times */
 	private static List<ShowTime> showTimes;// 10
-	/** Status of the movie */
+	/** Status of the movie*/
 	private static String status;// 11
 
 	/** The show time ID */
@@ -77,10 +75,8 @@ public class MovieController {
 	private static List<ShowTime> showTimeList = new ArrayList();
 
 	/**
-	 * Allows staff to add new movie to the database The method will guide the staff
-	 * through the whole process of entering movie details and assigning its show
-	 * time and location
-	 * 
+	 * Allows staff to add new movie to the database
+	 * The method will guide the staff through the whole process of entering movie details and assigning its show time and location
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -102,27 +98,27 @@ public class MovieController {
 
 				// 2 movieType
 				System.out.print("Enter the Movie type: ");
-				System.out.println("Choose the Movie type: ");
-				System.out.println("1. Digital");
-				System.out.println("2. 3D");
-				System.out.println("3. Blockbuster ");
-				do {
-					rchoice = sc.nextInt();
-					sc.nextLine();
-					switch (rchoice) {
-					case 1:
-						movieType = Movie.DIGITAL;
-						break;
-					case 2:
-						movieType = Movie.THREED;
-						break;
-					case 3:
-						movieType = Movie.BLOCKBUSTER;
-						break;
-					default:
-						System.out.println("No such choice");
-					}
-				} while (rchoice < 1 || rchoice > 3);
+                                System.out.println("Choose the Movie type: ");
+                                System.out.println("1. Digital");
+                                System.out.println("2. 3D");
+                                System.out.println("3. Blockbuster ");
+                                do {
+                                    rchoice = sc.nextInt();
+                                    sc.nextLine();
+                                    switch (rchoice) {
+                                    case 1:
+                                            movieType = Movie.DIGITAL;
+                                            break;
+                                    case 2:
+                                            movieType = Movie.THREED;
+                                            break;
+                                    case 3:
+                                            movieType = Movie.BLOCKBUSTER;
+                                            break;
+                                    default:
+                                            System.out.println("No such choice");
+                                    }
+                                } while (rchoice < 1 || rchoice > 3);
 
 				// 4 director
 				System.out.print("Enter the Movie Director: ");
@@ -154,16 +150,16 @@ public class MovieController {
 					// 7 runningTime
 					System.out.print("Enter the Movie running time: ");
 					while (true) {
-						try {
-							runningTime = sc.nextInt();
-							sc.nextLine();
-							break;
-						} catch (InputMismatchException e) {
-							System.out.print("Please enter integer only:");
-							sc.nextLine();
-						}
-					}
-
+                                                try {
+                                                        runningTime = sc.nextInt();
+                                                        sc.nextLine();
+                                                        break;
+                                                } catch (InputMismatchException e) {
+                                                        System.out.print("Please enter integer only:");
+                                                        sc.nextLine();
+                                                }
+                                        }
+                                        
 					// 8 reviews
 					reviews = new ArrayList();
 
@@ -250,14 +246,18 @@ public class MovieController {
 					if (cinema.getTimeSlot().size() == 1) {
 						System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
 						temp.add(cinema.getTimeSlot().get(0).getDate());
-					} else {
+					} 
+					else 
+					{
 						System.out.println(count + ". " + cinema.getTimeSlot().get(0).getDate());
 						temp.add(cinema.getTimeSlot().get(0).getDate());
 						count++;
 
-						for (int i = 1; i < cinema.getTimeSlot().size(); i++) {
+						for (int i = 1; i < cinema.getTimeSlot().size(); i++) 
+						{
 							if (cinema.getTimeSlot().get(i).getDate()
-									.compareTo(cinema.getTimeSlot().get(i - 1).getDate()) != 0) {
+									.compareTo(cinema.getTimeSlot().get(i-1).getDate()) != 0) 
+							{
 								System.out.println(count + ". " + cinema.getTimeSlot().get(i).getDate());
 								temp.add(cinema.getTimeSlot().get(i).getDate());
 								count++;
@@ -274,7 +274,7 @@ public class MovieController {
 							System.out.println("out of range! Please re-choose date");
 							showTimeCheck = false;
 						} else {
-							choseDay = choseDay - 1;
+                                                        choseDay = choseDay -1;
 							String day_string = temp.get(choseDay);
 
 							boolean date_check = false;
@@ -341,8 +341,8 @@ public class MovieController {
 						}
 					} while (choice < 1 || choice > 4);
 
-					Movie mov = new Movie(movieId, title, cast, director, language, synopsis, runningTime, reviews,
-							movieType, rating, showTimeList, status);
+					Movie mov = new Movie(movieId, title, cast, director, language, synopsis, runningTime,
+							 reviews, movieType, rating, showTimeList, status);
 					movieList.add(mov);
 					SerializeDB.writeSerializedObject("Movie.ser", movieList);
 
@@ -369,7 +369,6 @@ public class MovieController {
 
 	/**
 	 * This method allows staff to update details of a movie
-	 * 
 	 * @return true if the update is successful, false otherwise
 	 */
 	public static boolean updateMovie() {
@@ -497,16 +496,16 @@ public class MovieController {
 
 						case 7:// 7 runningTime
 							System.out.print("Enter the Movie running time: ");
-							while (true) {
-								try {
-									runningTime = sc.nextInt();
-									sc.nextLine();
-									break;
-								} catch (InputMismatchException e) {
-									System.out.print("Please enter integer only:");
-									sc.nextLine();
-								}
-							}
+                                                        while (true) {
+                                                                try {
+                                                                        runningTime = sc.nextInt();
+                                                                        sc.nextLine();
+                                                                        break;
+                                                                } catch (InputMismatchException e) {
+                                                                        System.out.print("Please enter integer only:");
+                                                                        sc.nextLine();
+                                                                }
+                                                        }
 
 							movie.setRunningTime(runningTime);
 							break;
@@ -655,7 +654,7 @@ public class MovieController {
 									System.out.println("out of range! Please re-choose date");
 									showTimeCheck = false;
 								} else {
-									choseDay = choseDay - 1;
+                                                                        choseDay = choseDay - 1;
 									String day_string = temp2.get(choseDay);
 
 									boolean date_check = false;
@@ -722,14 +721,10 @@ public class MovieController {
 									status = "End of Showing";
 									break;
 								default:
-									System.out.println("No such choice for movie");
+									System.out.println("No such choice");
 								}
 							} while (rchoice < 1 || rchoice > 4);
 							movie.setStatus(status);
-							if(status.compareTo("End of Showing") == 0)
-							{
-								System.out.println("This movie is removed from the database");
-							}
 							break;
 						case 12: // write into DB
 							SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
@@ -754,19 +749,12 @@ public class MovieController {
 	}
 
 	/**
-	 * This method is used by both moviegoer and staff to add a review to a
-	 * particular movie
-	 * 
-	 * @param MovieId
-	 *            The ID of selected movie
-	 * @param name
-	 *            The name of reviewer
-	 * @param email
-	 *            Their email
-	 * @param rating
-	 *            Their rating
-	 * @param review
-	 *            Their review's content
+	 * This method is used by both moviegoer and staff to add a review to a particular movie
+	 * @param MovieId The ID of selected movie
+	 * @param name The name of reviewer
+	 * @param email Their email
+	 * @param rating Their rating
+	 * @param review Their review's content
 	 * @return true if adding is successful, false otherwise
 	 */
 	public static boolean addReview(int MovieId, String name, String email, float rating, String review) {
@@ -781,15 +769,10 @@ public class MovieController {
 	}
 
 	/**
-	 * This method supplements addMovie() method. Which checks for duplicate of the
-	 * movie, input by the user, and the database
-	 * 
-	 * @param name
-	 *            Name of the movie
-	 * @param director
-	 *            The director of the movie
-	 * @param type
-	 *            The movie's type
+	 * This method supplements addMovie() method. Which checks for duplicate of the movie, input by the user, and the database 
+	 * @param name Name of the movie
+	 * @param director The director of the movie
+	 * @param type The movie's type
 	 * @return true if there is duplicate, false otherwise
 	 */
 	private static boolean checkDuplicateMovie(String name, String director, String type) {
@@ -806,53 +789,53 @@ public class MovieController {
 
 	/**
 	 * This method simply shows all movies in the database
-	 * 
 	 * @return
 	 */
 	public static List<Movie> viewAllMovie() {
+                List<Movie> returnMovieList = new ArrayList<>();
 		System.out.println("============All Movies================");
 		int sn = 0;
 		for (Movie movie : movieList) {
-			sn++;
-			if ((movie.getStatus()).compareTo("End of Showing") != 0) {
-
-				System.out.println(sn + ". " + movie.getTitle() + ", (" + movie.getStatus() + ")");
-			}
+                        if(!movie.getStatus().equals("End of Showing")){
+                            sn++;
+                            returnMovieList.add(movie);
+                            System.out.println(sn + ". " + movie.getTitle() + ", (" + movie.getStatus() + ")");
+                        }
 		}
 		System.out.println("======================================");
-		return movieList;
+		return returnMovieList;
 	}
-
+	
 	/**
 	 * This method simply shows all movies with detail view.
-	 * 
 	 * @return
 	 */
 	public static List<Movie> viewAllMovieWithDetail() {
+                List<Movie> returnMovieList = new ArrayList<>();
 		System.out.println("============All Movies================");
 		for (Movie movie : movieList) {
-			if ((movie.getStatus()).compareTo("End of Showing") != 0) {
-				movie.showMovieDetailWithReview();
-			}
+                    if(!movie.getStatus().equals("End of Showing")){
+			movie.showMovieDetailWithReview();
+                        returnMovieList.add(movie);
+                    }
 		}
 		System.out.println("======================================");
-		return movieList;
+		return returnMovieList;
 	}
-
 	/**
-	 * Search Movies by name and return all the movies that contain the searched
-	 * name
-	 * 
+	 * Search Movies by name and return all the movies that contain the searched name
 	 * @param movieName
 	 * @return List<Movie> List of Movie search by name
 	 */
 	public static List<Movie> searchMovies(String movieName) {
 		// empty array list for the result
 		List<Movie> returnMovieList = new ArrayList<>();
-		for (Movie movie : movieList) {
-			if (movie.getTitle().toLowerCase().contains(movieName.toLowerCase())) {
-				// if search name is in movie title add to list
+		for(Movie movie : movieList){
+			if(movie.getTitle().toLowerCase().contains(movieName.toLowerCase())){
+			 // if search name is in movie title add to list
+                            if(!movie.getStatus().equals("End of Showing")){
 				returnMovieList.add(movie);
+                            }
 			}
 		}
 		return returnMovieList;
