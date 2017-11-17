@@ -45,15 +45,18 @@ public class SystemSettingController  {
 		try{
 				do {
 					System.out.println("=======System Config Menu============");
-					System.out.println("|1. Standard Ticket Price           |");
-					System.out.println("|2. Premium Ticket Price            |");
-					System.out.println("|3. Child Discount                  |");
-					System.out.println("|4. Senior Citizen Discount         |");
-					System.out.println("|5. Holiday Increment               |");
-					System.out.println("|6. Add Holiday                     |");
-					System.out.println("|7. Remove Holiday                  |");
-					System.out.println("|8. View Current System Setting     |");
-					System.out.println("|9. Exit System Configuration       |");
+					System.out.println("|1.  Standard Ticket Price           |");
+					System.out.println("|2.  Premium Ticket Price            |");
+					System.out.println("|3.  Child Discount                  |");
+					System.out.println("|4.  Senior Citizen Discount         |");
+					System.out.println("|5.  3D Type Increment               |");
+					System.out.println("|6.  Blockbuster Type Increment      |");
+					System.out.println("|7.  Digital Type Increment          |");
+					System.out.println("|8.  Holiday Increment               |");
+					System.out.println("|9.  Add Holiday                     |");
+					System.out.println("|10. Remove Holiday                  |");
+					System.out.println("|11. View Current System Setting     |");
+					System.out.println("|12. Exit System Configuration       |");
 					System.out.println("=====================================");				
 					System.out.print("Enter your choice: ");
 					configChoice = sc.nextInt();
@@ -83,9 +86,24 @@ public class SystemSettingController  {
 					case 5:
 						System.out.print(" Enter New Value to Update: ");
 						newValue = sc.nextFloat();
-						systemSetting.setHolidayIncrement(newValue);
+						systemSetting.setThreeDTypeIncrement(newValue);
 						break;
 					case 6:
+						System.out.print(" Enter New Value to Update: ");
+						newValue = sc.nextFloat();
+						systemSetting.setBlockBusterTypeIncrement(newValue);
+						break;
+					case 7:
+						System.out.print(" Enter New Value to Update: ");
+						newValue = sc.nextFloat();
+						systemSetting.setDigitalTypeIncrement(newValue);
+						break;
+					case 8:
+						System.out.print(" Enter New Value to Update: ");
+						newValue = sc.nextFloat();
+						systemSetting.setHolidayIncrement(newValue);
+						break;
+					case 9:
 						System.out.println("Enter New Date to add in (dd-mm-yyyy) format");
 						String newDate = sc.nextLine();
 						checkDuplicateHoliday(newDate);
@@ -97,18 +115,18 @@ public class SystemSettingController  {
 						}
 						systemSetting.setHolidays(holidays);
 						break;
-					case 7:
+					case 10:
 						System.out.println("Following are the current holidays : ");
 						systemSetting.printHoliday();
 						System.out.print(" Enter the no to remove: ");
 						int index = sc.nextInt();
 						holidays.remove(index - 1);
 						break;
-					case 8:
+					case 11:
 						System.out.println();
 						systemSetting.toString();
 						break;
-					case 9:
+					case 12:
 						//Update the SystemSetting before exit
 						createSystemSetting(systemSetting);
 						return;
