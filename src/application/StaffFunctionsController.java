@@ -76,31 +76,50 @@ public class StaffFunctionsController {
 	/**
 	 * Generates sale report based on the tickets sold
 	 */
-	private static void generateSaleReport() {
-
+	private static void generateSaleReport(){
+		
 		List<MovieGoer> goerList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
 		List<Movie> movieList = (ArrayList<Movie>) SerializeDB.readSerializedObject("Movie.ser");
-
+		
 		List<Transaction> transList;
 		int numberOfSoldTickets = 0;
 		float amountOfSales = 0;
-
-		System.out.println("=========Printing Sales for each movie.==========");
-		for (int i = 0; i < movieList.size(); i++) {
-			System.out.println((i + 1) + ". " + movieList.get(i).getTitle() + "=>");
-			for (int j = 0; j < goerList.size(); j++) {
-				transList = goerList.get(j).getTxnList();
-
-				for (int k = 0; k < transList.size(); k++) {
-					if (movieList.get(i).getTitle() == transList.get(k).getMovieName()) {
-						numberOfSoldTickets += transList.get(k).getTickets().size();
-						amountOfSales += transList.get(k).getTotalPayment();
-					}
-				}
-			}
+		
+		System.out.println("=========Printing Total Sales for each movie.==========");
+		for(int i = 0; i < movieList.size(); i++)
+		{
+			System.out.println((i+1) + ". " + movieList.get(i).getTitle() + "=>");
+                        for(ShowTime st : movieList.get(i).getShowTimes()){
+                            numberOfSoldTickets += st.getNoOfTicketsSold();
+                            for(Ticket tk : st.getTickets()){
+                                if(tk.getStatus().equals(Ticket.SOLD)){
+                                    amountOfSales += tk.getPrice();
+                                }
+                            }
+                        }
+                        
 			System.out.println("The total number of Sold Tickets is : " + numberOfSoldTickets);
 			System.out.println("The total amount of Sales is : " + amountOfSales);
+                        
 		}
+                
+                System.out.println("===========Printing All Transactions==============");
+                System.out.printf("%10s %30s %30s %20s %15s%n", "Bought at", "Movie Name", "Show Time",
+                                            "No. of Tickets", "Total Payment");
+                SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+                for(int j = 0; j < goerList.size();j++)
+                    {
+                        transList = goerList.get(j).getTxnList();
+
+                        for(Transaction trans : transList) {
+
+                            System.out.printf("%10s %30s %30s %10d %20f%n", dft.format(trans.getTransactionDate()),
+                                            trans.getMovieName(), dft.format(trans.getShowTime()), trans.getTickets().size(),
+                                            trans.getTotalPayment());
+
+                        }
+                }
+              
 	}
 
 }

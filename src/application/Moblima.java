@@ -368,6 +368,7 @@ public class Moblima {
 		Transaction txn;
 
 		List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB.readSerializedObject("MovieGoer.ser");
+
 		
 			System.out.print("Enter your email: ");
 			String email = sc.nextLine();
@@ -377,11 +378,11 @@ public class Moblima {
 					if (movieGoer.getEmail().equalsIgnoreCase(email)) {
 						if (!movieGoer.getTxnList().isEmpty()){
 							System.out.println("\nYour booking history:");
-							System.out.printf("%30s %30s %30s %10s %10s%n", "Bought at", "Movie Name", "Show Time",
-									"No. of Tickets", "Total Payment");
+							System.out.printf("%10s %30s %30s %20s %15s%n", "Bought at", "Movie Name", "Show Time",
+                                                                            "No. of Tickets", "Total Payment");
 							
 							for(Transaction trans : movieGoer.getTxnList()) {
-								System.out.printf("%30s %30s %30s %10d %10f%n", dft.format(trans.getTransactionDate()),
+								System.out.printf("%10s %30s %30s %10d %20f%n", dft.format(trans.getTransactionDate()),
 										trans.getMovieName(), dft.format(trans.getShowTime()), trans.getTickets().size(),
 										trans.getTotalPayment());
 							}
@@ -394,7 +395,8 @@ public class Moblima {
 				}
 			}
 			if (!foundMG)
-				System.out.println("No transaction found");		
+				System.out.println("No transaction found");
+		
 	}
 
 	/**
