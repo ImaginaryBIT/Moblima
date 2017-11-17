@@ -16,6 +16,7 @@ import entity.Seat;
 import entity.ShowTime;
 import entity.Ticket;
 import entity.TimeSlot;
+import java.util.InputMismatchException;
 
 /**
  * This controller class is mostly meant for staff to change update add or remove movies and their associated details
@@ -148,8 +149,16 @@ public class MovieController {
 
 					// 7 runningTime
 					System.out.print("Enter the Movie running time: ");
-					runningTime = sc.nextInt();
-					sc.nextLine();
+					while (true) {
+                                                try {
+                                                        runningTime = sc.nextInt();
+                                                        sc.nextLine();
+                                                        break;
+                                                } catch (InputMismatchException e) {
+                                                        System.out.print("Please enter integer only:");
+                                                        sc.nextLine();
+                                                }
+                                        }
                                         
 					// 8 reviews
 					reviews = new ArrayList();
@@ -230,7 +239,7 @@ public class MovieController {
 							+ cinema.getCineplex().getName());
 
 					List<String> temp = new ArrayList();
-					int count = 0;
+					int count = 1;
 					System.out.println("=====Movie Show Time Slot=====");
 					System.out.println("Total number of slots is: " + cinema.getTimeSlot().size());
 
@@ -261,10 +270,11 @@ public class MovieController {
 						System.out.println("Please choose the date: ");
 						int choseDay = sc.nextInt();
 						sc.nextLine();
-						if (choseDay >= count || choseDay < 0) {
+						if (choseDay >= count || choseDay < 1) {
 							System.out.println("out of range! Please re-choose date");
 							showTimeCheck = false;
 						} else {
+                                                        choseDay = choseDay -1;
 							String day_string = temp.get(choseDay);
 
 							boolean date_check = false;
@@ -486,8 +496,17 @@ public class MovieController {
 
 						case 7:// 7 runningTime
 							System.out.print("Enter the Movie running time: ");
-							runningTime = sc.nextInt();
-							sc.nextLine();
+                                                        while (true) {
+                                                                try {
+                                                                        runningTime = sc.nextInt();
+                                                                        sc.nextLine();
+                                                                        break;
+                                                                } catch (InputMismatchException e) {
+                                                                        System.out.print("Please enter integer only:");
+                                                                        sc.nextLine();
+                                                                }
+                                                        }
+
 							movie.setRunningTime(runningTime);
 							break;
 
@@ -603,7 +622,7 @@ public class MovieController {
 									+ cinema.getCineplex().getName());
 
 							List<String> temp2 = new ArrayList();
-							int count = 0;
+							int count = 1;
 							System.out.println("=====Movie Show Time Slot=====");
 							System.out.println("total number of slot is: " + cinema.getTimeSlot().size());
 
@@ -631,10 +650,11 @@ public class MovieController {
 								System.out.println("Please choose the date: ");
 								int choseDay = sc.nextInt();
 								sc.nextLine();
-								if (choseDay >= count || choseDay < 0) {
+								if (choseDay >= count || choseDay < 1) {
 									System.out.println("out of range! Please re-choose date");
 									showTimeCheck = false;
 								} else {
+                                                                        choseDay = choseDay - 1;
 									String day_string = temp2.get(choseDay);
 
 									boolean date_check = false;
@@ -782,7 +802,19 @@ public class MovieController {
 		System.out.println("======================================");
 		return movieList;
 	}
-
+	
+	/**
+	 * This method simply shows all movies with detail view.
+	 * @return
+	 */
+	public static List<Movie> viewAllMovieWithDetail() {
+		System.out.println("============All Movies================");
+		for (Movie movie : movieList) {
+			movie.showMovieDetailWithReview();
+		}
+		System.out.println("======================================");
+		return movieList;
+	}
 	/**
 	 * Search Movies by name and return all the movies that contain the searched name
 	 * @param movieName

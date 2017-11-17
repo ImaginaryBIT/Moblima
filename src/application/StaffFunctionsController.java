@@ -48,7 +48,7 @@ public class StaffFunctionsController {
 				sc.nextLine();
 				switch (choice) {
 				case 1:
-					MovieController.viewAllMovie();
+					MovieController.viewAllMovieWithDetail();
 					break;
 				case 2:
 					MovieController.addMovie();
