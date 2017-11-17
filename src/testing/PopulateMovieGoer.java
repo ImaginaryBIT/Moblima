@@ -24,8 +24,7 @@ public class PopulateMovieGoer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        /////////////////////////////// STAFF //////////////////////////////////////////
+        /////////////////////////////// MovieGoer //////////////////////////////////////////
         // Create new data
         List<MovieGoer> moveGoerList = new ArrayList<>();
         MovieGoer MovieGoer = new MovieGoer("thiwn","thwin",123);
@@ -34,12 +33,11 @@ public class PopulateMovieGoer {
 
         SerializeDB.writeSerializedObject("MovieGoer.ser", moveGoerList);
         List<MovieGoer> mgList = (ArrayList<MovieGoer>) SerializeDB
-				.readSerializedObject("MovieGoer.ser");
+                .readSerializedObject("MovieGoer.ser");
         List<Ticket> tickets = new ArrayList<>();
-        Transaction transaction = new Transaction(new Date(), "TEST", "Test Movie", tickets, (float)12.90);
-        MovieGoer.setMovieGoerTXN(transaction);
-		mgList.add(MovieGoer);
-		SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
+        
+        mgList.add(MovieGoer);
+        SerializeDB.writeSerializedObject("MovieGoer.ser", mgList);
     }
     
 }
