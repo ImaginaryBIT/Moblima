@@ -100,7 +100,7 @@ public class Moblima {
                         if (top5movies.get(i).getOverallUserRating() == 0)
                             System.out.printf("%d\t%s : %s", i + 1, top5movies.get(i).getTitle(),"NA");
                         else
-                            System.out.printf("%d\t%s : %s/5", i + 1, top5movies.get(i).getTitle(),top5movies.get(i).getOverallUserRating());
+                            System.out.printf("%d\t%s : %.1f/5.0", i + 1, top5movies.get(i).getTitle(),top5movies.get(i).getOverallUserRating());
 					System.out.println("");
 				}
 				menuAfterList(top5movies);
@@ -654,7 +654,7 @@ public class Moblima {
 							break;
 						} else {
 							System.out.println("Seat not available. Re-enter seat number");
-							break;
+							
 
 						}
 
