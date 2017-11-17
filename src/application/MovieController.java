@@ -792,18 +792,15 @@ public class MovieController {
 	 * @return
 	 */
 	public static List<Movie> viewAllMovie() {
-                List<Movie> returnMovieList = new ArrayList<>();
 		System.out.println("============All Movies================");
 		int sn = 0;
 		for (Movie movie : movieList) {
-                        if(!movie.getStatus().equals("End of Showing")){
-                            sn++;
-                            returnMovieList.add(movie);
-                            System.out.println(sn + ". " + movie.getTitle() + ", (" + movie.getStatus() + ")");
-                        }
+			sn++;
+			System.out.println(sn + ". " + movie.getTitle() + ", (" + movie.getStatus() + ")");
+
 		}
 		System.out.println("======================================");
-		return returnMovieList;
+		return movieList;
 	}
 	
 	/**
@@ -811,16 +808,12 @@ public class MovieController {
 	 * @return
 	 */
 	public static List<Movie> viewAllMovieWithDetail() {
-                List<Movie> returnMovieList = new ArrayList<>();
 		System.out.println("============All Movies================");
 		for (Movie movie : movieList) {
-                    if(!movie.getStatus().equals("End of Showing")){
 			movie.showMovieDetailWithReview();
-                        returnMovieList.add(movie);
-                    }
 		}
 		System.out.println("======================================");
-		return returnMovieList;
+		return movieList;
 	}
 	/**
 	 * Search Movies by name and return all the movies that contain the searched name
@@ -833,9 +826,7 @@ public class MovieController {
 		for(Movie movie : movieList){
 			if(movie.getTitle().toLowerCase().contains(movieName.toLowerCase())){
 			 // if search name is in movie title add to list
-                            if(!movie.getStatus().equals("End of Showing")){
 				returnMovieList.add(movie);
-                            }
 			}
 		}
 		return returnMovieList;
