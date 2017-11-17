@@ -326,7 +326,7 @@ public class Movie implements Serializable {
 		System.out.println("Moive ID    : " + this.movieId);
 		System.out.println("Moive Title : " + this.title);
 		System.out.println("Synopisis   : " + Utilities.wrap(this.synopsis));
-		if (this.cast.isEmpty()) {
+		if (!this.cast.isEmpty()) {
 			System.out.print("Actors 	    : ");
 			for (String cast : this.cast) {
 				System.out.print(cast + ", ");
