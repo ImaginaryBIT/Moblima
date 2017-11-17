@@ -205,7 +205,7 @@ public class MovieController {
 					} while (rchoice < 1 || rchoice > 7);
 
 					// 10 showTimes
-					System.out.println("=============Available Show Times to add================");
+					System.out.println("=============Available Cinemas to add================");
 					int showTimeId = showTimeList.size() + 1;
 
 					for (Cinema cinema : cinemaList) {
@@ -588,7 +588,7 @@ public class MovieController {
 
 							break;
 						case 10:// 11 add showTimes
-							System.out.println("=============Available Show Times to add================");
+							System.out.println("=============Available Cinemas to add================");
 							int showTimeId = showTimeList.size() + 1;
 
 							for (Cinema cinema : cinemaList) {
