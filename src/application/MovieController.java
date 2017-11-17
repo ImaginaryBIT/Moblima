@@ -781,7 +781,19 @@ public class MovieController {
 		System.out.println("======================================");
 		return movieList;
 	}
-
+	
+	/**
+	 * This method simply shows all movies with detail view.
+	 * @return
+	 */
+	public static List<Movie> viewAllMovieWithDetail() {
+		System.out.println("============All Movies================");
+		for (Movie movie : movieList) {
+			movie.showMovieDetailWithReview();
+		}
+		System.out.println("======================================");
+		return movieList;
+	}
 	/**
 	 * Search Movies by name and return all the movies that contain the searched name
 	 * @param movieName
