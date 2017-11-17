@@ -120,43 +120,43 @@ public class PopulateCinema {
                         }
                         int[] aisle;
                         //cineplex1
-                        newCinema = new Cinema(0, "C1", newCineplex1, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(0),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(1, "C1", newCineplex1, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(0),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(1, "C2", newCineplex1, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(1),new ArrayList<Integer>(Arrays.asList(1)));
+                        newCinema = new Cinema(2, "C2", newCineplex1, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(1),new ArrayList<Integer>(Arrays.asList(1)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(2, "C3", newCineplex1, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(2),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(3, "C3", newCineplex1, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(2),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(3, "C4", newCineplex1, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(3),new ArrayList<Integer>(Arrays.asList(1,2)));
+                        newCinema = new Cinema(4, "C4", newCineplex1, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(3),new ArrayList<Integer>(Arrays.asList(1,2)));
                         cinemaList.add(newCinema);
                         
                         //cineplex2
-                        newCinema = new Cinema(4, "C1", newCineplex2, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(4),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(5, "C1", newCineplex2, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(4),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(5, "C2", newCineplex2, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(5),new ArrayList<Integer>(Arrays.asList(1)));
+                        newCinema = new Cinema(6, "C2", newCineplex2, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(5),new ArrayList<Integer>(Arrays.asList(1)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(6, "C3", newCineplex2, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(6),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(7, "C3", newCineplex2, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(6),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(7, "C4", newCineplex2, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(7),new ArrayList<Integer>(Arrays.asList(1,2)));
+                        newCinema = new Cinema(8, "C4", newCineplex2, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(7),new ArrayList<Integer>(Arrays.asList(1,2)));
                         cinemaList.add(newCinema);
                         
                         //cineplex3
-                        newCinema = new Cinema(8, "C1", newCineplex3, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(8),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(9, "C1", newCineplex3, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(8),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(9, "C2", newCineplex3, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(9),new ArrayList<Integer>(Arrays.asList(1)));
+                        newCinema = new Cinema(10, "C2", newCineplex3, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(9),new ArrayList<Integer>(Arrays.asList(1)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(10, "C3", newCineplex3, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(10),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(11, "C3", newCineplex3, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(10),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(11, "C4", newCineplex3, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(11),new ArrayList<Integer>(Arrays.asList(1,2)));
+                        newCinema = new Cinema(12, "C4", newCineplex3, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(11),new ArrayList<Integer>(Arrays.asList(1,2)));
                         cinemaList.add(newCinema);
                         
                         //cineplex4
-                        newCinema = new Cinema(12, "C1", newCineplex4, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(12),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(13, "C1", newCineplex4, seatList1, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(12),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(13, "C2", newCineplex4, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(13),new ArrayList<Integer>(Arrays.asList(1)));
+                        newCinema = new Cinema(14, "C2", newCineplex4, seatList2, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(13),new ArrayList<Integer>(Arrays.asList(1)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(14, "C3", newCineplex4, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(14),new ArrayList<Integer>(Arrays.asList(2, 8)));
+                        newCinema = new Cinema(15, "C3", newCineplex4, seatList3, Cinema.CINEMA_CLASS_REGULAR,timeSlotListArrayList.get(14),new ArrayList<Integer>(Arrays.asList(2, 8)));
                         cinemaList.add(newCinema);
-                        newCinema = new Cinema(15, "C4", newCineplex4, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(15),new ArrayList<Integer>(Arrays.asList(1,2)));
+                        newCinema = new Cinema(16, "C4", newCineplex4, seatList4, Cinema.CINEMA_CLASS_PLATINIUM,timeSlotListArrayList.get(15),new ArrayList<Integer>(Arrays.asList(1,2)));
                         cinemaList.add(newCinema);
                         
                         SerializeDB.writeSerializedObject("Cinema.ser", cinemaList);
