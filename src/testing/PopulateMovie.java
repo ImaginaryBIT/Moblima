@@ -33,32 +33,28 @@ public class PopulateMovie {
                         list = (ArrayList<Cinema>) SerializeDB.readSerializedObject("Cinema.ser");
 			for (int i = 0; i < list.size(); i++) {
 				Cinema cnma = (Cinema) list.get(i);
-                                //get first 3 timeslot and create show time
-                                for(int ts = 0 ; ts < cnma.getTimeSlot().size() ; ts ++){
-                                    Ticket[] tckt = new Ticket[cnma.getSeat().length];
-                                    for(int s = 0; s < cnma.getSeat().length; s++){
+                                if(i == 0 || i == 1 || i == 5 || i == 6 || i == 9){
+                                    //get first 3 timeslot and create show time
+                                    for(int ts = 0 ; ts < cnma.getTimeSlot().size() ; ts ++){
+                                        Ticket[] tckt = new Ticket[cnma.getSeat().length];
+                                        for(int s = 0; s < cnma.getSeat().length; s++){
+                                            //set price to 0 will be set upon booking base on system setting
+                                            float price = 0.0f;
 
-                                        //movie type and getting system setting here
-                                        // if newMovie.getType() == "something" price = something
-                                        float price = 0.0f;
-                                        //if holiday add 
-                                        price += 2.0;
-
-                                        tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
+                                            tckt[s] = new Ticket(s,cnma.getSeat()[s],price,Ticket.AVAILABLE);
 
 
+                                        }
+
+                                        cnma.getTimeSlot().get(ts).setStatus(TimeSlot.UNAVAILABLE);
+                                        ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot().get(ts).getDateTime(),tckt);
+                                        showtimeList.add(st);
+                                        if(ts == 2){
+                                            break;
+                                        }
                                     }
-                                
-                                    cnma.getTimeSlot().get(ts).setStatus(TimeSlot.UNAVAILABLE);
-                                    ShowTime st = new ShowTime(ts, cnma,cnma.getTimeSlot().get(ts).getDateTime(),tckt);
-                                    showtimeList.add(st);
-                                    if(ts == 3){
-                                        break;
-                                    }
+                               
                                 }
-                                
-                                
-                                break;
                         }
                         
                         newMovie = new Movie(1,"My Little Pony",myStringArray, "Jayson Thiessen","English", "description movie",90,reviewList,"Digital","G", showtimeList, "now showing");

@@ -25,7 +25,7 @@ public class PopulateStaff {
         /////////////////////////////// STAFF //////////////////////////////////////////
         // Create new data
         List<Staff> staffList = new ArrayList();
-        Staff staff = new Staff("admin", "1", "password", "email", 123);
+        Staff staff = new Staff("admin", "staff1", "staff1", "staff1@email", 123);
         // add to list
         staffList.add(staff);
 
