@@ -94,7 +94,13 @@ public class Moblima {
 				List<Movie> top5movies = showTopRank(rankBy);
 				System.out.println("\nTop 5 Ranking");
 				for (int i = 0; i < top5movies.size(); i++) {
-					System.out.printf("%d\t%s", i + 1, top5movies.get(i).getTitle());
+                    if (choice == 1)
+                        System.out.printf("%d\t%s : %s tickets sold", i + 1, top5movies.get(i).getTitle(),top5movies.get(i).getTicketSold());
+                    else
+                        if (top5movies.get(i).getOverallUserRating() == 0)
+                            System.out.printf("%d\t%s : %s", i + 1, top5movies.get(i).getTitle(),"NA");
+                        else
+                            System.out.printf("%d\t%s : %s/5", i + 1, top5movies.get(i).getTitle(),top5movies.get(i).getOverallUserRating());
 					System.out.println("");
 				}
 				break;
