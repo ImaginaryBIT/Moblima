@@ -501,7 +501,7 @@ public class Moblima {
 				System.out.println("===What would you like to do?========");
 				System.out.println("|1. Book this Movie                  |");
 				System.out.println("|2. Write Review                     |");
-				System.out.println("|3. Exit                             |");
+				System.out.println("|3. Exit from Detail View            |");
 				System.out.println("======================================");				
 				System.out.print("Enter your choice: ");
 				int choice = sc.nextInt();
