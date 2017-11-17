@@ -707,7 +707,7 @@ public class MovieController {
 							do {
 								rchoice = sc.nextInt();
 								sc.nextLine();
-								switch (choice) {
+								switch (rchoice) {
 								case 1:
 									status = "Coming Soon";
 									break;
