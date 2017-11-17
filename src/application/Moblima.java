@@ -166,7 +166,15 @@ public class Moblima {
 					try{
 						int selectedIndex = sc.nextInt();
 						Movie movie = movieLst.get(selectedIndex-1);
-						bookTicket(movie);
+                                                if (movie.getStatus().equalsIgnoreCase("Coming Soon")) {
+                                                        System.out.println("The movie is coming soon. Please come back later");
+                                                } else if (movie.getStatus().equalsIgnoreCase("End of Showing")) {
+                                                        System.out.println("Sorry, the showing period for this movie has ended");
+                                                }else{
+                                                        //book
+                                                        bookTicket(movie);
+                                                }
+						
 						
 					} catch (InputMismatchException e) {
 						System.out.println("Your choice is in incorrect format");
