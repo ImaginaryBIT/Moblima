@@ -18,8 +18,9 @@ import entity.Ticket;
 import entity.TimeSlot;
 
 /**
- * This controller class is meant for staff to change update add or remove movies and their associated details
+ * This controller class is mostly meant for staff to change update add or remove movies and their associated details
  * Any changes will be written to the database Movie.ser
+ * In addition to that, there are methods, which involve movie searching, also implemented here
  * @author group5
  *
  */

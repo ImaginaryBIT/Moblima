@@ -12,7 +12,7 @@ import entity.ShowTime;
 import entity.Ticket;
 import entity.Transaction;
 /**
- * This class controller is used by staff. 
+ * This class controller is used by staff to perform their tasks. 
  * It offers them the option to
  * 1. View all movies in the database               
  * 2. Add a new movie to the database  
