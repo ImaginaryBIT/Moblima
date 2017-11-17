@@ -244,17 +244,22 @@ public class Moblima {
 		}
 		System.out.println("Enter your review:");
 		String content = sc.nextLine();
-		sc.nextLine();
-		System.out.print("Enter your rating: ");
+		System.out.print("Enter your rating 1-5: ");
 		float rate;
 		while (true) {
 			try {
 				rate = sc.nextFloat();
-				break;
+                                if(rate >= 1 && rate <= 5){
+                                    break;
+                                }else{
+                                    System.out.print("Please enter between 1 to 5:");
+                                    sc.nextLine();
+                                }
+				
 			} catch (InputMismatchException e) {
-
-				System.out.println("Your rate is in incorrect format. Please re-enter");
-			
+                                
+				System.out.print("Your rate is in incorrect format. Please re-enter");
+                                sc.nextLine();
 			}
 		}
 		System.out.println();
@@ -300,12 +305,12 @@ public class Moblima {
 		newMovieList = (Movie[]) movieList.toArray(newMovieList);
 		if (rankBy == "review") {
 			// do insertion sort
-			for (int i = 0; i < newMovieList.length - 1; i++) {
+			for (int i = 0; i < newMovieList.length-1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (newMovieList[i].getOverallUserRating() > newMovieList[i + 1].getOverallUserRating()) {
-						temp_movie = newMovieList[i];
-						newMovieList[i] = newMovieList[i + 1];
-						newMovieList[i + 1] = temp_movie;
+					if (newMovieList[d].getOverallUserRating() < newMovieList[d + 1].getOverallUserRating()) {
+						temp_movie = newMovieList[d];
+						newMovieList[d] = newMovieList[d + 1];
+						newMovieList[d + 1] = temp_movie;
 					} else {
 						break;
 					}
@@ -313,12 +318,12 @@ public class Moblima {
 			}
 		} else {
 			// do insertion sort
-			for (int i = 0; i < newMovieList.length - 1; i++) {
+			for (int i = 0; i < newMovieList.length-1; i++) {
 				for (int d = i; d >= 0; d--) {
-					if (newMovieList[i].getTicketSold() > newMovieList[i + 1].getTicketSold()) {
-						temp_movie = newMovieList[i];
-						newMovieList[i] = newMovieList[i + 1];
-						newMovieList[i + 1] = temp_movie;
+					if (newMovieList[d].getTicketSold() < newMovieList[d + 1].getTicketSold()) {
+						temp_movie = newMovieList[d];
+						newMovieList[d] = newMovieList[d + 1];
+						newMovieList[d + 1] = temp_movie;
 					} else {
 						break;
 					}
